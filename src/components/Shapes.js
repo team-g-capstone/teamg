@@ -37,14 +37,7 @@ export default function Shapes() {
 
   return (
     <View style={styles.container}>
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-evenly",
-          width: "60%",
-          alignItems: "center",
-        }}
-      >
+      <View style={styles.questionContainer}>
         <View style={styles.rowContainer}>
           <View style={styles[shape]}>
             <Text style={styles.number}>{numOne}</Text>
@@ -74,7 +67,7 @@ export default function Shapes() {
         </View>
 
         <View style={styles.rowContainer}>
-          <View style={styles[shape]}>
+          <View style={styles.trapezoid}>
             <Text style={styles.number}>?</Text>
           </View>
         </View>
@@ -101,12 +94,21 @@ export default function Shapes() {
 
 const styles = StyleSheet.create({
   container: {
+    //take up all available space by setting it to flex :1
     flex: 1,
     width: "100%",
     height: "100%",
     paddingTop: 45,
     backgroundColor: "#FFBF80",
   },
+  questionContainer: {
+    flexDirection: "row",
+    padding: 15,
+    justifyContent: "space-around",
+    width: "60%",
+    alignItems: "center",
+  },
+
   rowContainer: {
     width: 50,
     height: 50,
@@ -117,19 +119,20 @@ const styles = StyleSheet.create({
     backgroundColor: "red",
     padding: 1,
     margin: 20,
+    alignItems: "center",
   },
   addSign: {
     position: "absolute",
-    left: 105,
-    top: "40%",
+    left: 45,
+    top: "100%",
   },
   equalSign: {
     position: "absolute",
-    left: 230,
-    top: "40%",
+    left: 45,
+    top: "100%",
   },
   inputContainer: {
-    paddingTop: 15,
+    paddingTop: 60,
   },
   textInput: {
     borderColor: "#CCCCCC",
@@ -156,17 +159,30 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   number: {
+    //setting it to absolute would bring it in front of the triangle
+    position: "absolute",
     textAlign: "center",
-    paddingTop: 30,
+    paddingTop: 45,
     fontSize: 25,
     fontWeight: "bold",
     color: "white",
+    // marginTop: -20,//for square
+    // marginTop: -10,//for circle,
+    // marginTop: 0, //for triangle,
+    /******triangleDown need the following THREE */
+    // transform: [{ rotate: "180deg" }],
+    // marginTop: 40,
+    // marginLeft: -5,
+    /*********trapezoid */
+    // marginTop: -25,
+    // marginLeft: 23,
   },
   circle: {
     width: 100,
     height: 100,
     borderRadius: 100 / 2,
     backgroundColor: "red",
+    alignItems: "center",
   },
   triangle: {
     width: 0,
@@ -179,6 +195,7 @@ const styles = StyleSheet.create({
     borderLeftColor: "transparent",
     borderRightColor: "transparent",
     borderBottomColor: "red",
+    alignItems: "center",
   },
   triangleDown: {
     width: 0,
@@ -194,14 +211,16 @@ const styles = StyleSheet.create({
     transform: [{ rotate: "180deg" }],
   },
   trapezoid: {
-    width: 200,
+    width: 120,
     height: 0,
-    borderBottomWidth: 100,
+    borderBottomWidth: 60,
     borderBottomColor: "red",
-    borderLeftWidth: 50,
+    borderLeftWidth: 30,
     borderLeftColor: "transparent",
-    borderRightWidth: 50,
+    borderRightWidth: 30,
     borderRightColor: "transparent",
     borderStyle: "solid",
+    padding: 1,
+    margin: 20,
   },
 });
