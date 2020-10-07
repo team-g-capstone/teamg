@@ -1,11 +1,13 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import AudioButton from './AudioButton'
 
 export default function OriginalTextPage() {
   return (
     <View style={styles.container}>
       <Text>Team G Capstone!</Text>
+      <AudioButton />
       <StatusBar style="auto" />
     </View>
   );
