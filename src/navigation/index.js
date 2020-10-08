@@ -5,30 +5,31 @@ import { createStackNavigator } from "@react-navigation/stack";
 import OriginalTextPage from "../components/OriginalTextPage";
 
 import Shapes from "../components/Shapes";
+import Subjects from "../components/Subjects";
+import WelcomePage from "../components/WelcomePage";
 
-import AudioButton from '../components/AudioButton'
-
+import AudioButton from "../components/AudioButton";
 
 const Stack = createStackNavigator();
 
 const Navigation = () => (
   <NavigationContainer>
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-   
       <Stack.Screen
-        name="OriginalTextPage"
-        component={OriginalTextPage}
+        name="WelcomePage"
+        component={WelcomePage}
         options={{ headerShown: false }}
       />
-
+      <Stack.Screen
+        name="Subjects"
+        component={Subjects}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name="Shapes"
         component={Shapes}
         options={{ headerShown: false }}
       />
-
-     
-
     </Stack.Navigator>
   </NavigationContainer>
 );
