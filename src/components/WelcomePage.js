@@ -7,7 +7,7 @@ import AudioButton from "./AudioButton";
 export default function Welcome({ navigation }) {
   return (
     <View style={styles.container}>
-      <Text>Welcome!</Text>
+      <Text>Welcome!!</Text>
       <StatusBar style="auto" />
       <Button
         title="Go To Subjects"
