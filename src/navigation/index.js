@@ -5,6 +5,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import OriginalTextPage from "../components/OriginalTextPage";
 
 import Shapes from "../components/Shapes";
+import ShapesAnswer from "../components/ShapesAnswer";
 import Subjects from "../components/Subjects";
 import WelcomePage from "../components/WelcomePage";
 
@@ -28,6 +29,11 @@ const Navigation = () => (
       <Stack.Screen
         name="Shapes"
         component={Shapes}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ShapesAnswer"
+        component={ShapesAnswer}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

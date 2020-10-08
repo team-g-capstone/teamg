@@ -13,61 +13,32 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import * as Animatable from "react-native-animatable";
 import LottieView from "lottie-react-native";
+import { set } from "react-native-reanimated";
 function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
 
-function colorDecider(color1, color2) {
-  let colorOne = color1.slice(4, color1.length - 1).split(",");
-  let colorTwo = color2.slice(4, color2.length - 1).split(",");
-
-  let colorThree = [];
-
-  for (let i = 0; i < colorOne.length; i++) {
-    let colorAmount1 = Math.ceil(Number(colorOne[i]) / 2);
-    let colorAmount2 = Math.ceil(Number(colorTwo[i]) / 2);
-
-    colorThree.push(colorAmount1 + colorAmount2);
-  }
-
-  const newColor = "rgb(" + colorThree.join(", ") + ")";
-  return newColor;
-}
-
 const shapes = ["square", "circle", "triangle", "triangleDown", "trapezoid"];
-const colors = [
-  "rgb(255, 0, 0)",
-  "rgb(0, 0, 255)",
-  "rgb(0, 255, 0)",
-  "rgb(128, 0, 128)",
-  "rgb(0, 128, 128)",
-  "rgb(128, 128, 0)",
-];
 let rotation = 0;
 
-export default function Shapes({ navigation }) {
-  const [answer, setAnswer] = useState(0);
+export default function Shapes2({ navigation }) {
+  const [answer, setAnswer] = useState();
   const [numOne, setNumOne] = useState(getRandomInt(10));
   const [numTwo, setNumTwo] = useState(getRandomInt(10));
+  const [correctAns, setCorrectAns] = useState(numOne + numTwo);
 
   let shape = shapes[rotation];
-  let color1 = colors[rotation];
-  let color2 = colors[rotation + 1];
-  let color3 = colorDecider(color1, color2);
 
   const handlePress = () => {
-    let correctAns = numOne + numTwo;
-    console.log("correctAnswer", correctAns);
+    //
+    console.log("answer", typeof answer);
+    console.log("correctAns", typeof correctAns);
     if (Number(answer) === correctAns) {
-      navigation.navigate("ShapesAnswer", {
+      navigation.navigate("Shapes2Answer", {
         numOne: numOne,
         numTwo: numTwo,
         correctAns: correctAns,
         shape: shape,
-        color1: color1,
-        color2: color2,
-        color3: color3,
-        colorStyle: colorStyle,
       });
 
       setNumOne(getRandomInt(10));
@@ -77,11 +48,10 @@ export default function Shapes({ navigation }) {
       Alert.alert("SORRY", "Please click the button to try again", [
         {
           text: "Try again",
-          onPress: () => navigation.navigate("Shapes"),
+          onPress: () => navigation.navigate("Shapes2"),
         },
       ]);
     }
-
     if (rotation < 4) {
       rotation++;
     } else {
@@ -89,17 +59,6 @@ export default function Shapes({ navigation }) {
     }
     setAnswer(0);
   };
-
-  let colorStyle;
-  if (
-    shape === "triangle" ||
-    shape === "triangleDown" ||
-    shape === "trapezoid"
-  ) {
-    colorStyle = "borderBottomColor";
-  } else {
-    colorStyle = "backgroundColor";
-  }
 
   return (
     <View style={styles.container}>
@@ -109,7 +68,7 @@ export default function Shapes({ navigation }) {
             animation="zoomInUp"
             iterationCount={3}
             direction="alternate"
-            style={{ ...styles[shape], [colorStyle]: color1 }}
+            style={styles[shape]}
           >
             <Text style={styles.number}>{numOne}</Text>
           </Animatable.View>
@@ -127,7 +86,7 @@ export default function Shapes({ navigation }) {
             animation="slideInDown"
             iterationCount={3}
             direction="alternate"
-            style={{ ...styles[shape], [colorStyle]: color2 }}
+            style={styles[shape]}
           >
             <Text style={styles.number}>{numTwo}</Text>
           </Animatable.View>
@@ -141,7 +100,7 @@ export default function Shapes({ navigation }) {
           />
         </View>
         <View style={styles.rowContainer}>
-          <View style={{ ...styles[shape], [colorStyle]: color3 }}>
+          <View style={styles[shape]}>
             <Text style={styles.number}>?</Text>
           </View>
         </View>
@@ -167,8 +126,6 @@ export default function Shapes({ navigation }) {
     </View>
   );
 }
-let color1 = colors[rotation];
-let color2 = colors[rotation + 1];
 
 const styles = StyleSheet.create({
   container: {
@@ -194,7 +151,7 @@ const styles = StyleSheet.create({
   square: {
     width: 80,
     height: 80,
-    backgroundColor: color1,
+    backgroundColor: "red",
     padding: 1,
     margin: 20,
     alignItems: "center",
@@ -259,7 +216,7 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     borderRadius: 100 / 2,
-    backgroundColor: color2,
+    backgroundColor: "red",
     alignItems: "center",
   },
   triangle: {
