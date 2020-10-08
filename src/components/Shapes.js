@@ -82,7 +82,7 @@ export default function Shapes() {
           </View>
         </View>
 
-        <LottieView source={require("../../assets/check.json")} loop autoPlay />
+        {/* <LottieView source={require("../../assets/check.json")} loop autoPlay /> */}
       </View>
       <ScrollView onBlur={Keyboard.dismiss}>
         <View style={styles.inputContainer}>
