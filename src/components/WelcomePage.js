@@ -1,18 +1,18 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-
 import { StyleSheet, Text, View, Button } from "react-native";
 import AudioButton from "./AudioButton";
-import Shapes from "./Shapes";
+import SideMenu from "react-native-side-menu";
 
-
-export default function OriginalTextPage(props) {
+export default function Welcome({ navigation }) {
   return (
     <View style={styles.container}>
-      <Text>Team G Capstone!</Text>
-      {/* <AudioButton /> */}
-      <Shapes />
+      <Text>Welcome!</Text>
       <StatusBar style="auto" />
+      <Button
+        title="Go To Subjects"
+        onPress={() => navigation.navigate("Subjects")}
+      />
     </View>
   );
 }
