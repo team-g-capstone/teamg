@@ -80,25 +80,30 @@ export default function Shapes2Answer(props) {
             <Text style={styles.number}>{correctAns}</Text>
           </View>
         </View>
-
-        <LottieView source={require("../../assets/hero.json")} loop autoPlay />
-        <LottieView
-          source={require("../../assets/biggerBalloonDropping.json")}
-          loop
-          autoPlay
-        />
-
-        <View style={styles.inputContainer}>
-          <TouchableOpacity style={styles.submitButton} onPress={handlePress}>
-            <Text style={styles.submitButtonText}>Go to the next Question</Text>
-          </TouchableOpacity>
-        </View>
       </View>
+
+      <View style={styles.inputContainer}>
+        <TouchableOpacity style={styles.submitButton} onPress={handlePress}>
+          <Text style={styles.submitButtonText}>Go to the next Question</Text>
+        </TouchableOpacity>
+      </View>
+      <LottieView
+        style={styles.animation}
+        source={require("../../assets/balloonDropping.json")}
+        loop
+        autoPlay
+      />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  animation: {
+    marginLeft: "22%",
+    marginTop: "-10%",
+    width: "80%",
+    height: "80%",
+  },
   container: {
     //take up all available space by setting it to flex :1
     flex: 1,
@@ -109,9 +114,9 @@ const styles = StyleSheet.create({
   },
   questionContainer: {
     flexDirection: "row",
-    padding: 15,
+    padding: 20,
     justifyContent: "space-around",
-    width: "60%",
+    width: "40%",
     alignItems: "center",
   },
 
@@ -138,7 +143,7 @@ const styles = StyleSheet.create({
     top: "100%",
   },
   inputContainer: {
-    paddingTop: 60,
+    paddingTop: 80,
   },
   textInput: {
     borderColor: "#CCCCCC",
