@@ -10,7 +10,8 @@ import {
 } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
-
+import * as Animatable from "react-native-animatable";
+import LottieView from "lottie-react-native";
 function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
@@ -23,6 +24,7 @@ export default function Shapes() {
   const [numOne, setNumOne] = useState(getRandomInt(10));
   const [numTwo, setNumTwo] = useState(getRandomInt(10));
   const [correctAns, setCorrectAns] = useState(numOne + numTwo);
+
   let shape = shapes[rotation];
 
   const handlePress = () => {
@@ -39,9 +41,14 @@ export default function Shapes() {
     <View style={styles.container}>
       <View style={styles.questionContainer}>
         <View style={styles.rowContainer}>
-          <View style={styles[shape]}>
+          <Animatable.View
+            animation="zoomInUp"
+            iterationCount={3}
+            direction="alternate"
+            style={styles[shape]}
+          >
             <Text style={styles.number}>{numOne}</Text>
-          </View>
+          </Animatable.View>
         </View>
         <View style={styles.rowContainer}>
           <FontAwesome
@@ -52,11 +59,15 @@ export default function Shapes() {
           />
         </View>
         <View style={styles.rowContainer}>
-          <View style={styles[shape]}>
+          <Animatable.View
+            animation="slideInDown"
+            iterationCount={3}
+            direction="alternate"
+            style={styles[shape]}
+          >
             <Text style={styles.number}>{numTwo}</Text>
-          </View>
+          </Animatable.View>
         </View>
-
         <View style={styles.rowContainer}>
           <FontAwesome5
             style={styles.equalSign}
@@ -65,12 +76,13 @@ export default function Shapes() {
             color="black"
           />
         </View>
-
         <View style={styles.rowContainer}>
-          <View style={styles.trapezoid}>
+          <View style={styles[shape]}>
             <Text style={styles.number}>?</Text>
           </View>
         </View>
+
+        <LottieView source={require("../../assets/check.json")} loop autoPlay />
       </View>
       <ScrollView onBlur={Keyboard.dismiss}>
         <View style={styles.inputContainer}>
