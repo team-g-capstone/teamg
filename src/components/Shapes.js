@@ -12,6 +12,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import * as Animatable from "react-native-animatable";
 import LottieView from "lottie-react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
@@ -50,10 +51,9 @@ export default function Shapes() {
  
   let color2 = colors[rotation + 1];
   let color3 = colorDecider(color1, color2)
-  console.log(color1, color2)
-
+  
   const handlePress = () => {
-    //
+  
     if (rotation < 4) {
       rotation++;
     } else {
@@ -163,45 +163,51 @@ const styles = StyleSheet.create({
   rowContainer: {
     width: 50,
     height: 50,
+    alignItems: 'center',
   },
   square: {
     width: 80,
     height: 80,
+    justifyContent: 'center',
+    textAlignVertical: 'center',
     backgroundColor: color1,
-    padding: 1,
-    margin: 20,
+    padding: '50%',
+    margin: '20%',
     alignItems: "center",
+    borderRadius: 10,
+   
   },
   addSign: {
-    position: "absolute",
-    left: 45,
+    position: "relative",
+    
     top: "100%",
   },
   equalSign: {
-    position: "absolute",
-    left: 45,
+    position: "relative",
+    justifyContent: 'center',
+    
     top: "100%",
   },
   inputContainer: {
-    paddingTop: 60,
+    paddingTop: "10%",
   },
   textInput: {
     borderColor: "#CCCCCC",
     borderTopWidth: 1,
     borderBottomWidth: 1,
-    height: 50,
+    height: '50%',
     fontSize: 25,
-    paddingLeft: 20,
-    paddingRight: 20,
+    paddingLeft: '5%',
+    paddingRight: '5%',
   },
   submitButton: {
     borderWidth: 1,
     borderColor: "#007BFF",
     borderRadius: 15,
     backgroundColor: "#74D8D1",
-    padding: 12,
-    margin: 20,
-    width: 250,
+    padding: '2%',
+    margin: '2%',
+    width: '50%',
   },
   submitButtonText: {
     color: "#000066",
@@ -210,10 +216,11 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   number: {
+   
     //setting it to absolute would bring it in front of the triangle
     position: "absolute",
-    textAlign: "center",
-    paddingTop: '40%',
+    justifyContent: 'center',
+    paddingTop: '30%',
     fontSize: 25,
     fontWeight: "bold",
     color: "white",
@@ -231,13 +238,19 @@ const styles = StyleSheet.create({
   circle: {
     width: 100,
     height: 100,
+    justifyContent: 'center',
+    textAlign: 'center',
     borderRadius: 100 / 2,
     backgroundColor: color2,
     alignItems: "center",
   },
   triangle: {
+    flex: 1, 
+    justifyContent: 'center',
+    textAlign: 'center',
     width: 0,
     height: 0,
+    alignItems: "center",
     // backgroundColor: "transparent",
     borderStyle: "solid",
     borderLeftWidth: 50,
@@ -246,11 +259,12 @@ const styles = StyleSheet.create({
     borderLeftColor: "transparent",
     borderRightColor: "transparent",
     borderBottomColor: "red",
-    alignItems: "center",
+    
   },
   triangleDown: {
     width: 0,
     height: 0,
+    justifyContent: 'center',
     // backgroundColor: "transparent",
     borderStyle: "solid",
     borderLeftWidth: 50,
@@ -262,16 +276,25 @@ const styles = StyleSheet.create({
     transform: [{ rotate: "180deg" }],
   },
   trapezoid: {
-    width: 120,
+    
+    width: 80,
     height: 0,
+    justifyContent: 'center',
+    textAlign: 'center',
+    alignItems: 'center',
+    
+    // textAlignVertical: 'center',
+    borderColor: 'transparent',
     borderBottomWidth: 60,
     borderBottomColor: "red",
-    borderLeftWidth: 30,
+    borderTopWidth: 0,
+    borderLeftWidth: 20,
+    borderTopColor: 'transparent',
     borderLeftColor: "transparent",
-    borderRightWidth: 30,
+    borderRightWidth: 20,
     borderRightColor: "transparent",
     borderStyle: "solid",
-    padding: 1,
-    margin: 20,
+    padding: '20%',
+    margin: "20%",
   },
 });
