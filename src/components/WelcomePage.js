@@ -2,7 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { StyleSheet, Text, View, Button } from "react-native";
 import AudioButton from "./AudioButton";
-import SideMenu from "react-native-side-menu";
+// import SideMenu from "react-native-side-menu";
 
 export default function Welcome({ navigation }) {
   return (
