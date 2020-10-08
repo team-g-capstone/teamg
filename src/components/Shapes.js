@@ -18,31 +18,28 @@ function getRandomInt(max) {
 }
 
 function colorDecider(color1, color2) {
-  let colorOne = color1.slice(4, color1.length - 1).split(",");
-  let colorTwo = color2.slice(4, color2.length - 1).split(",");
 
-  let colorThree = [];
+  let colorOne = color1.slice(4, color1.length - 1).split(',')
+  let colorTwo = color2.slice(4, color2.length - 1).split(',')
+  
+
+  let colorThree = []; 
 
   for (let i = 0; i < colorOne.length; i++) {
-    let colorAmount1 = Math.ceil(Number(colorOne[i]) / 2);
-    let colorAmount2 = Math.ceil(Number(colorTwo[i]) / 2);
+    
+    let colorAmount1 = Math.ceil(Number(colorOne[i]) / 2) 
+    let colorAmount2 = Math.ceil(Number(colorTwo[i]) / 2)
+   
+    colorThree.push(colorAmount1 + colorAmount2)
 
-    colorThree.push(colorAmount1 + colorAmount2);
   }
 
-  const newColor = "rgb(" + colorThree.join(", ") + ")";
-  return newColor;
+  const newColor = 'rgb(' + colorThree.join(', ') + ')'
+  return newColor
 }
-
 const shapes = ["square", "circle", "triangle", "triangleDown", "trapezoid"];
-const colors = [
-  "rgb(255, 0, 0)",
-  "rgb(0, 0, 255)",
-  "rgb(0, 255, 0)",
-  "rgb(128, 0, 128)",
-  "rgb(0, 128, 128)",
-  "rgb(128, 128, 0)",
-];
+const colors = ['rgb(255, 0, 0)', 'rgb(0, 0, 255)', 'rgb(0, 255, 0)', 'rgb(128, 0, 128)', 'rgb(0, 128, 128)', 'rgb(128, 128, 0)']
+
 let rotation = 0;
 
 export default function Shapes({ navigation }) {
@@ -52,8 +49,10 @@ export default function Shapes({ navigation }) {
 
   let shape = shapes[rotation];
   let color1 = colors[rotation];
+
   let color2 = colors[rotation + 1];
   let color3 = colorDecider(color1, color2);
+
 
   const handlePress = () => {
     let correctAns = numOne + numTwo;
@@ -90,6 +89,7 @@ export default function Shapes({ navigation }) {
     setAnswer(0);
   };
 
+
   let colorStyle;
   if (
     shape === "triangle" ||
@@ -99,6 +99,7 @@ export default function Shapes({ navigation }) {
     colorStyle = "borderBottomColor";
   } else {
     colorStyle = "backgroundColor";
+
   }
 
   return (
@@ -109,7 +110,12 @@ export default function Shapes({ navigation }) {
             animation="zoomInUp"
             iterationCount={3}
             direction="alternate"
-            style={{ ...styles[shape], [colorStyle]: color1 }}
+
+            style={{...styles[shape], [colorStyle]: color1}}
+            
+            
+            
+
           >
             <Text style={styles.number}>{numOne}</Text>
           </Animatable.View>
@@ -127,7 +133,10 @@ export default function Shapes({ navigation }) {
             animation="slideInDown"
             iterationCount={3}
             direction="alternate"
-            style={{ ...styles[shape], [colorStyle]: color2 }}
+
+            style={{...styles[shape], [colorStyle]: color2}}
+            
+
           >
             <Text style={styles.number}>{numTwo}</Text>
           </Animatable.View>
@@ -141,7 +150,9 @@ export default function Shapes({ navigation }) {
           />
         </View>
         <View style={styles.rowContainer}>
-          <View style={{ ...styles[shape], [colorStyle]: color3 }}>
+
+          <View style={{...styles[shape], [colorStyle]: color3}}>
+
             <Text style={styles.number}>?</Text>
           </View>
         </View>
@@ -169,6 +180,9 @@ export default function Shapes({ navigation }) {
 }
 let color1 = colors[rotation];
 let color2 = colors[rotation + 1];
+
+let color1 = colors[rotation]
+let color2 = colors[rotation + 1]
 
 const styles = StyleSheet.create({
   container: {
@@ -240,7 +254,7 @@ const styles = StyleSheet.create({
     //setting it to absolute would bring it in front of the triangle
     position: "absolute",
     textAlign: "center",
-    paddingTop: 45,
+    paddingTop: '40%',
     fontSize: 25,
     fontWeight: "bold",
     color: "white",
@@ -265,7 +279,7 @@ const styles = StyleSheet.create({
   triangle: {
     width: 0,
     height: 0,
-    backgroundColor: "transparent",
+    // backgroundColor: "transparent",
     borderStyle: "solid",
     borderLeftWidth: 50,
     borderRightWidth: 50,
@@ -278,7 +292,7 @@ const styles = StyleSheet.create({
   triangleDown: {
     width: 0,
     height: 0,
-    backgroundColor: "transparent",
+    // backgroundColor: "transparent",
     borderStyle: "solid",
     borderLeftWidth: 50,
     borderRightWidth: 50,
