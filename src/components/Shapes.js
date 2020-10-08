@@ -13,6 +13,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import * as Animatable from "react-native-animatable";
 import LottieView from "lottie-react-native";
+import AudioButton from './AudioButton'
 function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
@@ -171,8 +172,10 @@ export default function Shapes({ navigation }) {
             keyboardType={"numeric"}
           />
         </View>
-        <TouchableOpacity style={styles.submitButton} onPress={handlePress}>
-          <Text style={styles.submitButtonText}>Submit</Text>
+         
+        <TouchableOpacity style={styles.submitButton} onPress={handlePress}> 
+          {/* <AudioButton onPress={handlePress}/> */}
+          <Text>Submit</Text>
         </TouchableOpacity>
       </ScrollView>
     </View>
@@ -181,8 +184,6 @@ export default function Shapes({ navigation }) {
 let color1 = colors[rotation];
 let color2 = colors[rotation + 1];
 
-let color1 = colors[rotation]
-let color2 = colors[rotation + 1]
 
 const styles = StyleSheet.create({
   container: {
