@@ -14,6 +14,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import * as Animatable from "react-native-animatable";
 import LottieView from "lottie-react-native";
 import { set } from "react-native-reanimated";
+import {Audio} from 'expo-av'
 function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
@@ -30,6 +31,26 @@ export default function Shapes2Answer(props) {
   const color2 = props.route.params.color2;
   const color3 = props.route.params.color3;
   const colorStyle = props.route.params.colorStyle;
+  const componentDidMount = async () => {
+    Audio.setAudioModeAsync({
+      allowRecordingIOS: false, 
+      interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+       playsInSilentModeIOS: true,
+       interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DUCK_OTHERS,
+       shouldDuckAndroid: true,
+       staysActiveInBackground: true,
+       playsThroughEarpieceAndroid: true,
+    })
+    let sound = new Audio.Sound()
+    const status = {
+      shouldPlay: false
+    }
+   await sound.loadAsync(require('../../assets/correctanswer.mp3'), status, false);
+   await sound.playAsync(); 
+  }
+
+  componentDidMount(); 
+  
 
   const handlePress = () => {
     props.navigation.navigate("Shapes");
