@@ -1,0 +1,11 @@
+{
+    "githubPullRequests.hosts":  [
+        {
+            "host": "https://github.com",
+            "username": "oauth",
+            "token": "baf2f508f0ef4cc82734756ad7aea67918e2ed44"
+        }
+        
+    
+    ]
+}

@@ -13,6 +13,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import * as Animatable from "react-native-animatable";
 import LottieView from "lottie-react-native";
+import {Audio} from 'expo-av'
 function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
@@ -58,7 +59,24 @@ export default function Shapes({ navigation }) {
   let color2 = colors[rotation + 1];
   let color3 = colorDecider(color1, color2);
 
-  const handlePress = () => {
+
+  const componentDidMountAudio = async () => {
+    Audio.setAudioModeAsync({
+      allowRecordingIOS: false, 
+      interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+       playsInSilentModeIOS: true,
+       interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DUCK_OTHERS,
+       shouldDuckAndroid: true,
+       staysActiveInBackground: true,
+       playsThroughEarpieceAndroid: true,
+    })
+    
+   
+  }
+
+  componentDidMountAudio(); 
+
+  const handlePress = async () => {
     let correctAns = numOne + numTwo;
     console.log("correctAnswer", correctAns);
     if (Number(answer) === correctAns) {
@@ -80,6 +98,12 @@ export default function Shapes({ navigation }) {
       setAnswer();
       setCheckAns(true);
     } else {
+      let sound = new Audio.Sound()
+    const status = {
+      shouldPlay: false
+    }
+   await sound.loadAsync(require('../../assets/incorrectAnswer.mp3'), status, false);
+   await sound.playAsync()
       Alert.alert("SORRY", "Please click the button to try again", [
         {
           text: "Try again",
@@ -165,8 +189,10 @@ export default function Shapes({ navigation }) {
             keyboardType={"numeric"}
           />
         </View>
-        <TouchableOpacity style={styles.submitButton} onPress={handlePress}>
-          <Text style={styles.submitButtonText}>Submit</Text>
+         
+        <TouchableOpacity style={styles.submitButton} onPress={handlePress}> 
+          {/* <AudioButton onPress={handlePress}/> */}
+          <Text>Submit</Text>
         </TouchableOpacity>
       </ScrollView>
       {!checkAns ? (
@@ -184,6 +210,7 @@ export default function Shapes({ navigation }) {
 }
 let color1 = colors[rotation];
 let color2 = colors[rotation + 1];
+
 
 const styles = StyleSheet.create({
   container: {

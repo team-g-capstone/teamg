@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View, Button} from 'react-native';
-import {Ionicons} from '@expo/vector-icons'
+import { StyleSheet, Text, View, Button, TouchableOpacity} from 'react-native';
+
 import {Audio} from 'expo-av'
 
 export default class App extends React.Component {
@@ -34,7 +34,7 @@ export default class App extends React.Component {
       <View style={styles.container}>
         <StatusBar style='auto' />
          <Button 
-          title="Play Sound"
+          title="Submit"
           color="#3CBBB1"
           onPress={this.playSound.bind(this)}
           />
