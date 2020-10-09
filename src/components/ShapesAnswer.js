@@ -16,12 +16,13 @@ import * as Animatable from "react-native-animatable";
 import LottieView from "lottie-react-native";
 import { set } from "react-native-reanimated";
 import {Audio} from 'expo-av'
+import Animations from './Animations'
 function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
 
 const shapes = ["square", "circle", "triangle", "triangleDown", "trapezoid"];
-let rotation = 0;
+
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -35,6 +36,8 @@ export default function Shapes2Answer(props) {
   const color2 = props.route.params.color2;
   const color3 = props.route.params.color3;
   const colorStyle = props.route.params.colorStyle;
+  let rotation = props.route.params.rotation; 
+  
 
   const numQuestions = props.route.params.numQuestions;
 
@@ -125,12 +128,7 @@ export default function Shapes2Answer(props) {
           )}
         </TouchableOpacity>
       </View>
-      <LottieView
-        style={styles.animation}
-        source={require("../../assets/balloonDropping.json")}
-        loop
-        autoPlay
-      />
+    <Animations rotation={rotation}/>
     </View>
   );
 }

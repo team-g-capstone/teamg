@@ -82,6 +82,7 @@ export default function Shapes({ navigation }) {
     if (Number(answer) === correctAns) {
       setNumQuestions(numQuestions + 1);
       navigation.navigate("ShapesAnswer", {
+        rotation: rotation,
         numOne: numOne,
         numTwo: numTwo,
         correctAns: correctAns,
