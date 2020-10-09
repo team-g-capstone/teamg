@@ -52,10 +52,10 @@ export default function Shapes2Answer(props) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text>
-        {" "}
-        ANSWER PAGE: numQuestions: {numQuestions} windowHeight: {windowHeight}{" "}
-        window Width: {windowWidth}{" "}
+      <Text style={{...styles.number, left: '10%'}}>
+       
+        Questions: {numQuestions} / 10
+        
       </Text>
       <View style={styles.questionContainer}>
         <View style={styles.rowContainer}>
@@ -112,6 +112,7 @@ export default function Shapes2Answer(props) {
       </View>
 
       <Animations rotation={rotation} />
+
     </SafeAreaView>
   );
 }
