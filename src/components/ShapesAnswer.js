@@ -41,25 +41,25 @@ export default function Shapes2Answer(props) {
 
   const numQuestions = props.route.params.numQuestions;
 
-  const componentDidMount = async () => {
-    Audio.setAudioModeAsync({
-      allowRecordingIOS: false, 
-      interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
-       playsInSilentModeIOS: true,
-       interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DUCK_OTHERS,
-       shouldDuckAndroid: true,
-       staysActiveInBackground: true,
-       playsThroughEarpieceAndroid: true,
-    })
-    let sound = new Audio.Sound()
-    const status = {
-      shouldPlay: false
-    }
-   await sound.loadAsync(require('../../assets/correctanswer.mp3'), status, false);
-   await sound.playAsync(); 
-  }
+  // const componentDidMount = async () => {
+  //   Audio.setAudioModeAsync({
+  //     allowRecordingIOS: false, 
+  //     interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+  //      playsInSilentModeIOS: true,
+  //      interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DUCK_OTHERS,
+  //      shouldDuckAndroid: true,
+  //      staysActiveInBackground: true,
+  //      playsThroughEarpieceAndroid: true,
+  //   })
+  //   let sound = new Audio.Sound()
+  //   const status = {
+  //     shouldPlay: false
+  //   }
+  //  await sound.loadAsync(require('../../assets/guitarist.mp3'), status, false);
+  //  await sound.playAsync(); 
+  // }
 
-  componentDidMount(); 
+  // componentDidMount(); 
   
 
 
