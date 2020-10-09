@@ -9,14 +9,15 @@ import {
   Keyboard,
   Alert,
   Dimensions,
+  SafeAreaView
 } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import * as Animatable from "react-native-animatable";
 import LottieView from "lottie-react-native";
 import { set } from "react-native-reanimated";
-import {Audio} from 'expo-av'
 import Animations from './Animations'
+
 function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
@@ -24,7 +25,9 @@ function getRandomInt(max) {
 const shapes = ["square", "circle", "triangle", "triangleDown", "trapezoid"];
 
 
+
 const windowWidth = Dimensions.get("window").width;
+const widthConstant = windowWidth / 667;
 const windowHeight = Dimensions.get("window").height;
 
 export default function Shapes2Answer(props) {
@@ -40,28 +43,7 @@ export default function Shapes2Answer(props) {
   
 
   const numQuestions = props.route.params.numQuestions;
-
-  // const componentDidMount = async () => {
-  //   Audio.setAudioModeAsync({
-  //     allowRecordingIOS: false, 
-  //     interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
-  //      playsInSilentModeIOS: true,
-  //      interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DUCK_OTHERS,
-  //      shouldDuckAndroid: true,
-  //      staysActiveInBackground: true,
-  //      playsThroughEarpieceAndroid: true,
-  //   })
-  //   let sound = new Audio.Sound()
-  //   const status = {
-  //     shouldPlay: false
-  //   }
-  //  await sound.loadAsync(require('../../assets/guitarist.mp3'), status, false);
-  //  await sound.playAsync(); 
-  // }
-
-  // componentDidMount(); 
   
-
 
   const handlePress = () => {
     if (numQuestions < 10) {
@@ -73,8 +55,9 @@ export default function Shapes2Answer(props) {
   };
 
   return (
-    <View style={styles.container}>
-      <Text>ANSWER PAGE: numQuestions: {numQuestions} </Text>
+    <SafeAreaView style={styles.container}>
+      <Text>   ANSWER PAGE: numQuestions: {numQuestions} windowHeight: {windowHeight}{" "}
+        window Width: {windowWidth} </Text>
       <View style={styles.questionContainer}>
         <View style={styles.rowContainer}>
           <Animatable.View
@@ -128,8 +111,10 @@ export default function Shapes2Answer(props) {
           )}
         </TouchableOpacity>
       </View>
+     
     <Animations rotation={rotation}/>
-    </View>
+
+    </SafeAreaView>
   );
 }
 
@@ -143,16 +128,20 @@ const styles = StyleSheet.create({
   container: {
     //take up all available space by setting it to flex :1
     flex: 1,
-    width: windowWidth,
-    height: windowHeight,
-    paddingTop: 45,
+    width: "100%",
+    height: "100%",
+    paddingTop: 40,
+    paddingLeft: 20,
     backgroundColor: "#FFBF80",
+    flexDirection: "column",
+    flexWrap: "wrap",
+    justifyContent: "space-evenly", //center the question block
   },
   questionContainer: {
     flexDirection: "row",
     padding: 20,
     justifyContent: "space-around",
-    width: "40%",
+    width: "53%",
     alignItems: "center",
   },
 
@@ -197,7 +186,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#74D8D1",
     padding: 12,
     margin: 20,
-    width: 250,
+    width: 300 * widthConstant,
   },
   submitButtonText: {
     color: "#000066",

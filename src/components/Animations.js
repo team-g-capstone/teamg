@@ -83,9 +83,13 @@ export default function Shapes2Answer(props) {
 
 const styles = StyleSheet.create({
     animation: {
-      marginLeft: "22%",
-      marginTop: "-10%",
-      width: "80%",
-      height: "80%",
-    },
+        marginLeft: "3%",
+        marginTop: "-10%",
+        marginRight: "-100%",
+        marginVertical: "-17%",
+        marginHorizontal: "-100%",
+        width: "100%",
+        height: "100%",
+        padding: "5%",
+      },
 })
