@@ -13,7 +13,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import * as Animatable from "react-native-animatable";
 import LottieView from "lottie-react-native";
-import {Audio} from 'expo-av'
+import { Audio } from "expo-av";
 function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
@@ -34,7 +34,7 @@ function colorDecider(color1, color2) {
   const newColor = "rgb(" + colorThree.join(", ") + ")";
   return newColor;
 }
-const shapes = ["square", "circle", "triangle", "triangleDown", "trapezoid"];
+const shapes = ["square", "circle", "triangle", "square", "circle"];
 const colors = [
   "rgb(255, 0, 0)",
   "rgb(0, 0, 255)",
@@ -47,11 +47,11 @@ const colors = [
 let rotation = 0;
 
 export default function Shapes({ navigation }) {
-  const [answer, setAnswer] = useState(0);
+  const [answer, setAnswer] = useState("");
   const [numOne, setNumOne] = useState(getRandomInt(10));
   const [numTwo, setNumTwo] = useState(getRandomInt(10));
   const [checkAns, setCheckAns] = useState(true);
-  const [numQuestions, setNumQuestions] = useState(0);
+  const [numQuestions, setNumQuestions] = useState(1);
 
   let shape = shapes[rotation];
   let color1 = colors[rotation];
@@ -59,22 +59,19 @@ export default function Shapes({ navigation }) {
   let color2 = colors[rotation + 1];
   let color3 = colorDecider(color1, color2);
 
-
   const componentDidMountAudio = async () => {
     Audio.setAudioModeAsync({
-      allowRecordingIOS: false, 
+      allowRecordingIOS: false,
       interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
-       playsInSilentModeIOS: true,
-       interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DUCK_OTHERS,
-       shouldDuckAndroid: true,
-       staysActiveInBackground: true,
-       playsThroughEarpieceAndroid: true,
-    })
-    
-   
-  }
+      playsInSilentModeIOS: true,
+      interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DUCK_OTHERS,
+      shouldDuckAndroid: true,
+      staysActiveInBackground: true,
+      playsThroughEarpieceAndroid: true,
+    });
+  };
 
-  componentDidMountAudio(); 
+  componentDidMountAudio();
 
   const handlePress = async () => {
     let correctAns = numOne + numTwo;
@@ -99,12 +96,16 @@ export default function Shapes({ navigation }) {
       setAnswer();
       setCheckAns(true);
     } else {
-      let sound = new Audio.Sound()
-    const status = {
-      shouldPlay: false
-    }
-   await sound.loadAsync(require('../../assets/incorrectAnswer.mp3'), status, false);
-   await sound.playAsync()
+      let sound = new Audio.Sound();
+      const status = {
+        shouldPlay: false,
+      };
+      await sound.loadAsync(
+        require("../../assets/incorrectAnswer.mp3"),
+        status,
+        false
+      );
+      await sound.playAsync();
       Alert.alert("SORRY", "Please click the button to try again", [
         {
           text: "Try again",
@@ -119,7 +120,7 @@ export default function Shapes({ navigation }) {
     } else {
       rotation = 0;
     }
-    setAnswer(0);
+    setAnswer("");
   };
 
   let colorStyle;
@@ -174,7 +175,7 @@ export default function Shapes({ navigation }) {
         </View>
         <View style={styles.rowContainer}>
           <View style={{ ...styles[shape], [colorStyle]: color3 }}>
-            <Text style={styles.number}>?</Text>
+            <Text style={styles.questionMark}>?</Text>
           </View>
         </View>
       </View>
@@ -190,10 +191,10 @@ export default function Shapes({ navigation }) {
             keyboardType={"numeric"}
           />
         </View>
-         
-        <TouchableOpacity style={styles.submitButton} onPress={handlePress}> 
+
+        <TouchableOpacity style={styles.submitButton} onPress={handlePress}>
           {/* <AudioButton onPress={handlePress}/> */}
-          <Text>Submit</Text>
+          <Text style={styles.submitButtonText}>Submit</Text>
         </TouchableOpacity>
       </ScrollView>
       {!checkAns ? (
@@ -211,7 +212,6 @@ export default function Shapes({ navigation }) {
 }
 let color1 = colors[rotation];
 let color2 = colors[rotation + 1];
-
 
 const styles = StyleSheet.create({
   container: {
@@ -235,12 +235,17 @@ const styles = StyleSheet.create({
     height: 50,
   },
   square: {
+    //flex: 1,
+    flexDirection: "row",
     width: 80,
     height: 80,
     backgroundColor: color1,
     padding: 1,
     margin: 20,
     alignItems: "center",
+    justifyContent: "center",
+    // textAlignVertical: "center",
+    // textAlign: "center",
   },
   addSign: {
     position: "absolute",
@@ -279,33 +284,42 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
   },
-  number: {
-    //setting it to absolute would bring it in front of the triangle
+  questionMark: {
     position: "absolute",
     textAlign: "center",
     paddingTop: "40%",
     fontSize: 25,
     fontWeight: "bold",
     color: "white",
+    justifyContent: "center",
+  },
+  number: {
+    //setting it to absolute would bring it in front of the triangle
+    position: "absolute",
+    //textAlign: "" ,
+    paddingTop: "40%",
+    fontSize: 25,
+    fontWeight: "bold",
+    color: "white",
+    alignSelf: "center",
+
+    //textAlignVertical: ,
+    //justifyContent: "center",
     // marginTop: -20,//for square
     // marginTop: -10,//for circle,
     // marginTop: 0, //for triangle,
-    /******triangleDown need the following THREE */
-    // transform: [{ rotate: "180deg" }],
-    // marginTop: 40,
-    // marginLeft: -5,
-    /*********trapezoid */
-    // marginTop: -25,
-    // marginLeft: 23,
   },
   circle: {
+    flexDirection: "row",
     width: 100,
     height: 100,
     borderRadius: 100 / 2,
     backgroundColor: color2,
     alignItems: "center",
+    justifyContent: "center",
   },
   triangle: {
+    flexDirection: "row",
     width: 0,
     height: 0,
     // backgroundColor: "transparent",
@@ -317,31 +331,6 @@ const styles = StyleSheet.create({
     borderRightColor: "transparent",
     borderBottomColor: "red",
     alignItems: "center",
-  },
-  triangleDown: {
-    width: 0,
-    height: 0,
-    // backgroundColor: "transparent",
-    borderStyle: "solid",
-    borderLeftWidth: 50,
-    borderRightWidth: 50,
-    borderBottomWidth: 100,
-    borderLeftColor: "transparent",
-    borderRightColor: "transparent",
-    borderBottomColor: "red",
-    transform: [{ rotate: "180deg" }],
-  },
-  trapezoid: {
-    width: 120,
-    height: 0,
-    borderBottomWidth: 60,
-    borderBottomColor: "red",
-    borderLeftWidth: 30,
-    borderLeftColor: "transparent",
-    borderRightWidth: 30,
-    borderRightColor: "transparent",
-    borderStyle: "solid",
-    padding: 1,
-    margin: 20,
+    justifyContent: "center",
   },
 });

@@ -9,22 +9,20 @@ import {
   Keyboard,
   Alert,
   Dimensions,
-  SafeAreaView
+  SafeAreaView,
 } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import * as Animatable from "react-native-animatable";
 import LottieView from "lottie-react-native";
 import { set } from "react-native-reanimated";
-import Animations from './Animations'
+import Animations from "./Animations";
 
 function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
 
 const shapes = ["square", "circle", "triangle", "triangleDown", "trapezoid"];
-
-
 
 const windowWidth = Dimensions.get("window").width;
 const widthConstant = windowWidth / 667;
@@ -39,11 +37,9 @@ export default function Shapes2Answer(props) {
   const color2 = props.route.params.color2;
   const color3 = props.route.params.color3;
   const colorStyle = props.route.params.colorStyle;
-  let rotation = props.route.params.rotation; 
-  
+  let rotation = props.route.params.rotation;
 
   const numQuestions = props.route.params.numQuestions;
-  
 
   const handlePress = () => {
     if (numQuestions < 10) {
@@ -56,8 +52,11 @@ export default function Shapes2Answer(props) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text>   ANSWER PAGE: numQuestions: {numQuestions} windowHeight: {windowHeight}{" "}
-        window Width: {windowWidth} </Text>
+      <Text>
+        {" "}
+        ANSWER PAGE: numQuestions: {numQuestions} windowHeight: {windowHeight}{" "}
+        window Width: {windowWidth}{" "}
+      </Text>
       <View style={styles.questionContainer}>
         <View style={styles.rowContainer}>
           <Animatable.View
@@ -111,9 +110,8 @@ export default function Shapes2Answer(props) {
           )}
         </TouchableOpacity>
       </View>
-     
-    <Animations rotation={rotation}/>
 
+      <Animations rotation={rotation} />
     </SafeAreaView>
   );
 }
@@ -150,12 +148,14 @@ const styles = StyleSheet.create({
     height: 50,
   },
   square: {
+    flexDirection: "row",
     width: 80,
     height: 80,
     backgroundColor: "red",
     padding: 1,
     margin: 20,
     alignItems: "center",
+    justifyContent: "center",
   },
   addSign: {
     position: "absolute",
@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
     //setting it to absolute would bring it in front of the triangle
     position: "absolute",
     textAlign: "center",
-    paddingTop: 45,
+    //paddingTop: "40%",
     fontSize: 25,
     fontWeight: "bold",
     color: "white",
@@ -214,13 +214,16 @@ const styles = StyleSheet.create({
     // marginLeft: 23,
   },
   circle: {
+    flexDirection: "row",
     width: 100,
     height: 100,
     borderRadius: 100 / 2,
     backgroundColor: "red",
     alignItems: "center",
+    justifyContent: "center",
   },
   triangle: {
+    flexDirection: "row",
     width: 0,
     height: 0,
     backgroundColor: "transparent",
@@ -232,31 +235,6 @@ const styles = StyleSheet.create({
     borderRightColor: "transparent",
     borderBottomColor: "red",
     alignItems: "center",
-  },
-  triangleDown: {
-    width: 0,
-    height: 0,
-    backgroundColor: "transparent",
-    borderStyle: "solid",
-    borderLeftWidth: 50,
-    borderRightWidth: 50,
-    borderBottomWidth: 100,
-    borderLeftColor: "transparent",
-    borderRightColor: "transparent",
-    borderBottomColor: "red",
-    transform: [{ rotate: "180deg" }],
-  },
-  trapezoid: {
-    width: 120,
-    height: 0,
-    borderBottomWidth: 60,
-    borderBottomColor: "red",
-    borderLeftWidth: 30,
-    borderLeftColor: "transparent",
-    borderRightWidth: 30,
-    borderRightColor: "transparent",
-    borderStyle: "solid",
-    padding: 1,
-    margin: 20,
+    justifyContent: "center",
   },
 });
