@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Keyboard,
   Alert,
+  Dimensions,
 } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
@@ -22,6 +23,9 @@ function getRandomInt(max) {
 const shapes = ["square", "circle", "triangle", "triangleDown", "trapezoid"];
 let rotation = 0;
 
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
+
 export default function Shapes2Answer(props) {
   const correctAns = props.route.params.correctAns;
   const numOne = props.route.params.numOne;
@@ -31,6 +35,9 @@ export default function Shapes2Answer(props) {
   const color2 = props.route.params.color2;
   const color3 = props.route.params.color3;
   const colorStyle = props.route.params.colorStyle;
+
+  const numQuestions = props.route.params.numQuestions;
+
   const componentDidMount = async () => {
     Audio.setAudioModeAsync({
       allowRecordingIOS: false, 
@@ -52,13 +59,19 @@ export default function Shapes2Answer(props) {
   componentDidMount(); 
   
 
+
   const handlePress = () => {
-    props.navigation.navigate("Shapes");
+    if (numQuestions < 10) {
+      props.navigation.navigate("Shapes");
+    }
+    if (numQuestions === 10) {
+      props.navigation.navigate("WelcomePage");
+    }
   };
 
   return (
     <View style={styles.container}>
-      <Text>ANSWER PAGE </Text>
+      <Text>ANSWER PAGE: numQuestions: {numQuestions} </Text>
       <View style={styles.questionContainer}>
         <View style={styles.rowContainer}>
           <Animatable.View
@@ -105,7 +118,11 @@ export default function Shapes2Answer(props) {
 
       <View style={styles.inputContainer}>
         <TouchableOpacity style={styles.submitButton} onPress={handlePress}>
-          <Text style={styles.submitButtonText}>Go to the next Question</Text>
+          {numQuestions < 10 ? (
+            <Text style={styles.submitButtonText}>Go to the next Question</Text>
+          ) : (
+            <Text style={styles.submitButtonText}>Go to next Level</Text>
+          )}
         </TouchableOpacity>
       </View>
       <LottieView
@@ -128,8 +145,8 @@ const styles = StyleSheet.create({
   container: {
     //take up all available space by setting it to flex :1
     flex: 1,
-    width: "100%",
-    height: "100%",
+    width: windowWidth,
+    height: windowHeight,
     paddingTop: 45,
     backgroundColor: "#FFBF80",
   },

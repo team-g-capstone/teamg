@@ -19,27 +19,30 @@ function getRandomInt(max) {
 }
 
 function colorDecider(color1, color2) {
+  let colorOne = color1.slice(4, color1.length - 1).split(",");
+  let colorTwo = color2.slice(4, color2.length - 1).split(",");
 
-  let colorOne = color1.slice(4, color1.length - 1).split(',')
-  let colorTwo = color2.slice(4, color2.length - 1).split(',')
-  
-
-  let colorThree = []; 
+  let colorThree = [];
 
   for (let i = 0; i < colorOne.length; i++) {
-    
-    let colorAmount1 = Math.ceil(Number(colorOne[i]) / 2) 
-    let colorAmount2 = Math.ceil(Number(colorTwo[i]) / 2)
-   
-    colorThree.push(colorAmount1 + colorAmount2)
+    let colorAmount1 = Math.ceil(Number(colorOne[i]) / 2);
+    let colorAmount2 = Math.ceil(Number(colorTwo[i]) / 2);
 
+    colorThree.push(colorAmount1 + colorAmount2);
   }
 
-  const newColor = 'rgb(' + colorThree.join(', ') + ')'
-  return newColor
+  const newColor = "rgb(" + colorThree.join(", ") + ")";
+  return newColor;
 }
 const shapes = ["square", "circle", "triangle", "triangleDown", "trapezoid"];
-const colors = ['rgb(255, 0, 0)', 'rgb(0, 0, 255)', 'rgb(0, 255, 0)', 'rgb(128, 0, 128)', 'rgb(0, 128, 128)', 'rgb(128, 128, 0)']
+const colors = [
+  "rgb(255, 0, 0)",
+  "rgb(0, 0, 255)",
+  "rgb(0, 255, 0)",
+  "rgb(128, 0, 128)",
+  "rgb(0, 128, 128)",
+  "rgb(128, 128, 0)",
+];
 
 let rotation = 0;
 
@@ -47,12 +50,15 @@ export default function Shapes({ navigation }) {
   const [answer, setAnswer] = useState(0);
   const [numOne, setNumOne] = useState(getRandomInt(10));
   const [numTwo, setNumTwo] = useState(getRandomInt(10));
+  const [checkAns, setCheckAns] = useState(true);
+  const [numQuestions, setNumQuestions] = useState(0);
 
   let shape = shapes[rotation];
   let color1 = colors[rotation];
 
   let color2 = colors[rotation + 1];
   let color3 = colorDecider(color1, color2);
+
 
   const componentDidMountAudio = async () => {
     Audio.setAudioModeAsync({
@@ -74,6 +80,7 @@ export default function Shapes({ navigation }) {
     let correctAns = numOne + numTwo;
     console.log("correctAnswer", correctAns);
     if (Number(answer) === correctAns) {
+      setNumQuestions(numQuestions + 1);
       navigation.navigate("ShapesAnswer", {
         numOne: numOne,
         numTwo: numTwo,
@@ -83,11 +90,13 @@ export default function Shapes({ navigation }) {
         color2: color2,
         color3: color3,
         colorStyle: colorStyle,
+        numQuestions: numQuestions,
       });
 
       setNumOne(getRandomInt(10));
       setNumTwo(getRandomInt(10));
       setAnswer();
+      setCheckAns(true);
     } else {
       let sound = new Audio.Sound()
     const status = {
@@ -101,6 +110,7 @@ export default function Shapes({ navigation }) {
           onPress: () => navigation.navigate("Shapes"),
         },
       ]);
+      setCheckAns(false);
     }
 
     if (rotation < 4) {
@@ -111,7 +121,6 @@ export default function Shapes({ navigation }) {
     setAnswer(0);
   };
 
-
   let colorStyle;
   if (
     shape === "triangle" ||
@@ -121,7 +130,6 @@ export default function Shapes({ navigation }) {
     colorStyle = "borderBottomColor";
   } else {
     colorStyle = "backgroundColor";
-
   }
 
   return (
@@ -132,12 +140,7 @@ export default function Shapes({ navigation }) {
             animation="zoomInUp"
             iterationCount={3}
             direction="alternate"
-
-            style={{...styles[shape], [colorStyle]: color1}}
-            
-            
-            
-
+            style={{ ...styles[shape], [colorStyle]: color1 }}
           >
             <Text style={styles.number}>{numOne}</Text>
           </Animatable.View>
@@ -155,10 +158,7 @@ export default function Shapes({ navigation }) {
             animation="slideInDown"
             iterationCount={3}
             direction="alternate"
-
-            style={{...styles[shape], [colorStyle]: color2}}
-            
-
+            style={{ ...styles[shape], [colorStyle]: color2 }}
           >
             <Text style={styles.number}>{numTwo}</Text>
           </Animatable.View>
@@ -172,14 +172,10 @@ export default function Shapes({ navigation }) {
           />
         </View>
         <View style={styles.rowContainer}>
-
-          <View style={{...styles[shape], [colorStyle]: color3}}>
-
+          <View style={{ ...styles[shape], [colorStyle]: color3 }}>
             <Text style={styles.number}>?</Text>
           </View>
         </View>
-
-        {/* <LottieView source={require("../../assets/check.json")} loop autoPlay /> */}
       </View>
       <ScrollView onBlur={Keyboard.dismiss}>
         <View style={styles.inputContainer}>
@@ -187,7 +183,7 @@ export default function Shapes({ navigation }) {
             style={styles.textInput}
             placeholder="Your answer here "
             maxLength={20}
-            value={answer}
+            value={String(answer)}
             onChangeText={(answer) => setAnswer(answer)}
             // defaultValue={answer}
             keyboardType={"numeric"}
@@ -199,6 +195,16 @@ export default function Shapes({ navigation }) {
           <Text>Submit</Text>
         </TouchableOpacity>
       </ScrollView>
+      {!checkAns ? (
+        <View>
+          <LottieView
+            source={require("../../assets/check.json")}
+            loop
+            autoPlay
+          />
+          <Text>Try Again!</Text>
+        </View>
+      ) : null}
     </View>
   );
 }
@@ -276,7 +282,7 @@ const styles = StyleSheet.create({
     //setting it to absolute would bring it in front of the triangle
     position: "absolute",
     textAlign: "center",
-    paddingTop: '40%',
+    paddingTop: "40%",
     fontSize: 25,
     fontWeight: "bold",
     color: "white",
