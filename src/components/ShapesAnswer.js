@@ -10,6 +10,7 @@ import {
   Alert,
   Dimensions,
   SafeAreaView,
+  ImageBackground
 } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
@@ -40,6 +41,7 @@ export default function Shapes2Answer(props) {
   let rotation = props.route.params.rotation;
 
   const numQuestions = props.route.params.numQuestions;
+  let image = require('../../assets/backgrounds/orange.jpg')
 
   const handlePress = () => {
     if (numQuestions < 10) {
@@ -52,7 +54,8 @@ export default function Shapes2Answer(props) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={{...styles.number, left: '10%'}}>
+      <ImageBackground source={image} style={styles.image}>
+      <Text style={{...styles.number, marginVertical: '25%', marginLeft: '5%'}}>
        
         Questions: {numQuestions} / 10
         
@@ -112,36 +115,53 @@ export default function Shapes2Answer(props) {
       </View>
 
       <Animations rotation={rotation} />
-
+         </ImageBackground>   
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  animation: {
-    marginLeft: "22%",
-    marginTop: "-10%",
-    width: "80%",
-    height: "80%",
-  },
+  // animation: {
+  //   flex: 3, 
+  //   flexDirection: 'row',
+  //   justifyContent: 'flex-end',
+  //   marginLeft: "22%",
+  //   marginTop: "-10%",
+  //   width: "80%",
+  //   height: "80%",
+  // },
   container: {
     //take up all available space by setting it to flex :1
     flex: 1,
     width: "100%",
     height: "100%",
-    paddingTop: 40,
-    paddingLeft: 20,
+   
     backgroundColor: "#FFBF80",
-    flexDirection: "column",
-    flexWrap: "wrap",
-    justifyContent: "space-evenly", //center the question block
+   
+    // flexDirection: "column",
+   
+    // flexWrap: "wrap",
+    // justifyContent: "space-evenly", //center the question block
   },
+  image: {
+    flex: 1,
+    resizeMode: 'cover',
+    justifyContent: 'center',
+    
+  },
+
   questionContainer: {
     flexDirection: "row",
-    padding: 20,
+    padding: 15,
     justifyContent: "space-around",
-    width: "53%",
+    width: "60%",
     alignItems: "center",
+  },
+
+  image: {
+    flex: 1,
+    resizeMode: 'cover',
+    justifyContent: 'center'
   },
 
   rowContainer: {
@@ -157,6 +177,10 @@ const styles = StyleSheet.create({
     margin: 20,
     alignItems: "center",
     justifyContent: "center",
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
   },
   addSign: {
     position: "absolute",
@@ -188,12 +212,17 @@ const styles = StyleSheet.create({
     padding: 12,
     margin: 20,
     width: 300 * widthConstant,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
   },
   submitButtonText: {
     color: "#000066",
     fontSize: 20,
     fontWeight: "bold",
     textAlign: "center",
+
   },
   number: {
     //setting it to absolute would bring it in front of the triangle
@@ -222,6 +251,10 @@ const styles = StyleSheet.create({
     backgroundColor: "red",
     alignItems: "center",
     justifyContent: "center",
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
   },
   triangle: {
     flexDirection: "row",
@@ -237,5 +270,9 @@ const styles = StyleSheet.create({
     borderBottomColor: "red",
     alignItems: "center",
     justifyContent: "center",
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
   },
 });

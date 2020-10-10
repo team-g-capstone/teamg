@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Keyboard,
   Alert,
+  ImageBackground
 } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
@@ -58,6 +59,8 @@ export default function Shapes({ navigation }) {
 
   let color2 = colors[rotation + 1];
   let color3 = colorDecider(color1, color2);
+
+  let image = require('../../assets/backgrounds/green.jpg')
 
   const componentDidMountAudio = async () => {
     Audio.setAudioModeAsync({
@@ -135,7 +138,10 @@ export default function Shapes({ navigation }) {
   }
 
   return (
+   
+    
     <View style={styles.container}>
+    <ImageBackground source={image} style={styles.image}>
       <View style={styles.questionContainer}>
         <View style={styles.rowContainer}>
           <Animatable.View
@@ -207,21 +213,37 @@ export default function Shapes({ navigation }) {
           <Text>Try Again!</Text>
         </View>
       ) : null}
+       </ImageBackground>
     </View>
+   
+   
   );
 }
 let color1 = colors[rotation];
 let color2 = colors[rotation + 1];
 
 const styles = StyleSheet.create({
+ 
   container: {
     //take up all available space by setting it to flex :1
     flex: 1,
     width: "100%",
     height: "100%",
-    paddingTop: 45,
-    backgroundColor: "#FFBF80",
+    // paddingTop: 15,
+    backgroundColor: "#4d0000",
+    borderStyle: "solid",
+    borderColor: 'black',
+
+
   },
+
+  image: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "center"
+  },
+  
+
   questionContainer: {
     flexDirection: "row",
     padding: 15,
@@ -245,9 +267,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     shadowColor: '#000',
-              shadowOffset: { width: 0, height: 2 },
-              shadowOpacity: 0.8,
-              shadowRadius: 2,    
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,    
     // textAlignVertical: "center",
     // textAlign: "center",
   },
@@ -263,8 +285,10 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     paddingTop: 60,
+   
   },
   textInput: {
+    color: 'white',
     borderColor: "#CCCCCC",
     borderTopWidth: 1,
     borderBottomWidth: 1,
@@ -272,6 +296,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     paddingLeft: 20,
     paddingRight: 20,
+    textAlign: 'center'
   },
   submitButton: {
     borderWidth: 1,
@@ -281,6 +306,10 @@ const styles = StyleSheet.create({
     padding: 12,
     margin: 20,
     width: 250,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
   },
   submitButtonText: {
     color: "#000066",
