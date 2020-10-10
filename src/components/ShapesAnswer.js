@@ -130,6 +130,15 @@ const styles = StyleSheet.create({
   //   width: "80%",
   //   height: "80%",
   // },
+  image: {
+    flex: 1,
+    resizeMode: 'cover',
+    justifyContent: 'center',
+    width: '100%',
+    height: '100%',
+    
+    
+  },
   container: {
     //take up all available space by setting it to flex :1
     flex: 1,
@@ -143,12 +152,15 @@ const styles = StyleSheet.create({
     // flexWrap: "wrap",
     // justifyContent: "space-evenly", //center the question block
   },
-  image: {
-    flex: 1,
-    resizeMode: 'cover',
-    justifyContent: 'center',
+  // image: {
+  //   flex: 1,
+  //   resizeMode: 'cover',
+  //   justifyContent: 'center',
+  //   width: '100%',
+  //   height: '100%',
     
-  },
+    
+  // },
 
   questionContainer: {
     flexDirection: "row",
@@ -158,11 +170,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
-  image: {
-    flex: 1,
-    resizeMode: 'cover',
-    justifyContent: 'center'
-  },
+  
 
   rowContainer: {
     width: 50,
