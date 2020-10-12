@@ -12,7 +12,7 @@ export default function Subjects({ navigation }) {
       <Button title="History" />
       <Button
         title="User Progress"
-        onPress={() => navigation.navigate("UserStats")}
+        onPress={() => navigation.navigate("UserStats_PY")}
       />
     </View>
   );

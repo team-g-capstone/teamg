@@ -9,7 +9,8 @@ import Shapes from "../components/Shapes";
 import ShapesAnswer from "../components/ShapesAnswer";
 import Subjects from "../components/Subjects";
 import WelcomePage from "../components/WelcomePage";
-import UserStats from "../components/UserStats";
+import UserStats_PT from "../components/UserStats_PT";
+import UserStats_Student from "../components/UserStats_Student";
 
 import AudioButton from "../components/AudioButton";
 
@@ -39,8 +40,13 @@ const Navigation = () => (
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="UserStats"
-        component={UserStats}
+        name="UserStats_PT"
+        component={UserStats_PT}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="UserStats_Student"
+        component={UserStats_Student}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

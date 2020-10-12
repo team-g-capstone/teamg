@@ -14,8 +14,13 @@ export default function Welcome({ navigation }) {
         onPress={() => navigation.navigate("Subjects")}
       />
       <Button
-        title="User Progress"
-        onPress={() => navigation.navigate("UserStats")}
+        title="User Progress for Parents/Teachers"
+        onPress={() => navigation.navigate("UserStats_PT")}
+        style={styles.progressButton}
+      />
+      <Button
+        title="User Progress for Students"
+        onPress={() => navigation.navigate("UserStats_Student")}
         style={styles.progressButton}
       />
     </View>
