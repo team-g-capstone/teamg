@@ -14,13 +14,13 @@ export default function ColorSortGame({ navigation }) {
     <View style={styles.mainContainer}>
       <ImageBackground source={image} style={styles.image}>
           <View style={styles.dropZoneContainer}>
-          <View style={{...styles.dropZone, backgroundColor: 'red'}}>
+          <View style={{...styles.dropZone, backgroundColor: 'rgb(255, 0, 0)'}}>
             <Text style={styles.text}>Drop Here if Red!</Text>
         </View>
-        <View style={{...styles.dropZone, backgroundColor: 'blue'}}>
+        <View style={{...styles.dropZone, backgroundColor: 'rgb(0, 0, 255)'}}>
             <Text style={styles.text}>Drop Here if Blue!</Text>
         </View>
-        <View style={{...styles.dropZone, backgroundColor: 'green'}}>
+        <View style={{...styles.dropZone, backgroundColor: 'rgb(0, 255, 0)'}}>
             <Text style={styles.text}>Drop Here if Green!</Text>
         </View>
           </View>
@@ -65,6 +65,10 @@ const styles = StyleSheet.create({
     // textAlign: "center",
     color: "white",
     fontSize: 25,
+    shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.8,
+      shadowRadius: 2,   
     // fontWeight: "bold"
   },
   row: {
@@ -77,6 +81,10 @@ const styles = StyleSheet.create({
       height: 80,
       borderStyle: 'solid',
       borderWidth: 5, 
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.8,
+      shadowRadius: 2,   
   },
 
   image: {

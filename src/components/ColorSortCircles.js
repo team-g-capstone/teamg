@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import X, {View, Animated, PanResponder} from 'react-native'
-import {getRandomInt, colors} from './ShapesHelperFuncs'
+import {getRandomInt, colors, componentDidMountAudio} from './ShapesHelperFuncs'
+import {Audio} from 'expo-av'
 
 
 
@@ -10,8 +11,10 @@ const ColorSortCircles= (props) => {
     const pan = useState(new Animated.ValueXY())[0]
     let [color] = useState(colors[getRandomInt(3)]);
     const opacity = useState(new Animated.Value(1))[0]
-    let showDraggable = true
-     const isDropArea = (gesture) => {
+    
+    componentDidMountAudio();
+
+    const isDropArea = (gesture) => {
          if(gesture.moveY < 50) {
              if(gesture.moveX < (width / 3)) {
                  return 'rgb(255, 0, 0)'
@@ -38,17 +41,26 @@ const ColorSortCircles= (props) => {
             onPanResponderMove: Animated.event([null, {
                 dx: pan.x, dy: pan.y
             }], {useNativeDriver: false}),
-            onPanResponderRelease: (e, gesture) => {
+            onPanResponderRelease: async (e, gesture) => {
                 const colorOfDrop = isDropArea(gesture)
               if(colorOfDrop) {
                  if(colorOfDrop === color) {
+                    let sound = new Audio.Sound();
+                    const status = {
+                      shouldPlay: false,
+                    };
+              
+                    await sound.loadAsync(
+                      require("../../assets/correctsort.mp3"),
+                      status,
+                      false
+                    );
+                    await sound.playAsync();
                     Animated.timing(opacity, {
                         toValue: 0, 
                         duration: 1000, 
                         useNativeDriver: false,
                     }).start(() => {
-                      console.log(opacity)
-                      showDraggable = false
                      
                     })
                     pan.flattenOffset()
@@ -88,6 +100,10 @@ const ColorSortCircles= (props) => {
                             borderRadius: 100/2,
                             backgroundColor: color,
                             opacity: opacity,
+                            shadowColor: '#000',
+                            shadowOffset: { width: 0, height: 2 },
+                            shadowOpacity: 0.8,
+                            shadowRadius: 2,   
                         },
                             
                             pan.getLayout()
