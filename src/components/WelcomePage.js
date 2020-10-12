@@ -13,6 +13,11 @@ export default function Welcome({ navigation }) {
         title="Go To Subjects"
         onPress={() => navigation.navigate("Subjects")}
       />
+      <Button
+        title="User Progress"
+        onPress={() => navigation.navigate("UserStats")}
+        style={styles.progressButton}
+      />
     </View>
   );
 }
@@ -23,5 +28,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+  },
+  progressButton: {
+    alignSelf: "flex-end",
   },
 });
