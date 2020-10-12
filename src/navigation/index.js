@@ -8,6 +8,7 @@ import Shapes from "../components/Shapes";
 import ShapesAnswer from "../components/ShapesAnswer";
 import Subjects from "../components/Subjects";
 import WelcomePage from "../components/WelcomePage";
+import ColorSortGame from '../components/ColorSortGame';
 
 import AudioButton from "../components/AudioButton";
 
@@ -31,6 +32,11 @@ const Navigation = () => (
         component={Shapes}
         options={{ headerShown: false }}
       />
+      <Stack.Screen
+        name="ColorSortGame"
+        component={ColorSortGame}
+        options={{ headerShown: false}}
+        />
       <Stack.Screen
         name="ShapesAnswer"
         component={ShapesAnswer}

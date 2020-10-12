@@ -1,29 +1,47 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { StyleSheet, Text, View, Button, ImageBackground } from "react-native";
-import AudioButton from "./AudioButton";
+import ColorSort from './ColorSort'
 
-export default function Subjects({ navigation }) {
+export default function ColorSortGame({ navigation }) {
   let image = require('../../assets/backgrounds/blue.jpg')
+  
   return (
-    <View style={styles.container}>
+    <View style={styles.mainContainer}>
       <ImageBackground source={image} style={styles.image}>
-      {/* <Text>Choose a Subject!</Text> */}
-      <StatusBar style="auto" />
-      <Button title="Math" onPress={() => navigation.navigate("Shapes")} />
-      <Button title="Math Level 2" onPress={() => navigation.navigate("ColorSortGame")}/>
-      <Button title="History" />
+        <View style={styles.dropZone}>
+            <Text style={styles.text}>Drop Here!</Text>
+        </View>
+        <View style={styles.ballContainer}/>
+        <View style={styles.row}>
+            <ColorSort/>
+            <ColorSort/>
+            <ColorSort/>
+        </View>
+      
       </ImageBackground>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  mainContainer: {
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+  },
+
+  ballContainer: {
+      height: 100
+  },
+
+  row: {
+      flexDirection: "row"
+  },
+
+  dropZone: {
+      height: 200,
   },
 
   image: {
