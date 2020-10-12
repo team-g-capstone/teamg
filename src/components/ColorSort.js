@@ -2,13 +2,12 @@ import React, {useState} from 'react'
 import X, {View, Animated, PanResponder} from 'react-native'
 import {getRandomInt, colors} from './ShapesHelperFuncs'
 
-let colorRotation = getRandomInt(3)
-let color = colors[colorRotation]
-console.log(color)
+
+
 const ColorSort = () => {
     const pan = useState(new Animated.ValueXY())[0]
-    let [color1] = useState(colors[getRandomInt(3)]);
-    console.log(color1)
+    let [color] = useState(colors[getRandomInt(3)]);
+   
     const panResponder = useState(
         PanResponder.create({
             onMoveShouldSetPanResponder: () => true,
@@ -20,9 +19,9 @@ const ColorSort = () => {
             },
             onPanResponderMove: Animated.event([null, {
                 dx: pan.x, dy: pan.y
-            }]),
+            }], {useNativeDriver: false}),
             onPanResponderRelease: () => {
-                console.log(color)
+              
                 pan.flattenOffset()
             }
         })
@@ -37,7 +36,7 @@ const ColorSort = () => {
                             {width: 50,
                             height: 50,
                             borderRadius: 100/2,
-                            backgroundColor: color1},
+                            backgroundColor: color},
                             pan.getLayout()
                         ]}
                         {...panResponder.panHandlers}
