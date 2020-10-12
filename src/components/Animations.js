@@ -51,7 +51,7 @@ export default function Shapes2Answer(props) {
     return (
       <View>
           {rotation === 0 ? (<LottieView
-          style={styles.animation}
+          style={{...styles.animation, marginVertical: "-17%",}}
           source={require(`../../assets/balloonDropping.json`)}
           loop
           autoPlay
@@ -61,17 +61,17 @@ export default function Shapes2Answer(props) {
             loop
             autoPlay
           /> : (rotation === 2 ? <LottieView
-            style={styles.animation}
+            style={{...styles.animation, marginVertical: "-23%", marginRight: '-10%'}}
             source={require(`../../assets/guitarist.json`)}
             loop
             autoPlay
           /> : (rotation == 3 ? (<LottieView
-            style={styles.animation}
+            style={{...styles.animation, marginVertical: "-37%",}}
             source={require(`../../assets/correctanswerresponse.json`)}
             loop
             autoPlay
           />) : (<LottieView
-            style={styles.animation}
+            style={{...styles.animation, marginVertical: "-15%", marginBottom: '-12%'}}
             source={require(`../../assets/birthday-party.json`)}
             loop
             autoPlay
@@ -83,11 +83,13 @@ export default function Shapes2Answer(props) {
 
 const styles = StyleSheet.create({
     animation: {
-        marginLeft: "3%",
-        marginTop: "-10%",
-        marginRight: "-100%",
+        flex: 3, 
+        justifyContent: 'flex-end',
+        marginLeft: "40%",
+        // marginTop: "-10%",
+        // marginRight: "-50%",
         marginVertical: "-17%",
-        marginHorizontal: "-100%",
+        // marginHorizontal: "-100%",
         width: "100%",
         height: "100%",
         padding: "5%",
