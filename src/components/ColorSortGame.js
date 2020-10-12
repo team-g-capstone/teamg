@@ -1,7 +1,11 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet, Text, View, Button, ImageBackground } from "react-native";
-import ColorSort from './ColorSort'
+import { StyleSheet, Text, View, Button, ImageBackground, Dimensions} from "react-native";
+import ColorSortCircles from './ColorSortCircles'
+
+let {height, width} = Dimensions.get('window')
+console.log(height, width, 'HEIGHT')
+height > width ? width = height : width = width
 
 export default function ColorSortGame({ navigation }) {
   let image = require('../../assets/backgrounds/blue.jpg')
@@ -22,13 +26,13 @@ export default function ColorSortGame({ navigation }) {
           </View>
         <View style={styles.ballContainer}/>
         <View style={styles.row}>
-            <ColorSort/>
-            <ColorSort/>
-            <ColorSort/>
-            <ColorSort/>
-            <ColorSort/>
-            <ColorSort/>
-            <ColorSort/>
+            <ColorSortCircles width={width}/>
+            <ColorSortCircles width={width}/>
+            <ColorSortCircles width={width}/>
+            <ColorSortCircles width={width}/>
+            <ColorSortCircles width={width}/>
+            <ColorSortCircles width={width}/>
+           <ColorSortCircles width={width}/>
         </View>
       
       </ImageBackground>
