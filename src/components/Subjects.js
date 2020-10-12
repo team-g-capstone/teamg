@@ -12,6 +12,10 @@ export default function Subjects({ navigation }) {
       <StatusBar style="auto" />
       <Button title="Math" onPress={() => navigation.navigate("Shapes")} />
       <Button title="History" />
+      <Button
+        title="User Progress"
+        onPress={() => navigation.navigate("UserStats_PY")}
+      />
       </ImageBackground>
     </View>
   );

@@ -15,6 +15,16 @@ export default function Welcome({ navigation }) {
         title="Go To Subjects"
         onPress={() => navigation.navigate("Subjects")}
       />
+      <Button
+        title="User Progress for Parents/Teachers"
+        onPress={() => navigation.navigate("UserStats_PT")}
+        style={styles.progressButton}
+      />
+      <Button
+        title="User Progress for Students"
+        onPress={() => navigation.navigate("UserStats_Student")}
+        style={styles.progressButton}
+      />
       </ImageBackground>
     </View>
   );
@@ -28,6 +38,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 
+  progressButton: {
+    alignSelf: "flex-end",
+  },
   image: {
     flex: 1, 
     width: '100%',
