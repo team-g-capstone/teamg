@@ -30,7 +30,7 @@ export default function Shapes2Answer(props) {
       props.navigation.navigate("Shapes");
     }
     if (numQuestions === 10) {
-      props.navigation.navigate("WelcomePage");
+      props.navigation.navigate("ColorSortGame");
     }
   };
 
