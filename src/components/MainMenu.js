@@ -22,8 +22,9 @@ import { useNavigation } from "@react-navigation/native";
 export default function MainMenu(props) {
   const navigation = useNavigation();
   const userUID = props.route.params.userUID;
+  console.log("userUID from MainMenu", userUID)
   let image = require("../../assets/backgrounds/orange.jpg");
-  let currentUserUID = firebase.auth().currentUser.uid;
+
 
   const [value, loading, error] = useDocument(
     firebase.firestore().collection("users").doc(userUID)
@@ -45,6 +46,7 @@ export default function MainMenu(props) {
     let mathScores = value.data().mathScores;
     let userType = value.data().userType;
     let firstName = value.data().firstName;
+
     return (
       <View style={styles.container}>
         <ImageBackground source={image} style={styles.image}>
@@ -63,7 +65,7 @@ export default function MainMenu(props) {
           {userType !== "student" ? (
             <Button
               title="User Progress for Parents/Teachers"
-              onPress={() => navigation.navigate("UserStats_PT")}
+              onPress={() => navigation.navigate("UserStats_PT",{userUID})}
               style={styles.progressButton}
             />
           ) : (
@@ -73,11 +75,7 @@ export default function MainMenu(props) {
                 title="User Progress for Student"
                 onPress={() =>
                   navigation.navigate("UserStats_Student", {
-                    mathScores: mathScores,
-                    userUID:userUID,
-                    firstName: firstName,
-                  })
-                }
+                    mathScores, userUID, firstName})}
                 style={styles.progressButton}
               />
             </>

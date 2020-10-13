@@ -14,7 +14,7 @@ export default function SignIn({ navigation }) {
         .signInWithEmailAndPassword(email, password);
       //DONT DELETE THIS YET
       // console.log("User ID from Sign IN ", user.user.uid);
-      navigation.navigate("GameMenu");
+      navigation.navigate("MainMenu");
     } catch (err) {
       Alert.alert("There is something wrong!", err.message);
     }

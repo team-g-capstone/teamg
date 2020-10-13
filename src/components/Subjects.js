@@ -7,6 +7,7 @@ import AudioButton from "./AudioButton";
 export default function Subjects(props) {
   const navigation = useNavigation();
   const userUID = props.route.params.userUID;
+  console.log("UID from subject", userUID)
   let image = require("../../assets/backgrounds/blue.jpg");
   return (
     <View style={styles.container}>

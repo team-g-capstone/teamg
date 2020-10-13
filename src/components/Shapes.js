@@ -29,6 +29,7 @@ export default function Shapes(props) {
   const [checkAns, setCheckAns] = useState(true);
   const [numQuestions, setNumQuestions] = useState(1);
   const userUID = props.route.params.userUID;
+  console.log("UID from Shapes.js", userUID)
 
   let shape = shapes[rotation];
 
@@ -69,7 +70,7 @@ export default function Shapes(props) {
       Alert.alert("SORRY", "Please click the button to try again", [
         {
 
-          onPress: () => navigation.navigate("Shapes"),
+          onPress: () => navigation.navigate("Shapes",{userUID}),
         },
       ]);
       setCheckAns(false);

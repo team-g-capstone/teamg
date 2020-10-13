@@ -35,11 +35,12 @@ export default function Shapes2Answer(props) {
 
   const handlePress = () => {
     if (numQuestions < 10) {
-      props.navigation.navigate("Shapes");
+      props.navigation.navigate("Shapes",{userUID});
     }
     if (numQuestions === 10) {
+
+      props.navigation.navigate("ColorSortGame", {userUID});
       updateMathScores();
-      props.navigation.navigate("ColorSortGame");
     }
   };
 
