@@ -47,13 +47,30 @@ const lvlsCompletedData = {
 };
 
 export default function testingStudentDashboard(props) {
+  const firstName = props.route.params.firstName;
   const userUID = props.route.params.userUID;
-  const updateUser= async()=>{
-  let userDocument = await firebase.firestore().collection('users').doc(userUID).get();
-   userDocument.ref.update({
-     lastName:"Cheung"
-   })
-}
+  // const updateUser= async()=>{
+  // let userDocument = await firebase.firestore().collection('users').doc(userUID).get();
+  //  userDocument.ref.update({
+  //    lastName:"Cheung"
+  //  })
+  // }
+
+  // const updateMathLevels= async()=>{
+  //   let userDocument = await firebase.firestore().collection('users').doc(userUID).get();
+  //    userDocument.ref.update({
+  //      mathLevels:{
+  //       '0':false
+  //     }
+  //    })
+  //   }
+
+  const updateMathScores= async()=>{
+    let userDocument = await firebase.firestore().collection('users').doc(userUID).get();
+     userDocument.ref.update({
+       mathScores:[true,true,true, false, false, false, false, false, false, false ]
+     })
+    }
 
   //S1: const navigation , need to import
   const navigation = useNavigation();
@@ -81,7 +98,7 @@ export default function testingStudentDashboard(props) {
   return (
     <View style={styles.container}>
       <View style={styles.person}>
-        <Text style={styles.text}>Name: </Text>
+        <Text style={styles.text}>Name:{firstName} </Text>
         {selectedImage !== null ? (
           <View style={styles.imgContainer}>
             <Image
@@ -162,7 +179,7 @@ export default function testingStudentDashboard(props) {
             }
           })}
         </View>
-        <Button title="updateUser" onPress={()=>updateUser()}/>
+        <Button title="updateUser" onPress={()=>updateMathScores()}/>
       </View>
     </View>
   );

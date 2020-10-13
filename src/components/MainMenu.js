@@ -19,7 +19,7 @@ import {
 } from "react-firebase-hooks/firestore";
 import { useNavigation } from "@react-navigation/native";
 
-export default function GameMenu(props) {
+export default function MainMenu(props) {
   const navigation = useNavigation();
   const userUID = props.route.params.userUID;
   let image = require("../../assets/backgrounds/orange.jpg");
@@ -44,13 +44,14 @@ export default function GameMenu(props) {
   } else if (value && value.data()) {
     let mathScores = value.data().mathScores;
     let userType = value.data().userType;
+    let firstName = value.data().firstName;
     return (
       <View style={styles.container}>
         <ImageBackground source={image} style={styles.image}>
           <Text style={styles.headerText}>
-            Hello {userType}
+            Main Menu: Hello {userType}
             {` `}
-            {value.data().firstName} ! Your Game Menu!
+            {firstName} !
           </Text>
           <Text style={styles.signUpText}>Collect some stickers</Text>
 
@@ -69,11 +70,12 @@ export default function GameMenu(props) {
             <>
               <Text style={styles.signUpText}>View my stickers</Text>
               <Button
-                title="Testing Student Dashboard"
+                title="User Progress for Student"
                 onPress={() =>
-                  navigation.navigate("testingStudentDashboard", {
+                  navigation.navigate("UserStats_Student", {
                     mathScores: mathScores,
-                    userUID:userUID
+                    userUID:userUID,
+                    firstName: firstName,
                   })
                 }
                 style={styles.progressButton}
