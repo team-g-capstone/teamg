@@ -11,7 +11,7 @@ import Subjects from "../components/Subjects";
 import WelcomePage from "../components/WelcomePage";
 import MainMenu from "../components/MainMenu";
 import ColorSortGame from '../components/ColorSortGame';
-import GameMenu from "../components/GameMenu";
+
 import UserStats_PT from "../components/UserStats_PT";
 import UserStats_Student from "../components/UserStats_Student";
 import SignUp from "../components/SignUp";

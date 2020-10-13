@@ -45,14 +45,9 @@
     "react-native-web": "~0.13.12",
     "react-redux": "^7.2.1",
     "redux": "^4.0.5",
-<<<<<<< HEAD
-    "rnal": "^0.2.1",
-    "undefined": "react-native-firebase/firestore"
-=======
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
     "rnal": "^0.2.1"
->>>>>>> 35ed45c9a6d26cd02d3cb191e960946dce91b6e3
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",
