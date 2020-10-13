@@ -66,7 +66,7 @@ export default function Shapes({ navigation }) {
       
       Alert.alert("SORRY", "Please click the button to try again", [
         {
-          text: "Try again",
+         
           onPress: () => navigation.navigate("Shapes"),
         },
       ]);
@@ -164,7 +164,6 @@ export default function Shapes({ navigation }) {
             loop
             autoPlay
           />
-          <Text>Try Again!</Text>
         </View>
       ) : null}
        </ImageBackground>

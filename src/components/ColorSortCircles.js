@@ -7,7 +7,6 @@ import {Audio} from 'expo-av'
 
 const ColorSortCircles= (props) => {
     const width = props.width
-    console.log(width)
     const pan = useState(new Animated.ValueXY())[0]
     let [color] = useState(colors[getRandomInt(3)]);
     const opacity = useState(new Animated.Value(1))[0]

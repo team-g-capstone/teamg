@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, Button, ImageBackground, Dimensions} from "reac
 import ColorSortCircles from './ColorSortCircles'
 
 let {height, width} = Dimensions.get('window')
-console.log(height, width, 'HEIGHT')
+
 height > width ? width = height : width = width
 
 export default function ColorSortGame({ navigation }) {

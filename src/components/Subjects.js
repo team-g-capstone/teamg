@@ -4,15 +4,19 @@ import { StyleSheet, Text, View, Button, ImageBackground } from "react-native";
 import AudioButton from "./AudioButton";
 
 export default function Subjects({ navigation }) {
-  let image = require('../../assets/backgrounds/blue.jpg')
+  let image = require("../../assets/backgrounds/blue.jpg");
   return (
     <View style={styles.container}>
       <ImageBackground source={image} style={styles.image}>
+
       {/* <Text>Choose a Subject!</Text> */}
       <StatusBar style="auto" />
       <Button title="Math" onPress={() => navigation.navigate("Shapes")} />
       <Button title="Math Level 2" onPress={() => navigation.navigate("ColorSortGame")}/>
-      <Button title="History" />
+        <Button
+          title="User Progress"
+          onPress={() => navigation.navigate("UserStats_PT")}
+        />
       </ImageBackground>
     </View>
   );
@@ -27,10 +31,10 @@ const styles = StyleSheet.create({
   },
 
   image: {
-    flex: 1, 
-    resizeMode: 'cover',
-    justifyContent: 'center',
-    height: '100%',
-    width: "100%"
-  }
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "center",
+    height: "100%",
+    width: "100%",
+  },
 });
