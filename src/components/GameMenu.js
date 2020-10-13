@@ -42,11 +42,15 @@ export default function GameMenu(props) {
   } else if (loading) {
     return <ActivityIndicator size="large" />;
   } else if (value && value.data()) {
+    let mathScores = value.data().mathScores;
+    let userType = value.data().userType;
     return (
       <View style={styles.container}>
         <ImageBackground source={image} style={styles.image}>
           <Text style={styles.headerText}>
-            {value.data().firstName}! Welcome to Game Menu!
+            Hello {userType}
+            {` `}
+            {value.data().firstName} ! Your Game Menu!
           </Text>
           <Text style={styles.signUpText}>Collect some stickers</Text>
 
@@ -55,17 +59,26 @@ export default function GameMenu(props) {
             onPress={() => navigation.navigate("Subjects")}
           />
 
-          <Button
-            title="User Progress for Parents/Teachers"
-            onPress={() => navigation.navigate("UserStats_PT")}
-            style={styles.progressButton}
-          />
-          <Text style={styles.signUpText}>View my stickers</Text>
-          <Button
-            title="User Progress for Students"
-            onPress={() => navigation.navigate("UserStats_Student")}
-            style={styles.progressButton}
-          />
+          {userType !== "student" ? (
+            <Button
+              title="User Progress for Parents/Teachers"
+              onPress={() => navigation.navigate("UserStats_PT")}
+              style={styles.progressButton}
+            />
+          ) : (
+            <>
+              <Text style={styles.signUpText}>View my stickers</Text>
+              <Button
+                title="Testing Student Dashboard"
+                onPress={() =>
+                  navigation.navigate("testingStudentDashboard", {
+                    mathScores: mathScores,
+                  })
+                }
+                style={styles.progressButton}
+              />
+            </>
+          )}
           <TouchableOpacity style={styles.button} onPress={handlePress}>
             <Text style={styles.buttonText}>Log Out</Text>
           </TouchableOpacity>

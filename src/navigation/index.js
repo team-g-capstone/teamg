@@ -19,6 +19,7 @@ import LoadingScreen from "../components/LoadingScreen";
 //Firebase
 import * as firebase from "firebase";
 import apiKeys from "../../config/keys";
+import testingStudentDashboard from "../components/testingStudentDashboard";
 const Stack = createStackNavigator();
 
 if (!firebase.apps.length) {
@@ -75,6 +76,11 @@ const Navigation = () => (
       <Stack.Screen
         name="UserStats_Student"
         component={UserStats_Student}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="testingStudentDashboard"
+        component={testingStudentDashboard}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

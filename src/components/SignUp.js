@@ -24,12 +24,26 @@ export default function SignUp({ navigation }) {
 
       //Setting the user info to the firestone database
       const db = firebase.firestore();
-      db.collection("users").doc(currentUser.uid).set({
-        email: currentUser.email,
-        lastName: lastName,
-        firstName: firstName,
-        userType: userType,
-      });
+      db.collection("users")
+        .doc(currentUser.uid)
+        .set({
+          email: currentUser.email,
+          lastName: lastName,
+          firstName: firstName,
+          userType: userType,
+          mathScores: [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+          ],
+        });
 
       navigation.navigate("GameMenu", { userUID: currentUser.uid });
     } catch (err) {
