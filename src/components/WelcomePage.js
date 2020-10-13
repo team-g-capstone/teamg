@@ -31,7 +31,7 @@ export default function Welcome({ navigation }) {
           <Text style={styles.buttonText}>Sign In</Text>
         </TouchableOpacity>
 
-
+        {/* <Text>Welcome!!</Text> */}
 
         <StatusBar style="auto" />
         <Button
@@ -39,7 +39,9 @@ export default function Welcome({ navigation }) {
           onPress={() => navigation.navigate("Subjects")}
         />
         <Button
+
           title="Parents/Teachers Dashboard"
+
           onPress={() => navigation.navigate("UserStats_PT")}
           style={styles.progressButton}
         />

@@ -8,9 +8,11 @@ export default function Subjects({ navigation }) {
   return (
     <View style={styles.container}>
       <ImageBackground source={image} style={styles.image}>
-        <StatusBar style="auto" />
-        <Button title="Math" onPress={() => navigation.navigate("Shapes")} />
-        <Button title="History" />
+
+      {/* <Text>Choose a Subject!</Text> */}
+      <StatusBar style="auto" />
+      <Button title="Math" onPress={() => navigation.navigate("Shapes")} />
+      <Button title="Math Level 2" onPress={() => navigation.navigate("ColorSortGame")}/>
         <Button
           title="User Progress"
           onPress={() => navigation.navigate("UserStats_PT")}
