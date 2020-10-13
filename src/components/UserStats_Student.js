@@ -3,13 +3,9 @@ import {
   StyleSheet,
   Text,
   View,
-  ScrollView,
   TouchableOpacity,
-  Keyboard,
-  Alert,
-  Dimensions,
-  SafeAreaView,
   Image,
+  ImageBackground,
 } from "react-native";
 import LottieView from "lottie-react-native";
 
@@ -62,91 +58,95 @@ export default function UserStats_Student({ navigation }) {
     setSelectedImage({ localUri: pickerResult.uri });
   };
 
+  let image = require("../../assets/backgrounds/green.jpg");
+
   return (
     <View style={styles.container}>
-      <View style={styles.person}>
-        <Text style={styles.text}>Name: </Text>
-        {selectedImage !== null ? (
-          <View style={styles.imgContainer}>
-            <Image
-              source={{ uri: selectedImage.localUri }}
-              style={styles.thumbnail}
-            />
+      <ImageBackground source={image} style={styles.image}>
+        <View style={styles.person}>
+          <Text style={styles.text}>Name: </Text>
+          {selectedImage !== null ? (
+            <View style={styles.imgContainer}>
+              <Image
+                source={{ uri: selectedImage.localUri }}
+                style={styles.thumbnail}
+              />
 
-            <TouchableOpacity
-              onPress={openImagePickerAsync}
-              style={styles.button}
-            >
-              <Text style={styles.buttonText}>Change photo</Text>
-            </TouchableOpacity>
-          </View>
-        ) : (
-          <View style={styles.imgContainer}>
-            <Image
-              source={require("../../assets/blank-profile-pic.jpeg")}
-              style={styles.thumbnail}
-            />
-            <TouchableOpacity
-              onPress={openImagePickerAsync}
-              style={styles.button}
-            >
-              <Text style={styles.buttonText}>Pick a photo</Text>
-            </TouchableOpacity>
-          </View>
-        )}
-      </View>
-
-      <View style={styles.progressContainer}>
-        <Text style={styles.text}>Subjects:</Text>
-        <Text style={styles.text}>Math</Text>
-        <View style={styles.animationContainer}>
-          {lvlsCompletedData.math.map((level) => {
-            if (level !== false) {
-              return (
-                <LottieView
-                  style={styles.animationStar}
-                  source={require(`../../assets/gold_star.json`)}
-                  loop
-                  autoPlay
-                />
-              );
-            } else {
-              return (
-                <LottieView
-                  style={styles.animationCircle}
-                  source={require(`../../assets/x_circle.json`)}
-                  loop
-                  autoPlay
-                />
-              );
-            }
-          })}
+              <TouchableOpacity
+                onPress={openImagePickerAsync}
+                style={styles.button}
+              >
+                <Text style={styles.buttonText}>Change photo</Text>
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <View style={styles.imgContainer}>
+              <Image
+                source={require("../../assets/blank-profile-pic.jpeg")}
+                style={styles.thumbnail}
+              />
+              <TouchableOpacity
+                onPress={openImagePickerAsync}
+                style={styles.button}
+              >
+                <Text style={styles.buttonText}>Pick a photo</Text>
+              </TouchableOpacity>
+            </View>
+          )}
         </View>
 
-        <Text style={styles.text}>History</Text>
-        <View style={styles.animationContainer}>
-          {lvlsCompletedData.history.map((level) => {
-            if (level !== false) {
-              return (
-                <LottieView
-                  style={styles.animationStar}
-                  source={require(`../../assets/gold_star.json`)}
-                  loop
-                  autoPlay
-                />
-              );
-            } else {
-              return (
-                <LottieView
-                  style={styles.animationCircle}
-                  source={require(`../../assets/x_circle.json`)}
-                  autoPlay
-                />
-              );
-            }
-          })}
+        <View style={styles.progressContainer}>
+          <Text style={styles.text}>Subjects:</Text>
+          <Text style={styles.text}>Math</Text>
+          <View style={styles.animationContainer}>
+            {lvlsCompletedData.math.map((level) => {
+              if (level !== false) {
+                return (
+                  <LottieView
+                    style={styles.animationStar}
+                    source={require(`../../assets/gold_star.json`)}
+                    loop
+                    autoPlay
+                  />
+                );
+              } else {
+                return (
+                  <LottieView
+                    style={styles.animationCircle}
+                    source={require(`../../assets/x_circle.json`)}
+                    loop
+                    autoPlay
+                  />
+                );
+              }
+            })}
+          </View>
+
+          <Text style={styles.text}>History</Text>
+          <View style={styles.animationContainer}>
+            {lvlsCompletedData.history.map((level) => {
+              if (level !== false) {
+                return (
+                  <LottieView
+                    style={styles.animationStar}
+                    source={require(`../../assets/gold_star.json`)}
+                    loop
+                    autoPlay
+                  />
+                );
+              } else {
+                return (
+                  <LottieView
+                    style={styles.animationCircle}
+                    source={require(`../../assets/x_circle.json`)}
+                    autoPlay
+                  />
+                );
+              }
+            })}
+          </View>
         </View>
-      </View>
+      </ImageBackground>
     </View>
   );
 }
@@ -158,6 +158,12 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     justifyContent: "flex-start",
   },
+  image: {
+    flex: 1,
+    height: "100%",
+    resizeMode: "cover",
+    justifyContent: "center",
+  },
   imgContainer: {
     flex: 1,
     flexDirection: "column",
@@ -168,23 +174,24 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
     marginLeft: "5%",
     marginTop: "5%",
+    position: "absolute",
   },
   thumbnail: {
-    width: 150,
-    height: 150,
+    width: "15%",
+    height: "50%",
     resizeMode: "contain",
   },
   button: {
     backgroundColor: "#7492EA",
     borderRadius: 5,
-    width: "14%",
+    width: "20%",
     height: "7%",
     alignContent: "center",
   },
   buttonText: { fontSize: 15, color: "#fff", alignSelf: "center" },
   progressContainer: {
     flex: 1,
-    marginLeft: "-55%",
+    marginLeft: "30%",
     marginTop: "5%",
     marginBottom: "18%",
     width: "40%",
@@ -198,13 +205,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     marginLeft: "15%",
-    marginTop: "2%",
-    width: "20%",
+    marginTop: "3%",
+    width: "25%",
     height: "20%",
-    //padding: "5%",
   },
   animationStar: {
-    marginLeft: "-30%",
+    marginLeft: "-20%",
     //marginTop: "-10%",
     marginRight: "-25%",
     marginVertical: "-10%",
@@ -214,11 +220,12 @@ const styles = StyleSheet.create({
     // padding: "5%",
   },
   animationCircle: {
-    marginLeft: "-30%",
+    marginLeft: "-20%",
     //marginTop: "-10%",
     marginRight: "-50%",
     marginVertical: "-10%",
     width: "120%",
     height: "120%",
+    // position: "absolute",
   },
 });
