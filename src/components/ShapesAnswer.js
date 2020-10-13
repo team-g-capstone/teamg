@@ -9,6 +9,7 @@ import {
 import { FontAwesome5 } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import * as Animatable from "react-native-animatable";
+import * as firebase from "firebase"
 
 import Animations from "./Animations";
 import styles from './ShapesAnswer.component.style.js'
@@ -19,18 +20,27 @@ const windowWidth = Dimensions.get("window").width;
 const widthConstant = windowWidth / 667;
 
 export default function Shapes2Answer(props) {
-  const {correctAns, numOne, numTwo, color1, color2, color3, colorStyle, numQuestions} = props.route.params;
- 
+  const {correctAns, numOne, numTwo, color1, color2, color3, colorStyle, numQuestions, userUID} = props.route.params;
+  console.log("from shapesAnswer, userUID", userUID)
   let {shape, rotation} = props.route.params;
-  
+
   let image = require('../../assets/backgrounds/orange.jpg')
+
+  const updateMathScores = async () => {
+    let userDocument = await firebase.firestore().collection('users').doc(userUID).get();
+    userDocument.ref.update({
+      mathScores:[true,false,false, false, false, false, false, false, false, false ]
+    })
+   }
 
   const handlePress = () => {
     if (numQuestions < 10) {
-      props.navigation.navigate("Shapes");
+      props.navigation.navigate("Shapes",{userUID});
     }
     if (numQuestions === 10) {
-      props.navigation.navigate("ColorSortGame");
+
+      props.navigation.navigate("ColorSortGame", {userUID});
+      updateMathScores();
     }
   };
 
@@ -38,9 +48,9 @@ export default function Shapes2Answer(props) {
     <View style={styles.container}>
       <ImageBackground source={image} style={styles.image}>
       <Text style={{...styles.number, marginVertical: '25%', marginLeft: '3%', textShadowColor: '#000', textShadowOffset: { width: 0.5, height: 0.5 }, textShadowRadius: 1}}>
-       
+
         Questions: {numQuestions} / 10
-        
+
       </Text>
       <View style={styles.questionContainer}>
         <View style={styles.rowContainer}>
@@ -97,7 +107,7 @@ export default function Shapes2Answer(props) {
       </View>
 
       <Animations rotation={rotation} />
-         </ImageBackground>   
+         </ImageBackground>
     </View>
   );
 }

@@ -13,6 +13,7 @@ import { AppLoading } from "expo";
 import styles from "./UserStats_Student.component.style.js";
 
 import * as ImagePicker from "expo-image-picker";
+import { useNavigation } from "@react-navigation/native";
 
 const lvlsCompletedData = {
   math: [
@@ -41,8 +42,10 @@ const lvlsCompletedData = {
   ],
 };
 
-export default function UserStats_Student({ navigation }) {
+export default function UserStats_Student(props) {
+  const navigation = useNavigation();
   const [selectedImage, setSelectedImage] = useState(null);
+  const {mathScores, firstName,userUID} = props.route.params;
 
   let openImagePickerAsync = async () => {
     let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
@@ -75,7 +78,7 @@ export default function UserStats_Student({ navigation }) {
     <View style={styles.container}>
       <ImageBackground source={image} style={styles.image}>
         <View style={styles.person}>
-          <Text style={styles.text}>Name: </Text>
+          <Text style={styles.text}>Name: {firstName} </Text>
           {selectedImage !== null ? (
             <View style={styles.imgContainer}>
               <Image
@@ -110,7 +113,7 @@ export default function UserStats_Student({ navigation }) {
           <Text style={styles.text}>Subjects:</Text>
           <Text style={styles.text}>Math</Text>
           <View style={styles.animationContainer}>
-            {lvlsCompletedData.math.map((level, index) => {
+            {mathScores.map((level, index) => {
               if (level !== false) {
                 return (
                   <LottieView

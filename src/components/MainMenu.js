@@ -19,11 +19,12 @@ import {
 } from "react-firebase-hooks/firestore";
 import { useNavigation } from "@react-navigation/native";
 
-export default function GameMenu(props) {
+export default function MainMenu(props) {
   const navigation = useNavigation();
   const userUID = props.route.params.userUID;
+  console.log("userUID from MainMenu", userUID)
   let image = require("../../assets/backgrounds/orange.jpg");
-  let currentUserUID = firebase.auth().currentUser.uid;
+
 
   const [value, loading, error] = useDocument(
     firebase.firestore().collection("users").doc(userUID)
@@ -44,37 +45,37 @@ export default function GameMenu(props) {
   } else if (value && value.data()) {
     let mathScores = value.data().mathScores;
     let userType = value.data().userType;
+    let firstName = value.data().firstName;
+
     return (
       <View style={styles.container}>
         <ImageBackground source={image} style={styles.image}>
           <Text style={styles.headerText}>
-            Hello {userType}
+            Main Menu: Hello {userType}
             {` `}
-            {value.data().firstName} ! Your Game Menu!
+            {firstName} !
           </Text>
           <Text style={styles.signUpText}>Collect some stickers</Text>
 
           <Button
             title="Go To Subjects"
-            onPress={() => navigation.navigate("Subjects")}
+            onPress={() => navigation.navigate("Subjects", {userUID})}
           />
 
           {userType !== "student" ? (
             <Button
               title="User Progress for Parents/Teachers"
-              onPress={() => navigation.navigate("UserStats_PT")}
+              onPress={() => navigation.navigate("UserStats_PT",{userUID})}
               style={styles.progressButton}
             />
           ) : (
             <>
               <Text style={styles.signUpText}>View my stickers</Text>
               <Button
-                title="Testing Student Dashboard"
+                title="User Progress for Student"
                 onPress={() =>
-                  navigation.navigate("testingStudentDashboard", {
-                    mathScores: mathScores,
-                  })
-                }
+                  navigation.navigate("UserStats_Student", {
+                    mathScores, userUID, firstName})}
                 style={styles.progressButton}
               />
             </>

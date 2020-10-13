@@ -16,17 +16,20 @@ import LottieView from "lottie-react-native";
 import { Audio } from "expo-av";
 import styles from './Shapes.component.style.js'
 import {componentDidMountAudio, colorDecider, colors, shapes, getRandomInt} from './ShapesHelperFuncs'
-
-
+import { useNavigation } from "@react-navigation/native";
 
 let rotation = 0;
 
-export default function Shapes({ navigation }) {
+export default function Shapes(props) {
+
+  const navigation = useNavigation();
   const [answer, setAnswer] = useState("");
   const [numOne, setNumOne] = useState(getRandomInt(10));
   const [numTwo, setNumTwo] = useState(getRandomInt(10));
   const [checkAns, setCheckAns] = useState(true);
   const [numQuestions, setNumQuestions] = useState(1);
+  const userUID = props.route.params.userUID;
+  console.log("UID from Shapes.js", userUID)
 
   let shape = shapes[rotation];
 
@@ -41,10 +44,10 @@ export default function Shapes({ navigation }) {
 
   const handlePress = async () => {
     let correctAns = numOne + numTwo;
-   
+
     if (Number(answer) === correctAns) {
       setNumQuestions(numQuestions + 1);
-      navigation.navigate("ShapesAnswer", {rotation, numOne, numTwo, correctAns, shape, color1, color2, color3, colorStyle, numQuestions});
+      navigation.navigate("ShapesAnswer", {rotation, numOne, numTwo, correctAns, shape, color1, color2, color3, colorStyle, numQuestions, userUID});
 
       setNumOne(getRandomInt(10));
       setNumTwo(getRandomInt(10));
@@ -63,11 +66,11 @@ export default function Shapes({ navigation }) {
         false
       );
       await sound.playAsync();
-      
+
       Alert.alert("SORRY", "Please click the button to try again", [
         {
-         
-          onPress: () => navigation.navigate("Shapes"),
+
+          onPress: () => navigation.navigate("Shapes",{userUID}),
         },
       ]);
       setCheckAns(false);
@@ -93,8 +96,8 @@ export default function Shapes({ navigation }) {
   }
 
   return (
-   
-    
+
+
     <View style={styles.container}>
     <ImageBackground source={image} style={styles.image}>
       <View style={styles.questionContainer}>
@@ -153,7 +156,7 @@ export default function Shapes({ navigation }) {
         </View>
 
         <TouchableOpacity style={styles.submitButton} onPress={handlePress}>
-     
+
           <Text style={styles.submitButtonText}>Submit</Text>
         </TouchableOpacity>
       </ScrollView>
@@ -168,8 +171,8 @@ export default function Shapes({ navigation }) {
       ) : null}
        </ImageBackground>
     </View>
-   
-   
+
+
   );
 }
 

@@ -9,8 +9,9 @@ import Shapes from "../components/Shapes";
 import ShapesAnswer from "../components/ShapesAnswer";
 import Subjects from "../components/Subjects";
 import WelcomePage from "../components/WelcomePage";
+import MainMenu from "../components/MainMenu";
 import ColorSortGame from '../components/ColorSortGame';
-import GameMenu from "../components/GameMenu";
+
 import UserStats_PT from "../components/UserStats_PT";
 import UserStats_Student from "../components/UserStats_Student";
 import SignUp from "../components/SignUp";
@@ -21,7 +22,7 @@ import LoadingScreen from "../components/LoadingScreen";
 //Firebase
 import * as firebase from "firebase";
 import apiKeys from "../../config/keys";
-import testingStudentDashboard from "../components/testingStudentDashboard";
+
 const Stack = createStackNavigator();
 
 if (!firebase.apps.length) {
@@ -51,8 +52,8 @@ const Navigation = () => (
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="GameMenu"
-        component={GameMenu}
+        name="MainMenu"
+        component={MainMenu}
         options={{ headerShown: false }}
       />
       <Stack.Screen
@@ -85,11 +86,7 @@ const Navigation = () => (
         component={UserStats_Student}
         options={{ headerShown: false }}
       />
-      <Stack.Screen
-        name="testingStudentDashboard"
-        component={testingStudentDashboard}
-        options={{ headerShown: false }}
-      />
+
     </Stack.Navigator>
   </NavigationContainer>
 );

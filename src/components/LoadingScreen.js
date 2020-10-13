@@ -9,7 +9,7 @@ export default function LoadingScreen({ navigation }) {
     (checkIfLoggedIn = () => {
       firebase.auth().onAuthStateChanged((user) => {
         if (user) {
-          navigation.navigate("GameMenu", { userUID: user.uid });
+          navigation.navigate("MainMenu", { userUID: user.uid });
         } else {
           navigation.navigate("WelcomePage");
         }

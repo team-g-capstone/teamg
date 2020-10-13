@@ -3,20 +3,30 @@ import React from "react";
 import { StyleSheet, Text, View, Button, ImageBackground, Dimensions, TouchableOpacity} from "react-native";
 import ColorSortCircles from './ColorSortCircles'
 import {connect} from 'react-redux'
-
+import * as firebase from "firebase";
 
 let {height, width} = Dimensions.get('window')
 
 height > width ? width = height : width = width
 
-const numOfCirlces = [1, 2, 3, 4, 5, 6, 7]; 
+const numOfCirlces = [1, 2, 3, 4, 5, 6, 7];
 
 function ColorSortGame(props) {
+  const userUID = props.route.params.userUID
+
+  const updateMathScores = async () => {
+    let userDocument = await firebase.firestore().collection('users').doc(userUID).get();
+    userDocument.ref.update({
+      mathScores:[true,true,false, false, false, false, false, false, false, false ]
+    })
+   }
+
    const handlePress = () => {
+     updateMathScores();
       props.navigation.navigate('Subjects')
       };
   let image = require('../../assets/backgrounds/blue.jpg')
-  
+
   return (
     <View style={styles.mainContainer}>
       <ImageBackground source={image} style={styles.image}>
@@ -47,7 +57,7 @@ function ColorSortGame(props) {
             <ColorSortCircles width={width}/>
            <ColorSortCircles width={width}/> */}
         </View>
-      
+
       </ImageBackground>
     </View>
   );
@@ -81,7 +91,7 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.8,
-      shadowRadius: 2,   
+      shadowRadius: 2,
     // fontWeight: "bold"
   },
   row: {
@@ -93,21 +103,21 @@ const styles = StyleSheet.create({
       padding: 20,
       height: 80,
       borderStyle: 'solid',
-      borderWidth: 5, 
+      borderWidth: 5,
       shadowColor: '#000',
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.8,
-      shadowRadius: 2,   
+      shadowRadius: 2,
   },
 
   image: {
-    flex: 1, 
+    flex: 1,
     resizeMode: 'cover',
     justifyContent: 'center',
     height: '100%',
     width: "100%"
   },
-  
+
   submitButton: {
     borderWidth: 1,
     borderColor: "#007BFF",
