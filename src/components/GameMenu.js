@@ -22,20 +22,6 @@ import { useNavigation } from "@react-navigation/native";
 export default function GameMenu(props) {
   const navigation = useNavigation();
   const userUID = props.route.params.userUID;
-  console.log("UID from GameMenu", props);
-  // const [currentUID, setCurrentUID] = useState("");
-
-  // useEffect(
-  //   () =>
-  //     (getUser = () => {
-  //       firebase.auth().onAuthStateChanged((user) => {
-  //         if (user) {
-  //           setCurrentUID(user.uid);
-  //         }
-  //       });
-  //     })
-  // );
-
   let image = require("../../assets/backgrounds/orange.jpg");
   let currentUserUID = firebase.auth().currentUser.uid;
 
@@ -84,6 +70,16 @@ export default function GameMenu(props) {
             <Text style={styles.buttonText}>Log Out</Text>
           </TouchableOpacity>
         </ImageBackground>
+      </View>
+    );
+  } else {
+    return (
+      <View style={styles.container}>
+        <Text>NO USER </Text>
+        <Button
+          title="homepage"
+          onPress={() => navigation.navigate("WelcomePage")}
+        />
       </View>
     );
   }

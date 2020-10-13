@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
+import { Picker } from "react-native-picker-dropdown";
 import * as firebase from "firebase";
 import "firebase/firestore";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -7,7 +8,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 export default function SignUp({ navigation }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-
+  const [userType, setUserType] = useState("student");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -27,7 +28,10 @@ export default function SignUp({ navigation }) {
         email: currentUser.email,
         lastName: lastName,
         firstName: firstName,
+        userType: userType,
       });
+
+      navigation.navigate("GameMenu", { userUID: currentUser.uid });
     } catch (err) {
       Alert.alert("There is something wrong!", err.message);
     }
@@ -40,7 +44,9 @@ export default function SignUp({ navigation }) {
     setPassword("");
     setConfirmPassword("");
   };
-
+  const handleValueChange = (type) => {
+    setUserType(type);
+  };
   const handlePressSignIn = () => {
     navigation.navigate("SignIn");
   };
@@ -48,22 +54,14 @@ export default function SignUp({ navigation }) {
   const handlePress = () => {
     if (!firstName) {
       Alert.alert("First name is required");
-    }
-
-    if (!email) {
+    } else if (!email) {
       Alert.alert("Email field is required.");
-    }
-
-    if (!password) {
+    } else if (!password) {
       Alert.alert("Password field is required.");
-    }
-
-    if (!confirmPassword) {
+    } else if (!confirmPassword) {
       setPassword("");
       Alert.alert("Confirm password field is required.");
-    }
-
-    if (password !== confirmPassword) {
+    } else if (password !== confirmPassword) {
       Alert.alert("Password does not match!");
     } else {
       registration(email, password);
@@ -74,22 +72,39 @@ export default function SignUp({ navigation }) {
 
   return (
     <View style={styles.container}>
+      <Button
+        title="Go back to home"
+        onPress={() => {
+          navigation.navigate("WelcomePage");
+        }}
+      />
       <Text style={styles.text}>Create an account </Text>
+      <Picker
+        style={styles.pickerInput}
+        enabled={false}
+        selectedValue={userType}
+        onValueChange={handleValueChange}
+      >
+        <Picker.Item label="Student" value="student" />
+        <Picker.Item label="Teacher" value="teacher" />
+        <Picker.Item label="Parents" value="parent" />
+      </Picker>
+
       <TextInput
-        style={styles.emailInput}
+        style={styles.textInput}
         placeholder="First name"
         value={firstName}
         onChangeText={(name) => setFirstName(name)}
       />
       <TextInput
-        style={styles.emailInput}
+        style={styles.textInput}
         placeholder="Last name"
         value={lastName}
         onChangeText={(name) => setLastName(name)}
       />
 
       <TextInput
-        style={styles.emailInput}
+        style={styles.textInput}
         placeholder="Enter your email"
         value={email}
         onChangeText={(email) => setEmail(email)}
@@ -98,14 +113,14 @@ export default function SignUp({ navigation }) {
       />
 
       <TextInput
-        style={styles.passwordInput}
+        style={styles.textInput}
         placeholder="Enter your password"
         value={password}
         onChangeText={(password) => setPassword(password)}
         secureTextEntry={true}
       />
       <TextInput
-        style={styles.passwordInput}
+        style={styles.textInput}
         placeholder="Retype your password to confirm"
         value={confirmPassword}
         onChangeText={(password2) => setConfirmPassword(password2)}
@@ -114,17 +129,26 @@ export default function SignUp({ navigation }) {
       <TouchableOpacity style={styles.button} onPress={handlePress}>
         <Text style={styles.buttonText}>Sign up</Text>
       </TouchableOpacity>
-      <Button
-        title="Go back to home"
-        onPress={() => {
-          navigation.navigate("WelcomePage");
-        }}
-      />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  button: {
+    width: 200,
+    padding: 5,
+    backgroundColor: "#ff9999",
+    borderWidth: 2,
+    borderColor: "#ffcccc",
+    borderRadius: 15,
+    alignSelf: "center",
+    margin: 5,
+  },
+  buttonText: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
   container: {
     height: "100%",
     width: "100%",
@@ -140,31 +164,18 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#2E6194",
   },
-  emailInput: {
+  textInput: {
     width: 250,
     borderWidth: 1,
     padding: 10,
-    margin: 5,
+    margin: "0.2%",
   },
-  passwordInput: {
+  pickerInput: {
     width: 250,
     borderWidth: 1,
     padding: 10,
-    margin: 5,
-  },
-  buttonText: {
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  button: {
-    width: 200,
-    padding: 5,
-    backgroundColor: "#ff9999",
-    borderWidth: 2,
-    borderColor: "#ffcccc",
-    borderRadius: 15,
-    alignSelf: "center",
-    margin: 5,
+    margin: "0.2%",
+    marginLeft: "34.5%",
+    alignContent: "center",
   },
 });
