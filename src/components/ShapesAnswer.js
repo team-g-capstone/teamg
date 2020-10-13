@@ -12,7 +12,12 @@ import * as Animatable from "react-native-animatable";
 import * as firebase from "firebase"
 
 import Animations from "./Animations";
-import styles from './ShapesAnswer.component.style.js'
+import styles from './ShapesAnswer.component.style.js';
+import {
+  useCollection,
+  useDocument,
+  useDocumentOnce,
+} from "react-firebase-hooks/firestore";
 
 
 const windowWidth = Dimensions.get("window").width;
@@ -21,15 +26,19 @@ const widthConstant = windowWidth / 667;
 
 export default function Shapes2Answer(props) {
   const {correctAns, numOne, numTwo, color1, color2, color3, colorStyle, numQuestions, userUID} = props.route.params;
-  console.log("from shapesAnswer, userUID", userUID)
+  const [value, loading, error] = useDocument(
+    firebase.firestore().collection("users").doc(userUID)
+  );
   let {shape, rotation} = props.route.params;
 
   let image = require('../../assets/backgrounds/orange.jpg')
 
   const updateMathScores = async () => {
+    let mathScores = value.data().mathScores;
+    let mathScoresNew = mathScores.map((score,idx)=> idx === 0? true:score);
     let userDocument = await firebase.firestore().collection('users').doc(userUID).get();
     userDocument.ref.update({
-      mathScores:[true,false,false, false, false, false, false, false, false, false ]
+      mathScores:mathScoresNew
     })
    }
 

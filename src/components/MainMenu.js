@@ -22,9 +22,8 @@ import { useNavigation } from "@react-navigation/native";
 export default function MainMenu(props) {
   const navigation = useNavigation();
   const userUID = props.route.params.userUID;
-  console.log("userUID from MainMenu", userUID)
-  let image = require("../../assets/backgrounds/orange.jpg");
 
+  let image = require("../../assets/backgrounds/orange.jpg");
 
   const [value, loading, error] = useDocument(
     firebase.firestore().collection("users").doc(userUID)

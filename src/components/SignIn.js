@@ -12,8 +12,7 @@ export default function SignIn({ navigation }) {
       const user = await firebase
         .auth()
         .signInWithEmailAndPassword(email, password);
-      //DONT DELETE THIS YET
-      // console.log("User ID from Sign IN ", user.user.uid);
+
       navigation.navigate("MainMenu");
     } catch (err) {
       Alert.alert("There is something wrong!", err.message);
