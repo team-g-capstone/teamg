@@ -57,7 +57,7 @@ export default function MainMenu(props) {
 
           <Button
             title="Go To Subjects"
-            onPress={() => navigation.navigate("Subjects")}
+            onPress={() => navigation.navigate("Subjects", {userUID})}
           />
 
           {userType !== "student" ? (
