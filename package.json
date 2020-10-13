@@ -14,6 +14,7 @@
     "@expo-google-fonts/inter": "^0.1.0",
     "@react-native-community/masked-view": "0.1.10",
     "@react-native-community/picker": "1.6.6",
+    "@react-native-firebase/firestore": "^7.8.6",
     "@react-navigation/native": "^5.7.6",
     "@react-navigation/stack": "^5.9.3",
     "animate.css": "^4.1.1",
@@ -44,7 +45,8 @@
     "react-native-web": "~0.13.12",
     "react-redux": "^7.2.1",
     "redux": "^4.0.5",
-    "rnal": "^0.2.1"
+    "rnal": "^0.2.1",
+    "undefined": "react-native-firebase/firestore"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",

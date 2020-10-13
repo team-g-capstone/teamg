@@ -73,6 +73,7 @@ export default function GameMenu(props) {
                 onPress={() =>
                   navigation.navigate("testingStudentDashboard", {
                     mathScores: mathScores,
+                    userUID:userUID
                   })
                 }
                 style={styles.progressButton}

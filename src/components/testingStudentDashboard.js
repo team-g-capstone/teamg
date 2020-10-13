@@ -10,10 +10,14 @@ import {
   Dimensions,
   SafeAreaView,
   Image,
+  Button
 } from "react-native";
 import LottieView from "lottie-react-native";
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
+import * as firebase from 'firebase';
+import { diffClamp } from "react-native-reanimated";
+
 
 const lvlsCompletedData = {
   math: [
@@ -43,6 +47,14 @@ const lvlsCompletedData = {
 };
 
 export default function testingStudentDashboard(props) {
+  const userUID = props.route.params.userUID;
+  const updateUser= async()=>{
+  let userDocument = await firebase.firestore().collection('users').doc(userUID).get();
+   userDocument.ref.update({
+     lastName:"Cheung"
+   })
+}
+
   //S1: const navigation , need to import
   const navigation = useNavigation();
   const [selectedImage, setSelectedImage] = useState(null);
@@ -150,6 +162,7 @@ export default function testingStudentDashboard(props) {
             }
           })}
         </View>
+        <Button title="updateUser" onPress={()=>updateUser()}/>
       </View>
     </View>
   );
