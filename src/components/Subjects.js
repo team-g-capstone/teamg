@@ -8,7 +8,6 @@ export default function Subjects({ navigation }) {
   return (
     <View style={styles.container}>
       <ImageBackground source={image} style={styles.image}>
-        {/* <Text>Choose a Subject!</Text> */}
         <StatusBar style="auto" />
         <Button title="Math" onPress={() => navigation.navigate("Shapes")} />
         <Button title="History" />

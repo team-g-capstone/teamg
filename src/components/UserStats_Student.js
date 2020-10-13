@@ -8,6 +8,9 @@ import {
   ImageBackground,
 } from "react-native";
 import LottieView from "lottie-react-native";
+import { useFonts, Chilanka_400Regular } from "@expo-google-fonts/chilanka";
+import { AppLoading } from "expo";
+import styles from "./UserStats_Student.component.style.js";
 
 import * as ImagePicker from "expo-image-picker";
 
@@ -59,6 +62,14 @@ export default function UserStats_Student({ navigation }) {
   };
 
   let image = require("../../assets/backgrounds/green.jpg");
+  //Change font
+  let [fontsLoaded] = useFonts({
+    Chilanka_400Regular,
+  });
+
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
 
   return (
     <View style={styles.container}>
@@ -99,7 +110,7 @@ export default function UserStats_Student({ navigation }) {
           <Text style={styles.text}>Subjects:</Text>
           <Text style={styles.text}>Math</Text>
           <View style={styles.animationContainer}>
-            {lvlsCompletedData.math.map((level) => {
+            {lvlsCompletedData.math.map((level, index) => {
               if (level !== false) {
                 return (
                   <LottieView
@@ -107,6 +118,7 @@ export default function UserStats_Student({ navigation }) {
                     source={require(`../../assets/gold_star.json`)}
                     loop
                     autoPlay
+                    key={index}
                   />
                 );
               } else {
@@ -116,6 +128,7 @@ export default function UserStats_Student({ navigation }) {
                     source={require(`../../assets/x_circle.json`)}
                     loop
                     autoPlay
+                    key={index}
                   />
                 );
               }
@@ -150,82 +163,3 @@ export default function UserStats_Student({ navigation }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: "row",
-    backgroundColor: "white",
-    justifyContent: "flex-start",
-  },
-  image: {
-    flex: 1,
-    height: "100%",
-    resizeMode: "cover",
-    justifyContent: "center",
-  },
-  imgContainer: {
-    flex: 1,
-    flexDirection: "column",
-  },
-  person: {
-    width: "80%",
-    height: "80%",
-    resizeMode: "contain",
-    marginLeft: "5%",
-    marginTop: "5%",
-    position: "absolute",
-  },
-  thumbnail: {
-    width: "15%",
-    height: "50%",
-    resizeMode: "contain",
-  },
-  button: {
-    backgroundColor: "#7492EA",
-    borderRadius: 5,
-    width: "20%",
-    height: "7%",
-    alignContent: "center",
-  },
-  buttonText: { fontSize: 15, color: "#fff", alignSelf: "center" },
-  progressContainer: {
-    flex: 1,
-    marginLeft: "30%",
-    marginTop: "5%",
-    marginBottom: "18%",
-    width: "40%",
-  },
-  graph: {
-    flex: 1,
-    justifyContent: "center",
-  },
-  animationContainer: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginLeft: "15%",
-    marginTop: "3%",
-    width: "25%",
-    height: "20%",
-  },
-  animationStar: {
-    marginLeft: "-20%",
-    //marginTop: "-10%",
-    marginRight: "-25%",
-    marginVertical: "-10%",
-    //marginHorizontal: "100%",
-    width: "100%",
-    height: "100%",
-    // padding: "5%",
-  },
-  animationCircle: {
-    marginLeft: "-20%",
-    //marginTop: "-10%",
-    marginRight: "-50%",
-    marginVertical: "-10%",
-    width: "120%",
-    height: "120%",
-    // position: "absolute",
-  },
-});

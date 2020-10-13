@@ -10,7 +10,11 @@ import {
 } from "react-native";
 import { StackedBarChart } from "react-native-chart-kit";
 
+import { useFonts, Chilanka_400Regular } from "@expo-google-fonts/chilanka";
+import { AppLoading } from "expo";
 import * as ImagePicker from "expo-image-picker";
+
+import styles from "./UserStats_PT.component.style.js";
 
 const dummyData = {
   name: "DJ",
@@ -87,6 +91,16 @@ export default function UserStats_PT({ navigation }) {
 
   let image = require("../../assets/backgrounds/green.jpg");
 
+  //Change font
+  let [fontsLoaded] = useFonts({
+    Chilanka_400Regular,
+  });
+
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
+  console.log(selectedGraph);
+
   return (
     <View style={styles.container}>
       <ImageBackground source={image} style={styles.image}>
@@ -158,70 +172,32 @@ export default function UserStats_PT({ navigation }) {
               />
             </View>
           )}
-          {/*
-          {selectedGraph ? (
+
+          {/* if (selectedGraph === "math") {
+            return (
             <View style={styles.graph}>
-              <StackedBarChart
-                data={dataHistory}
-                width={screenWidth}
-                height={200}
-                chartConfig={chartConfig}
-              />
-            </View>
-          ) : null} */}
+            <StackedBarChart
+              data={dataMath}
+              width={screenWidth}
+              height={200}
+              chartConfig={chartConfig}
+            />
+          </View>)
+          } else if (selectedGraph === "history"){
+            return (
+            <View style={styles.graph}>
+            <StackedBarChart
+              data={dataHistory}
+              width={screenWidth}
+              height={200}
+              chartConfig={chartConfig}
+            />
+          </View>)
+          } else {
+            return null
+          } */}
         </View>
       </ImageBackground>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: "row",
-    backgroundColor: "white",
-    justifyContent: "flex-start",
-  },
-  image: {
-    flex: 1,
-    height: "100%",
-    resizeMode: "cover",
-    justifyContent: "center",
-  },
-  imgContainer: {
-    flex: 1,
-    flexDirection: "column",
-  },
-  person: {
-    width: "80%",
-    height: "80%",
-    resizeMode: "contain",
-    marginLeft: "5%",
-    marginTop: "5%",
-    position: "absolute",
-  },
-  thumbnail: {
-    width: "15%",
-    height: "50%",
-    resizeMode: "contain",
-  },
-  button: {
-    backgroundColor: "#7492EA",
-    borderRadius: 5,
-    width: "16%",
-    height: "7%",
-    alignContent: "center",
-    marginTop: "1%",
-  },
-  buttonText: { fontSize: 15, color: "#fff", alignSelf: "center" },
-  progressContainer: {
-    flex: 1,
-    marginLeft: "35%",
-    marginTop: "5%",
-    width: "40%",
-  },
-  graph: {
-    flex: 1,
-    justifyContent: "center",
-  },
-});
