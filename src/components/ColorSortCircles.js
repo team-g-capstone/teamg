@@ -2,6 +2,9 @@ import React, {useState} from 'react'
 import X, {View, Animated, PanResponder} from 'react-native'
 import {getRandomInt, colors, componentDidMountAudio} from './ShapesHelperFuncs'
 import {Audio} from 'expo-av'
+import {sortACircle} from '../redux/reducers/colorSortReducer'
+import {connect} from 'react-redux'
+
 
 
 
@@ -10,7 +13,7 @@ const ColorSortCircles= (props) => {
     const pan = useState(new Animated.ValueXY())[0]
     let [color] = useState(colors[getRandomInt(3)]);
     const opacity = useState(new Animated.Value(1))[0]
-    
+    console.log(props, 'HE')
     componentDidMountAudio();
 
     const isDropArea = (gesture) => {
@@ -44,6 +47,7 @@ const ColorSortCircles= (props) => {
                 const colorOfDrop = isDropArea(gesture)
               if(colorOfDrop) {
                  if(colorOfDrop === color) {
+                    props.sorted()
                     let sound = new Audio.Sound();
                     const status = {
                       shouldPlay: false,
@@ -55,6 +59,7 @@ const ColorSortCircles= (props) => {
                       false
                     );
                     await sound.playAsync();
+                    
                     Animated.timing(opacity, {
                         toValue: 0, 
                         duration: 1000, 
@@ -62,6 +67,9 @@ const ColorSortCircles= (props) => {
                     }).start(() => {
                      
                     })
+                   
+                   
+                
                     pan.flattenOffset()
                  } else {
                     Animated.spring(pan, {
@@ -113,5 +121,15 @@ const ColorSortCircles= (props) => {
            
         )
 }
+const mapState = state => {
+    return {
+        colorSort: state.colorSort.current
+    }
+}
+const mapDispatch = dispatch => {
+    return {
+        sorted: () => {dispatch(sortACircle())}
+    }
+}
 
-export default ColorSortCircles 
+export default connect (mapState, mapDispatch)(ColorSortCircles)
