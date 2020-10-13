@@ -3,17 +3,18 @@ import {
   StyleSheet,
   Text,
   View,
-  ScrollView,
   TouchableOpacity,
-  Keyboard,
-  Alert,
   Dimensions,
-  SafeAreaView,
   Image,
+  ImageBackground,
 } from "react-native";
-import { PieChart, StackedBarChart } from "react-native-chart-kit";
+import { StackedBarChart } from "react-native-chart-kit";
 
+import { useFonts, Chilanka_400Regular } from "@expo-google-fonts/chilanka";
+import { AppLoading } from "expo";
 import * as ImagePicker from "expo-image-picker";
+
+import styles from "./UserStats_PT.component.style.js";
 
 const dummyData = {
   name: "DJ",
@@ -24,7 +25,7 @@ const dummyData = {
   progress: "In Progress...",
 };
 
-const data = {
+const dataMath = {
   labels: ["Level 1", "Level 2", "Level 3"],
   legend: ["Correct", "Wrong"],
   data: [
@@ -32,17 +33,29 @@ const data = {
     [10, 0],
     [8, 2],
   ],
-  barColors: ["#dfe4ea", "#ced6e0", "#a4b0be"],
+  barColors: ["#82AEB1", "#BC6286"],
+};
+
+const dataHistory = {
+  labels: ["Level 1", "Level 2", "Level 3"],
+  legend: ["Correct", "Wrong"],
+  data: [
+    [3, 7],
+    [6, 4],
+    [9, 1],
+  ],
+  barColors: ["#82AEB1", "#BC6286"],
 };
 
 const screenWidth = Dimensions.get("window").width;
 
 const chartConfig = {
-  backgroundGradientFrom: "#9E8FB2",
-  backgroundGradientFromOpacity: 0,
-  backgroundGradientTo: "#08130D",
-  backgroundGradientToOpacity: 0.5,
-  color: (opacity = 1) => `rgba(63, 143, 244, ${opacity})`,
+  backgroundColor: "#F4B266",
+  backgroundGradientFrom: "#F4B266",
+  backgroundGradientTo: "#F4B266",
+  // backgroundGradientFromOpacity: 0,
+  // backgroundGradientToOpacity: 0.5,
+  color: (opacity = 1) => `rgba(66, 72, 116, ${opacity})`,
   strokeWidth: 2, // optional, default 3
   barPercentage: 1,
   useShadowColorFromDataset: false, // optional
@@ -69,103 +82,122 @@ export default function UserStats_PT({ navigation }) {
     setSelectedImage({ localUri: pickerResult.uri });
   };
 
-  const handleGraphPress = () => {
-    setSelectedGraph(true);
+  const handleGraphPressMath = () => {
+    setSelectedGraph("math");
   };
+  const handleGraphPressHistory = () => {
+    setSelectedGraph("history");
+  };
+
+  let image = require("../../assets/backgrounds/green.jpg");
+
+  //Change font
+  let [fontsLoaded] = useFonts({
+    Chilanka_400Regular,
+  });
+
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
+  console.log(selectedGraph);
 
   return (
     <View style={styles.container}>
-      <View style={styles.person}>
-        <Text style={styles.text}>Name: {dummyData.name}</Text>
-        {selectedImage !== null ? (
-          <View style={styles.imgContainer}>
-            <Image
-              source={{ uri: selectedImage.localUri }}
-              style={styles.thumbnail}
-            />
+      <ImageBackground source={image} style={styles.image}>
+        <View style={styles.person}>
+          <Text style={styles.text}>Name: {dummyData.name}</Text>
+          {selectedImage !== null ? (
+            <View style={styles.imgContainer}>
+              <Image
+                source={{ uri: selectedImage.localUri }}
+                style={styles.thumbnail}
+              />
 
-            <TouchableOpacity
-              onPress={openImagePickerAsync}
-              style={styles.button}
-            >
-              <Text style={styles.buttonText}>Change photo</Text>
-            </TouchableOpacity>
-          </View>
-        ) : (
-          <View style={styles.imgContainer}>
-            <Image
-              source={require("../../assets/blank-profile-pic.jpeg")}
-              style={styles.thumbnail}
-            />
-            <TouchableOpacity
-              onPress={openImagePickerAsync}
-              style={styles.button}
-            >
-              <Text style={styles.buttonText}>Pick a photo</Text>
-            </TouchableOpacity>
-          </View>
-        )}
-      </View>
+              <TouchableOpacity
+                onPress={openImagePickerAsync}
+                style={styles.button}
+              >
+                <Text style={styles.buttonText}>Change photo</Text>
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <View style={styles.imgContainer}>
+              <Image
+                source={require("../../assets/blank-profile-pic.jpeg")}
+                style={styles.thumbnail}
+              />
+              <TouchableOpacity
+                onPress={openImagePickerAsync}
+                style={styles.button}
+              >
+                <Text style={styles.buttonText}>Pick a photo</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+        </View>
 
-      <View style={styles.progressContainer}>
-        <Text style={styles.text}>Subjects:</Text>
-        <TouchableOpacity onPress={handleGraphPress} style={styles.button}>
-          <Text style={styles.buttonText}>Math</Text>
-        </TouchableOpacity>
-        {selectedGraph ? (
-          <View style={styles.graph}>
+        <View style={styles.progressContainer}>
+          <Text style={styles.text}>Subjects:</Text>
+
+          <TouchableOpacity
+            onPress={handleGraphPressMath}
+            style={styles.button}
+          >
+            <Text style={styles.buttonText}>Math</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={handleGraphPressHistory}
+            style={styles.button}
+          >
+            <Text style={styles.buttonText}>History</Text>
+          </TouchableOpacity>
+
+          {selectedGraph === "math" ? (
+            <View style={styles.graph}>
+              <StackedBarChart
+                data={dataMath}
+                width={screenWidth}
+                height={200}
+                chartConfig={chartConfig}
+              />
+            </View>
+          ) : (
+            <View style={styles.graph}>
+              <StackedBarChart
+                data={dataHistory}
+                width={screenWidth}
+                height={200}
+                chartConfig={chartConfig}
+              />
+            </View>
+          )}
+
+          {/* if (selectedGraph === "math") {
+            return (
+            <View style={styles.graph}>
             <StackedBarChart
-              data={data}
+              data={dataMath}
               width={screenWidth}
               height={200}
               chartConfig={chartConfig}
             />
-          </View>
-        ) : null}
-      </View>
+          </View>)
+          } else if (selectedGraph === "history"){
+            return (
+            <View style={styles.graph}>
+            <StackedBarChart
+              data={dataHistory}
+              width={screenWidth}
+              height={200}
+              chartConfig={chartConfig}
+            />
+          </View>)
+          } else {
+            return null
+          } */}
+        </View>
+      </ImageBackground>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: "row",
-    backgroundColor: "white",
-    justifyContent: "flex-start",
-  },
-  imgContainer: {
-    flex: 1,
-    flexDirection: "column",
-  },
-  person: {
-    width: "80%",
-    height: "80%",
-    resizeMode: "contain",
-    marginLeft: "5%",
-    marginTop: "5%",
-  },
-  thumbnail: {
-    width: 150,
-    height: 150,
-    resizeMode: "contain",
-  },
-  button: {
-    backgroundColor: "#7492EA",
-    borderRadius: 5,
-    width: "14%",
-    height: "7%",
-    alignContent: "center",
-  },
-  buttonText: { fontSize: 15, color: "#fff", alignSelf: "center" },
-  progressContainer: {
-    flex: 1,
-    marginLeft: "-45%",
-    marginTop: "5%",
-    width: "40%",
-  },
-  graph: {
-    flex: 1,
-    justifyContent: "center",
-  },
-});

@@ -10,6 +10,7 @@ export default function Welcome({ navigation }) {
   return (
     <View style={styles.container}>
       <ImageBackground source={image} style={styles.image}>
+
         <Text style={styles.headerText}>Welcome to Math Crazy!!</Text>
         <Text style={styles.signUpText}>Don't have an account yet?</Text>
         <TouchableOpacity
@@ -29,18 +30,21 @@ export default function Welcome({ navigation }) {
         >
           <Text style={styles.buttonText}>Sign In</Text>
         </TouchableOpacity>
+
+
+
         <StatusBar style="auto" />
         <Button
           title="Go To Subjects"
           onPress={() => navigation.navigate("Subjects")}
         />
         <Button
-          title="User Progress for Parents/Teachers"
+          title="Parents/Teachers Dashboard"
           onPress={() => navigation.navigate("UserStats_PT")}
           style={styles.progressButton}
         />
         <Button
-          title="User Progress for Students"
+          title="Students Dashboard"
           onPress={() => navigation.navigate("UserStats_Student")}
           style={styles.progressButton}
         />
