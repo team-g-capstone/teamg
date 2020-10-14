@@ -47,6 +47,8 @@ export default function UserStats_Student(props) {
   const [selectedImage, setSelectedImage] = useState(null);
   const {mathScores,logicScores, firstName,userUID} = props.route.params;
 
+
+
   let openImagePickerAsync = async () => {
     let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
 
@@ -60,8 +62,8 @@ export default function UserStats_Student(props) {
     if (pickerResult.cancelled === true) {
       return;
     }
-
     setSelectedImage({ localUri: pickerResult.uri });
+
   };
 
   let image = require("../../assets/backgrounds/green.jpg");
