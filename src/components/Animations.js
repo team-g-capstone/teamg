@@ -6,7 +6,7 @@ import {
 import {Audio} from 'expo-av'
 import {connect} from 'react-redux'
 import LottieView from "lottie-react-native";
-
+import { RECORDING_OPTION_IOS_OUTPUT_FORMAT_APPLELOSSLESS } from "expo-av/build/Audio";
 
 
   
@@ -52,7 +52,7 @@ const  Animations = (props) => {
             await sound.loadAsync(require('../../assets/pizzaparty.mp3'), status, false);
         }
 
-        await sound.setStatusAsync({isPLaying: isPlaying})
+    
 
         if(isPlaying) {
           await sound.playAsync()
