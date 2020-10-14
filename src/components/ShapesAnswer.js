@@ -35,12 +35,19 @@ const ShapesAnswer = (props) => {
   let image = require('../../assets/backgrounds/orange.jpg')
 
   const updateMathScores = async () => {
-    let mathScores = value.data().mathScores;
-    let mathScoresNew = mathScores.map((score,idx)=> idx === 0? true:score);
-    let userDocument = await firebase.firestore().collection('users').doc(userUID).get();
-    userDocument.ref.update({
-      mathScores:mathScoresNew
-    })
+
+    let currentUser =  await firebase.auth().currentUser;
+
+    if(!currentUser.isAnonymous){
+      let mathScores = value.data().mathScores;
+      let mathScoresNew = mathScores.map((score,idx)=> idx === 0? true:score);
+
+      let userDocument = await firebase.firestore().collection('users').doc(userUID).get();
+      userDocument.ref.update({
+        mathScores:mathScoresNew
+      })
+    }
+
    }
 
   const handlePress = () => {

@@ -1,9 +1,10 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text,TextInput, View, Button, ImageBackground, Alert } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import * as firebase from 'firebase';
 import { useDocument } from "react-firebase-hooks/firestore";
+
 
 export default function parentEditProfile(props) {
 
@@ -11,8 +12,18 @@ export default function parentEditProfile(props) {
   const userUID = props.route.params.userUID
   const [value, loading, error] = useDocument(firebase.firestore().collection('users').doc(userUID))
   const [childUID, setChildUID] = useState('');
+  const [childrenFB, setChildrenFB] = useState([]);
+
   let alertMsg = "You have added this child, click View all children to see the child's score"
   let image = require("../../assets/backgrounds/red.jpg");
+
+  // const readChildrenFB = () =>{
+  //   let childrenArr =[];
+  //   firebase.firestore().collection('users').doc(userUID).onSnapshot((querysnap)=>
+  //        console.log(querysnap)
+  //   )
+
+  // }
   const addAChild =async() =>{
     let childrenFB = value.data().children;
     childrenFB.includes(childUID)? Alert.alert(alertMsg):childrenFB.push(childUID)
@@ -21,14 +32,17 @@ export default function parentEditProfile(props) {
       children: childrenFB
     })
   }
+
   const handlePressAddAChild=()=>{
     addAChild();
   }
+
   return (
     <View style={styles.container}>
       <ImageBackground source={image} style={styles.image}>
 
         <Text style={styles.headerText}>Parent Dashboard: Edit your profile</Text>
+        <View style = {styles.addAChildContainer}>
         <TextInput
         style={styles.textInput}
         placeholder="Child UID"
@@ -41,11 +55,11 @@ export default function parentEditProfile(props) {
         >
           <Text style={styles.buttonText}>Add a child </Text>
         </TouchableOpacity>
-
+        </View>
         <TouchableOpacity
-          style={styles.button}
+          style={styles.viewAllChildbutton}
           onPress={() => {
-            console.log('View all childs pressed');
+            navigation.navigate('allChildrenList',{userUID})
           }}
         >
           <Text style={styles.buttonText}>View all children </Text>
@@ -69,13 +83,25 @@ const styles = StyleSheet.create({
     borderColor: "#ffcccc",
     borderRadius: 15,
     alignSelf: "center",
-    margin: 5,
+    margin: "1%",
+  },
+  viewAllChildbutton:{
+    width: 250,
+    padding: 5,
+    backgroundColor: "#ff9999",
+    borderWidth: 2,
+    borderColor: "#ffcccc",
+    borderRadius: 15,
+    alignSelf: "center",
+    margin: "0.5%",
+    marginLeft:"10%"
   },
   textInput: {
     width: 250,
     borderWidth: 1,
     padding: 10,
     margin: "0.2%",
+    marginLeft:"35%"
   },
   buttonText: {
     color: "white",
@@ -88,6 +114,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
 
+  },
+  addAChildContainer:{
+      flexDirection:"row",
+      alignItems:"center",
+      margin:"1%"
   },
   headerText: {
     color: "white",

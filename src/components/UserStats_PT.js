@@ -15,6 +15,9 @@ import { AppLoading } from "expo";
 import * as ImagePicker from "expo-image-picker";
 
 import styles from "./UserStats_PT.component.style.js";
+import * as firebase from "firebase"
+import {useDocument} from "react-firebase-hooks/firestore";
+import { useNavigation } from "@react-navigation/native";
 
 const dummyData = {
   name: "DJ",
@@ -61,10 +64,23 @@ const chartConfig = {
   useShadowColorFromDataset: false, // optional
 };
 
-export default function UserStats_PT({ navigation }) {
+export default function UserStats_PT(props) {
+  const navigation = useNavigation();
+  //Parent ID
+  const userUID = props.route.params.userUID;
+  //Child ID, DUMMY for now, need to get it from PROPS
+  const childUID ='GHTGDSbxRChwwoURLsU9xIsgmrl1'
+
+  const [value, loading, error] = useDocument(firebase.firestore().collection('users').doc(childUID))
+
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedGraph, setSelectedGraph] = useState(null);
 
+  //Async to get the data
+  const childData =async() =>{
+    let childMathScores = value.data().childMathScores;
+
+  }
   let openImagePickerAsync = async () => {
     let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
 
@@ -105,7 +121,7 @@ export default function UserStats_PT({ navigation }) {
     <View style={styles.container}>
       <ImageBackground source={image} style={styles.image}>
         <View style={styles.person}>
-          <Text style={styles.text}>Name: {dummyData.name}</Text>
+          <Text style={styles.text}>Child Name: {dummyData.name}</Text>
           {selectedImage !== null ? (
             <View style={styles.imgContainer}>
               <Image
