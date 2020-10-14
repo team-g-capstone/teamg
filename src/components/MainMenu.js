@@ -1,4 +1,4 @@
-import { StatusBar } from "expo-status-bar";
+//import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
@@ -22,9 +22,8 @@ import { useNavigation } from "@react-navigation/native";
 export default function MainMenu(props) {
   const navigation = useNavigation();
   const userUID = props.route.params.userUID;
-  console.log("userUID from MainMenu", userUID)
-  let image = require("../../assets/backgrounds/orange.jpg");
 
+  let image = require("../../assets/backgrounds/orange.jpg");
 
   const [value, loading, error] = useDocument(
     firebase.firestore().collection("users").doc(userUID)
@@ -80,6 +79,9 @@ export default function MainMenu(props) {
               />
             </>
           )}
+          <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate('parentEditProfile',{userUID})}>
+            <Text style={styles.buttonText}>Edit Profile</Text>
+          </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={handlePress}>
             <Text style={styles.buttonText}>Log Out</Text>
           </TouchableOpacity>

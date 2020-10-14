@@ -29,7 +29,7 @@ export default function Shapes(props) {
   const [checkAns, setCheckAns] = useState(true);
   const [numQuestions, setNumQuestions] = useState(1);
   const userUID = props.route.params.userUID;
-  console.log("UID from Shapes.js", userUID)
+
 
   let shape = shapes[rotation];
 

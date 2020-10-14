@@ -22,6 +22,7 @@ import LoadingScreen from "../components/LoadingScreen";
 //Firebase
 import * as firebase from "firebase";
 import apiKeys from "../../config/keys";
+import parentEditProfile from "../components/parentEditProfile";
 
 const Stack = createStackNavigator();
 
@@ -75,6 +76,11 @@ const Navigation = () => (
         name="ShapesAnswer"
         component={ShapesAnswer}
         options={{ headerShown: false }}
+      />
+      <Stack.Screen
+      name= "parentEditProfile"
+      component={parentEditProfile}
+      options={{headerShown: false}}
       />
       <Stack.Screen
         name="UserStats_PT"

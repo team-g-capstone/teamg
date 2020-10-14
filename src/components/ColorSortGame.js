@@ -4,6 +4,11 @@ import { StyleSheet, Text, View, Button, ImageBackground, Dimensions, TouchableO
 import ColorSortCircles from './ColorSortCircles'
 import {connect} from 'react-redux'
 import * as firebase from "firebase";
+import {
+  useCollection,
+  useDocument,
+  useDocumentOnce,
+} from "react-firebase-hooks/firestore";
 
 let {height, width} = Dimensions.get('window')
 
@@ -12,20 +17,27 @@ height > width ? width = height : width = width
 const numOfCirlces = [1, 2, 3, 4, 5, 6, 7];
 
 function ColorSortGame(props) {
+  let image = require('../../assets/backgrounds/blue.jpg')
   const userUID = props.route.params.userUID
+  const [value, loading, error] = useDocument(
+    firebase.firestore().collection("users").doc(userUID)
+  );
 
   const updateMathScores = async () => {
+    let mathScores = value.data().mathScores;
+    let mathScoresNew = mathScores.map((score,idx)=> idx === 1? true:score);
     let userDocument = await firebase.firestore().collection('users').doc(userUID).get();
     userDocument.ref.update({
-      mathScores:[true,true,false, false, false, false, false, false, false, false ]
+      mathScores:mathScoresNew
     })
-   }
-
+  }
    const handlePress = () => {
-     updateMathScores();
-      props.navigation.navigate('Subjects')
-      };
-  let image = require('../../assets/backgrounds/blue.jpg')
+
+    updateMathScores();
+    props.navigation.navigate('Subjects')
+  };
+
+
 
   return (
     <View style={styles.mainContainer}>
