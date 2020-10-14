@@ -89,8 +89,10 @@ export default function MainMenu(props) {
       </View>
     );
   } else {
+
     return (
       <View style={styles.container}>
+
         <Text>NO USER </Text>
         <Button
           title="homepage"

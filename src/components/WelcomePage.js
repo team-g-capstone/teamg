@@ -1,12 +1,32 @@
+import { useNavigation } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { StyleSheet, Text, View, Button, ImageBackground } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import AudioButton from "./AudioButton";
+import * as firebase from "firebase";
+
 // import SideMenu from "react-native-side-menu";
 
-export default function Welcome({ navigation }) {
+export default function Welcome() {
+  const navigation = useNavigation();
   let image = require("../../assets/backgrounds/red.jpg");
+
+  // const signInAnonymous =()=>{
+  //   firebase.auth().signInAnonymously().catch(function(error){Alert.alert("There is an error", error.message)})
+
+  //   firebase.auth().onAuthStateChanged((user)=>{
+  //     if(user){
+  //      const userUID = user.uid
+  //      navigation.navigate("Subjects", {userUID})
+  //     }
+  //   })
+  // }
+
+  const handlePress =()=>{
+      //signInAnonymous();
+      navigation.navigate("Subjects")
+  }
+
   return (
     <View style={styles.container}>
       <ImageBackground source={image} style={styles.image}>
@@ -21,34 +41,19 @@ export default function Welcome({ navigation }) {
         >
           <Text style={styles.buttonText}>Sign up</Text>
         </TouchableOpacity>
-        <Text style={styles.signUpText}>SIGN IN NOW</Text>
+        <Text style={styles.signUpText}>Already have an account?</Text>
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
             navigation.navigate("SignIn");
           }}
         >
-          <Text style={styles.buttonText}>Sign In</Text>
+          <Text style={styles.buttonText}>Sign in</Text>
         </TouchableOpacity>
-
-        {/* <Text>Welcome!!</Text> */}
-
         <StatusBar style="auto" />
         <Button
           title="Go To Subjects"
-          onPress={() => navigation.navigate("Subjects")}
-        />
-        <Button
-
-          title="Parents/Teachers Dashboard"
-
-          onPress={() => navigation.navigate("UserStats_PT")}
-          style={styles.progressButton}
-        />
-        <Button
-          title="Students Dashboard"
-          onPress={() => navigation.navigate("UserStats_Student")}
-          style={styles.progressButton}
+          onPress={handlePress}
         />
       </ImageBackground>
     </View>

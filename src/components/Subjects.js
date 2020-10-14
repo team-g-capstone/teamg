@@ -6,7 +6,11 @@ import AudioButton from "./AudioButton";
 
 export default function Subjects(props) {
   const navigation = useNavigation();
-  const userUID = props.route.params.userUID;
+  //const userUID = props.route.params.userUID;
+  // let userUID;
+  // if(props.route.params.userUID !== undefined){
+  //   userUID = props.route.params.userUID
+  // }
 
   let image = require("../../assets/backgrounds/blue.jpg");
   return (
@@ -15,8 +19,8 @@ export default function Subjects(props) {
 
       {/* <Text>Choose a Subject!</Text> */}
       <StatusBar style="auto" />
-      <Button title="Math" onPress={() => navigation.navigate("Shapes", {userUID})} />
-      <Button title="Math Level 2" onPress={() => navigation.navigate("ColorSortGame",{userUID})}/>
+      <Button title="Math" onPress={() => navigation.navigate("Shapes", {userUID:props.route.params.userUID})} />
+      <Button title="Math Level 2" onPress={() => navigation.navigate("ColorSortGame",{userUID:props.route.params.userUID})}/>
         {/* <Button
           title="User Progress"
           onPress={() => navigation.navigate("UserStats_PT")}
