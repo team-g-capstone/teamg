@@ -13,7 +13,7 @@ const ColorSortCircles= (props) => {
     const pan = useState(new Animated.ValueXY())[0]
     let [color] = useState(colors[getRandomInt(3)]);
     const opacity = useState(new Animated.Value(1))[0]
-    console.log(props, 'HE')
+  
     componentDidMountAudio();
 
     const isDropArea = (gesture) => {

@@ -1,9 +1,16 @@
 export const SORTED = 'SORTED'
+const RESET = 'RESET'
 
 export const sorted = () => {
     return {
     type: SORTED
 }}
+
+export const reset = () => {
+    return {
+        type: RESET
+    }
+}
 
 const initialState = {
     current: 0, 
@@ -12,10 +19,20 @@ const initialState = {
 export const sortACircle = () => {
     return async dispatch => {
         try{
-            console.log('HEUYHDYG')
+            
             dispatch(sorted())
         } catch (error) {
-            console.log("ASJDOHJAd")
+            
+            console.log(error)
+        }
+    }
+}
+
+export const resetSorted = () => {
+    return async dispatch => {
+        try {
+            dispatch(reset())
+        } catch (error) {
             console.log(error)
         }
     }
@@ -24,12 +41,17 @@ export const sortACircle = () => {
 const colorSortReducer = (state = initialState, action) => {
     switch(action.type) {
         case SORTED: {
-            console.log(state)
+          
             let newState = state.current
             newState += 1
-            console.log(newState, 'Hhellllllooo')
+           
             return {
                 current: newState
+            }
+        }
+        case RESET: {
+            return {
+                current: 0, 
             }
         }
 
