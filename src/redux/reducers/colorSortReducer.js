@@ -12,10 +12,10 @@ const initialState = {
 export const sortACircle = () => {
     return async dispatch => {
         try{
-            console.log('HEUYHDYG')
+            
             dispatch(sorted())
         } catch (error) {
-            console.log("ASJDOHJAd")
+            
             console.log(error)
         }
     }

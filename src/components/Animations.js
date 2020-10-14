@@ -4,14 +4,19 @@ import {
   View,
 } from "react-native";
 import {Audio} from 'expo-av'
-
+import {connect} from 'react-redux'
 import LottieView from "lottie-react-native";
+
 
 
   
 
-export default function Shapes2Answer(props) {
+const  Animations = (props) => {
     let rotation = props.rotation
+    let isPlaying = props.isPlaying
+    const sound = new Audio.Sound()
+    
+    Audio.setIsEnabledAsync(true)
     const componentDidMount = async () => {
         Audio.setAudioModeAsync({
           allowRecordingIOS: false, 
@@ -22,10 +27,12 @@ export default function Shapes2Answer(props) {
            staysActiveInBackground: true,
            playsThroughEarpieceAndroid: true,
         })
-        let sound = new Audio.Sound()
+        
         const status = {
           shouldPlay: false
         }
+
+        
     
         if(rotation === 0) {
             await sound.loadAsync(require('../../assets/balloondrop.mp3'), status, false);
@@ -44,10 +51,25 @@ export default function Shapes2Answer(props) {
         if(rotation === 4) {
             await sound.loadAsync(require('../../assets/pizzaparty.mp3'), status, false);
         }
-       await sound.playAsync(); 
+
+        await sound.setStatusAsync({isPLaying: isPlaying})
+
+        if(isPlaying) {
+          await sound.playAsync()
+        }
+       
       }
     
-      componentDidMount(); 
+      componentDidMount();
+      
+      const stopPlaying = async () => {
+        if (!isPlaying) {
+          Audio.setIsEnabledAsync(false)
+        }
+      }
+     
+     stopPlaying()
+    
     return (
       <View>
           {rotation === 0 ? (<LottieView
@@ -95,3 +117,11 @@ const styles = StyleSheet.create({
         padding: "5%",
       },
 })
+
+const mapState = state => {
+  return {
+    isPlaying: state.audio.isPlaying
+  }
+}
+
+export default connect (mapState) (Animations)
