@@ -6,25 +6,22 @@ import { StyleSheet, Text, View, Button, ImageBackground } from "react-native";
 
 export default function Subjects(props) {
   const navigation = useNavigation();
-  //const userUID = props.route.params.userUID;
-  // let userUID;
-  // if(props.route.params.userUID !== undefined){
-  //   userUID = props.route.params.userUID
-  // }
+  // const userUID = props.route.params.userUID;
+  let propsUSer = props.route.params.userUID;
+   let userUID;
+  if(propsUSer){
+    userUID = props.route.params.userUID
+  }else{
+    userUID = props.userUID
+  }
 
   let image = require("../../assets/backgrounds/blue.jpg");
   return (
     <View style={styles.container}>
       <ImageBackground source={image} style={styles.image}>
-
-      {/* <Text>Choose a Subject!</Text> */}
       <StatusBar style="auto" />
       <Button title="Math" onPress={() => navigation.navigate("Shapes", {userUID})} />
       <Button title="Logic" onPress={() => navigation.navigate("ColorSortGame",{userUID})}/>
-        {/* <Button
-          title="User Progress"
-          onPress={() => navigation.navigate("UserStats_PT")}
-        /> */}
       </ImageBackground>
     </View>
   );

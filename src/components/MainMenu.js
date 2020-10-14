@@ -18,6 +18,7 @@ import {
   useDocumentOnce,
 } from "react-firebase-hooks/firestore";
 import { useNavigation } from "@react-navigation/native";
+import Subjects from "./Subjects"
 
 export default function MainMenu(props) {
   const navigation = useNavigation();
@@ -43,6 +44,7 @@ export default function MainMenu(props) {
     return <ActivityIndicator size="large" />;
   } else if (value && value.data()) {
     let mathScores = value.data().mathScores;
+    let logicScores = value.data().logicScores;
     let userType = value.data().userType;
     let firstName = value.data().firstName;
 
@@ -74,7 +76,7 @@ export default function MainMenu(props) {
                 title="User Progress for Student"
                 onPress={() =>
                   navigation.navigate("UserStats_Student", {
-                    mathScores, userUID, firstName})}
+                    mathScores, logicScores, userUID, firstName})}
                 style={styles.progressButton}
               />
             </>
@@ -89,16 +91,18 @@ export default function MainMenu(props) {
       </View>
     );
   } else {
-
+    let image = require("../../assets/backgrounds/blue.jpg");
+    //SHOULD CHANGE BUTTON STYLING IF WE ARE OK WITH THIS
     return (
       <View style={styles.container}>
-
-        <Text>NO USER </Text>
-        <Button
-          title="homepage"
-          onPress={() => navigation.navigate("WelcomePage")}
-        />
-      </View>
+      <ImageBackground source={image} style={styles.image}>
+    <Text>ELSE from MAIN MENU</Text>
+      <Button title="Math" onPress={() => navigation.navigate("Shapes", {userUID})} />
+      <Button title="Logic" onPress={() => navigation.navigate("ColorSortGame",{userUID})}/>
+      <Button title="Sign Up" onPress={() => navigation.navigate("SignUp")}/>
+      <Button title="Sign In" onPress={() => navigation.navigate("SignIn")}/>
+      </ImageBackground>
+    </View>
     );
   }
 }

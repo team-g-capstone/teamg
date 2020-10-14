@@ -28,7 +28,7 @@ const lvlsCompletedData = {
     false,
     false,
   ],
-  history: [
+  logic: [
     "Level 1",
     "Level 2",
     false,
@@ -45,7 +45,7 @@ const lvlsCompletedData = {
 export default function UserStats_Student(props) {
   const navigation = useNavigation();
   const [selectedImage, setSelectedImage] = useState(null);
-  const {mathScores, firstName,userUID} = props.route.params;
+  const {mathScores,logicScores, firstName,userUID} = props.route.params;
 
   let openImagePickerAsync = async () => {
     let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
@@ -138,9 +138,10 @@ export default function UserStats_Student(props) {
             })}
           </View>
 
-          <Text style={styles.text}>History</Text>
+          <Text style={styles.text}>Logic</Text>
           <View style={styles.animationContainer}>
-            {lvlsCompletedData.history.map((level) => {
+            {
+            logicScores.map((level,index) => {
               if (level !== false) {
                 return (
                   <LottieView
@@ -148,6 +149,7 @@ export default function UserStats_Student(props) {
                     source={require(`../../assets/gold_star.json`)}
                     loop
                     autoPlay
+                    key={index}
                   />
                 );
               } else {
@@ -156,6 +158,7 @@ export default function UserStats_Student(props) {
                     style={styles.animationCircle}
                     source={require(`../../assets/x_circle.json`)}
                     autoPlay
+                    key={index}
                   />
                 );
               }

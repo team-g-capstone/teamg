@@ -11,20 +11,20 @@ export default function Welcome() {
   const navigation = useNavigation();
   let image = require("../../assets/backgrounds/red.jpg");
 
-  // const signInAnonymous =()=>{
-  //   firebase.auth().signInAnonymously().catch(function(error){Alert.alert("There is an error", error.message)})
+  const signInAnonymous =()=>{
+    firebase.auth().signInAnonymously().catch(function(error){Alert.alert("There is an error", error.message)})
 
-  //   firebase.auth().onAuthStateChanged((user)=>{
-  //     if(user){
-  //      const userUID = user.uid
-  //      navigation.navigate("Subjects", {userUID})
-  //     }
-  //   })
-  // }
+    firebase.auth().onAuthStateChanged((user)=>{
+      if(user){
+       const userUID = user.uid
+       navigation.navigate("Subjects", {userUID})
+      }
+    })
+  }
 
   const handlePress =()=>{
-      //signInAnonymous();
-      navigation.navigate("Subjects")
+      signInAnonymous();
+      //navigation.navigate("Subjects")
   }
 
   return (

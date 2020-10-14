@@ -21,7 +21,7 @@ export default function SignUp({ navigation }) {
 
       //Assign additional info to the Auth profile
       const currentUser = firebase.auth().currentUser;
-
+      const falseArr= new Array(10).fill(false);
       //Setting the user info to the firestone database
       const db = firebase.firestore();
       db.collection("users")
@@ -31,18 +31,9 @@ export default function SignUp({ navigation }) {
           lastName: lastName,
           firstName: firstName,
           userType: userType,
-          mathScores: [
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-          ],
+          mathScores:falseArr ,
+          logicScores: falseArr,
+
         });
       const userUID = currentUser.uid
       navigation.navigate("MainMenu", { userUID });

@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet, Text, View, Button, ImageBackground, Dimensions, TouchableOpacity, PanResponder} from "react-native";
+import { StyleSheet, Text, View, Button, ImageBackground, Dimensions, TouchableOpacity, PanResponder, Alert} from "react-native";
 import ColorSortCircles from './ColorSortCircles'
 import {resetSorted} from '../redux/reducers/colorSortReducer'
 import {connect} from 'react-redux'
@@ -18,23 +18,29 @@ height > width ? width = height : width = width
 const numOfCirlces = [1, 2, 3, 4, 5, 6, 7];
 
 function ColorSortGame(props) {
+
   let image = require('../../assets/backgrounds/blue.jpg')
   const userUID = props.route.params.userUID
   const [value, loading, error] = useDocument(
     firebase.firestore().collection("users").doc(userUID)
   );
 
-  const updateMathScores = async () => {
-    let mathScores = value.data().mathScores;
-    let mathScoresNew = mathScores.map((score,idx)=> idx === 1? true:score);
-    let userDocument = await firebase.firestore().collection('users').doc(userUID).get();
-    userDocument.ref.update({
-      mathScores:mathScoresNew
-    })
+  const updateLogicScores = async () => {
+    let currentUser =  await firebase.auth().currentUser;
+
+    if(!currentUser.isAnonymous){
+      let logicScores = value.data().logicScores;
+      let logicScoresNew = logicScores.map((score,idx)=> idx === 0? true:score);
+
+      let userDocument = await firebase.firestore().collection('users').doc(userUID).get();
+      userDocument.ref.update({
+        logicScores:logicScoresNew
+      })
+    }
+
   }
    const handlePress = () => {
-
-    updateMathScores();
+    updateLogicScores();
     props.reset()
     props.navigation.navigate('Subjects')
   };
@@ -80,7 +86,7 @@ const styles = StyleSheet.create({
 
   ballContainer: {
       height: 100,
-      
+
   },
 
   dropZoneContainer: {
@@ -90,14 +96,14 @@ const styles = StyleSheet.create({
   },
 
   text: {
-   
+
     color: "white",
     fontSize: 25,
     shadowColor: '#000',
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.8,
       shadowRadius: 2,
-    
+
   },
   row: {
       flexDirection: "row",
