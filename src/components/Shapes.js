@@ -45,8 +45,9 @@ const Shapes = (props) => {
   componentDidMountAudio();
 
   const handlePress = async () => {
-    props.startAudio()
-    Audio.setIsEnabledAsync(true)
+    
+    await Audio.setIsEnabledAsync(true)
+    await props.startAudio()
     let correctAns = numOne + numTwo;
 
     if (Number(answer) === correctAns) {

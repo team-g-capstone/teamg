@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { StyleSheet, Text, View, Button, ImageBackground } from "react-native";
-import AudioButton from "./AudioButton";
+
 
 export default function Subjects(props) {
   const navigation = useNavigation();
@@ -16,7 +16,7 @@ export default function Subjects(props) {
       {/* <Text>Choose a Subject!</Text> */}
       <StatusBar style="auto" />
       <Button title="Math" onPress={() => navigation.navigate("Shapes", {userUID})} />
-      <Button title="Math Level 2" onPress={() => navigation.navigate("ColorSortGame",{userUID})}/>
+      <Button title="Logic" onPress={() => navigation.navigate("ColorSortGame",{userUID})}/>
         {/* <Button
           title="User Progress"
           onPress={() => navigation.navigate("UserStats_PT")}
@@ -27,12 +27,16 @@ export default function Subjects(props) {
 }
 
 const styles = StyleSheet.create({
+ 
   container: {
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
   },
+
+ 
+
 
   image: {
     flex: 1,

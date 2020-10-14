@@ -50,7 +50,7 @@ const ShapesAnswer = (props) => {
     }
     if (numQuestions === 10) {
 
-      props.navigation.navigate("ColorSortGame", {userUID});
+      props.navigation.navigate("Subjects", {userUID});
       updateMathScores();
     }
   };
