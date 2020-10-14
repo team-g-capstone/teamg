@@ -1,4 +1,4 @@
-import { StatusBar } from "expo-status-bar";
+//import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
@@ -79,6 +79,9 @@ export default function MainMenu(props) {
               />
             </>
           )}
+          <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate('parentEditProfile',{userUID})}>
+            <Text style={styles.buttonText}>Edit Profile</Text>
+          </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={handlePress}>
             <Text style={styles.buttonText}>Log Out</Text>
           </TouchableOpacity>
