@@ -5,8 +5,6 @@ import { StyleSheet, Text, View, Button, ImageBackground } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import * as firebase from "firebase";
 
-// import SideMenu from "react-native-side-menu";
-
 export default function Welcome() {
   const navigation = useNavigation();
   let image = require("../../assets/backgrounds/red.jpg");

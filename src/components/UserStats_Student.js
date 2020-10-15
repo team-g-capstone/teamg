@@ -56,7 +56,6 @@ export default function UserStats_Student(props) {
     return;
     }
 
-
   };
 
   //handle upload to cloudinary
@@ -162,8 +161,7 @@ export default function UserStats_Student(props) {
 
           <Text style={styles.text}>Logic</Text>
           <View style={styles.animationContainer}>
-            {
-            logicScores.map((level,index) => {
+            {logicScores.map((level, index) => {
               if (level !== false) {
                 return (
                   <LottieView
