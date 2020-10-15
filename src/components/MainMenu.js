@@ -22,6 +22,9 @@ import { useNavigation } from "@react-navigation/native";
 export default function MainMenu(props) {
   const navigation = useNavigation();
   const userUID = props.route.params.userUID;
+  // let user = firebase.auth().currentUser;
+  // const userUID = user.uid;
+  // console.log(userUID);
 
   let image = require("../../assets/backgrounds/orange.jpg");
 
@@ -58,13 +61,26 @@ export default function MainMenu(props) {
 
           <Button
             title="Go To Subjects"
-            onPress={() => navigation.navigate("Subjects", {userUID})}
+            onPress={() =>
+              navigation.navigate("SubjectsNav", {
+                screen: "Subjects",
+                params: { userUID: userUID },
+              })
+            }
           />
 
           {userType !== "student" ? (
             <Button
               title="User Progress for Parents/Teachers"
-              onPress={() => navigation.navigate("UserStats_PT",{userUID})}
+              onPress={() =>
+                // navigation.navigate( "UserStats_PT",
+                //   { userUID }
+                // )}
+                navigation.navigate("MainMenu", {
+                  screen: "UserStats_PT",
+                  params: { userUID },
+                })
+              }
               style={styles.progressButton}
             />
           ) : (
@@ -73,13 +89,25 @@ export default function MainMenu(props) {
               <Button
                 title="User Progress for Student"
                 onPress={() =>
-                  navigation.navigate("UserStats_Student", {
-                    mathScores, userUID, firstName})}
+                  navigation.navigate("MainMenu", {
+                    screen: "UserStats_Student",
+                    params: {
+                      mathScores: mathScores,
+                      userUID: userUID,
+                      firstName: firstName,
+                    },
+                  })
+                }
                 style={styles.progressButton}
               />
             </>
           )}
-          <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate('parentEditProfile',{userUID})}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() =>
+              navigation.navigate("parentEditProfile", { userUID })
+            }
+          >
             <Text style={styles.buttonText}>Edit Profile</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={handlePress}>

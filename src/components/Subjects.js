@@ -3,6 +3,7 @@ import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { StyleSheet, Text, View, Button, ImageBackground } from "react-native";
 import AudioButton from "./AudioButton";
+import * as firebase from "firebase";
 
 export default function Subjects(props) {
   const navigation = useNavigation();
@@ -12,11 +13,16 @@ export default function Subjects(props) {
   return (
     <View style={styles.container}>
       <ImageBackground source={image} style={styles.image}>
-
-      {/* <Text>Choose a Subject!</Text> */}
-      <StatusBar style="auto" />
-      <Button title="Math" onPress={() => navigation.navigate("Shapes", {userUID})} />
-      <Button title="Math Level 2" onPress={() => navigation.navigate("ColorSortGame",{userUID})}/>
+        {/* <Text>Choose a Subject!</Text> */}
+        <StatusBar style="auto" />
+        <Button
+          title="Math"
+          onPress={() => navigation.navigate("Shapes", { userUID })}
+        />
+        <Button
+          title="Math Level 2"
+          onPress={() => navigation.navigate("ColorSortGame", { userUID })}
+        />
         {/* <Button
           title="User Progress"
           onPress={() => navigation.navigate("UserStats_PT")}

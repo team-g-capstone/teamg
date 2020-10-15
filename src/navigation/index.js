@@ -26,6 +26,9 @@ import parentEditProfile from "../components/parentEditProfile";
 
 //Drawer
 import { createDrawerNavigator } from "@react-navigation/drawer";
+import stackNav from "./stacknav";
+import SubjectsNav from "./subjectsnav";
+import MainMenuNav from "./MainMenuNav";
 
 const Drawer = createDrawerNavigator();
 
@@ -38,6 +41,11 @@ const Navigation = () => (
   <NavigationContainer>
     <Drawer.Navigator screenOptions={{ headerShown: false }}>
       <Drawer.Screen
+        name="WelcomePage"
+        component={stackNav}
+        options={{ headerShown: false }}
+      />
+      {/* <Drawer.Screen
         name="LoadingScreen"
         component={LoadingScreen}
         options={{ headerShown: false }}
@@ -56,18 +64,18 @@ const Navigation = () => (
         name="SignIn"
         component={SignIn}
         options={{ headerShown: false }}
-      />
+      /> */}
       <Drawer.Screen
         name="MainMenu"
-        component={MainMenu}
+        component={MainMenuNav}
         options={{ headerShown: false }}
       />
       <Drawer.Screen
-        name="Subjects"
-        component={Subjects}
+        name="SubjectsNav"
+        component={SubjectsNav}
         options={{ headerShown: false }}
       />
-      <Drawer.Screen
+      {/* <Drawer.Screen
         name="Shapes"
         component={Shapes}
         options={{ headerShown: false }}
@@ -81,13 +89,13 @@ const Navigation = () => (
         name="ShapesAnswer"
         component={ShapesAnswer}
         options={{ headerShown: false }}
-      />
-      <Drawer.Screen
+      /> */}
+      {/* <Drawer.Screen
         name="parentEditProfile"
         component={parentEditProfile}
         options={{ headerShown: false }}
-      />
-      <Drawer.Screen
+      /> */}
+      {/* <Drawer.Screen
         name="UserStats_PT"
         component={UserStats_PT}
         options={{ headerShown: false }}
@@ -96,7 +104,7 @@ const Navigation = () => (
         name="UserStats_Student"
         component={UserStats_Student}
         options={{ headerShown: false }}
-      />
+      /> */}
     </Drawer.Navigator>
   </NavigationContainer>
 );
