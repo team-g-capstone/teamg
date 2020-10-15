@@ -6,14 +6,14 @@ import { StyleSheet, Text, View, Button, ImageBackground } from "react-native";
 
 export default function Subjects(props) {
   const navigation = useNavigation();
-  // const userUID = props.route.params.userUID;
-  let propsUSer = props.route.params.userUID;
-   let userUID;
-  if(propsUSer){
-    userUID = props.route.params.userUID
-  }else{
-    userUID = props.userUID
-  }
+  const userUID = props.route.params.userUID;
+  // let propsUSer = props.route.params.userUID;
+  //  let userUID;
+  // if(propsUSer){
+  //   userUID = props.route.params.userUID
+  // }else{
+  //   userUID = props.userUID
+  // }
 
   let image = require("../../assets/backgrounds/blue.jpg");
   return (

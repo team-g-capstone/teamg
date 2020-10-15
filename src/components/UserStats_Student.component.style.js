@@ -30,11 +30,13 @@ export default StyleSheet.create({
     width: "20%",
     height: "7%",
     alignContent: "center",
+    margin:"0.5%",
   },
   buttonText: {
     fontSize: 15,
     color: "#fff",
-    alignSelf: "center",
+    textAlign:"center",
+    margin:"2%",
     fontFamily: "Chilanka_400Regular",
   },
   container: {
@@ -42,6 +44,7 @@ export default StyleSheet.create({
     flexDirection: "row",
     backgroundColor: "white",
     justifyContent: "flex-start",
+
   },
   graph: {
     flex: 1,
@@ -79,7 +82,7 @@ export default StyleSheet.create({
     fontFamily: "Chilanka_400Regular",
   },
   thumbnail: {
-    width: "15%",
+    width: "20%",
     height: "50%",
     resizeMode: "contain",
   },

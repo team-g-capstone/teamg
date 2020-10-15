@@ -22,6 +22,7 @@ export default function SignUp({ navigation }) {
       //Assign additional info to the Auth profile
       const currentUser = firebase.auth().currentUser;
       const falseArr= new Array(10).fill(false);
+      let defaultImage = 'https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png'
       //Setting the user info to the firestone database
       const db = firebase.firestore();
       db.collection("users")
@@ -33,6 +34,7 @@ export default function SignUp({ navigation }) {
           userType: userType,
           mathScores:falseArr ,
           logicScores: falseArr,
+          imageUrl: defaultImage,
 
         });
       const userUID = currentUser.uid
