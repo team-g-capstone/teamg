@@ -31,6 +31,9 @@ const Shapes = (props) => {
   const [checkAns, setCheckAns] = useState(true);
   const [numQuestions, setNumQuestions] = useState(1);
   const userUID = props.route.params.userUID;
+  
+  let  level = props.level
+  console.log(level)
 // let userUID;
 //   if(props.route.params.userUID){
 //   userUID = props.route.params.userUID
@@ -54,7 +57,13 @@ const Shapes = (props) => {
     let correctAns = numOne + numTwo;
 
     if (Number(answer) === correctAns) {
-      setNumQuestions(numQuestions + 1);
+      if(numQuestions < 10) {
+        setNumQuestions(numQuestions + 1);
+        
+      } else if (numQuestions === 10) {
+        setNumQuestions(1);
+      }
+      
       navigation.navigate("ShapesAnswer", {rotation, numOne, numTwo, correctAns, shape, color1, color2, color3, colorStyle, numQuestions, userUID});
 
       setNumOne(getRandomInt(10));
@@ -184,10 +193,15 @@ const Shapes = (props) => {
   );
 }
 
+const mapState = state => {
+  return {
+    level: state.level.currentLevel
+  }
+}
 const mapDispatch = dispatch => {
   return {
     startAudio: () => {dispatch(startAudioThunk())}
   }
 }
 
-export default connect (null, mapDispatch)(Shapes)
+export default connect (mapState, mapDispatch)(Shapes)

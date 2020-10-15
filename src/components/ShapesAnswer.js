@@ -19,6 +19,8 @@ import {
   useDocument,
   useDocumentOnce,
 } from "react-firebase-hooks/firestore";
+import {addLevelThunk} from '../redux/reducers/levelReducer'
+import { add } from "react-native-reanimated";
 
 
 const windowWidth = Dimensions.get("window").width;
@@ -56,9 +58,10 @@ const ShapesAnswer = (props) => {
       props.navigation.navigate("Shapes",{userUID});
     }
     if (numQuestions === 10) {
-
-      props.navigation.navigate("Subjects", {userUID});
+      props.addLevel() 
+      props.navigation.navigate("Shapes", {userUID});
       updateMathScores();
+      
     }
   };
 
@@ -132,7 +135,8 @@ const ShapesAnswer = (props) => {
 
 const mapDispatch = dispatch => {
   return {
-    stopAudio: () => {dispatch(stopAudioThunk())}
+    stopAudio: () => {dispatch(stopAudioThunk())},
+    addLevel: () => {dispatch(addLevelThunk())}
   }
 }
 
