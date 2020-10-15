@@ -4,7 +4,9 @@ import {
   View,
   TouchableOpacity,
   Dimensions,
-  ImageBackground
+  ImageBackground,
+  Alert,
+  
 } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
@@ -15,10 +17,11 @@ import {stopAudioThunk} from '../redux/reducers/audioReducer'
 import Animations from "./Animations";
 import styles from './ShapesAnswer.component.style.js';
 import {
-  useCollection,
   useDocument,
-  useDocumentOnce,
+ 
 } from "react-firebase-hooks/firestore";
+import {addLevelThunk} from '../redux/reducers/levelReducer'
+
 
 
 const windowWidth = Dimensions.get("window").width;
@@ -26,8 +29,8 @@ const windowWidth = Dimensions.get("window").width;
 const widthConstant = windowWidth / 667;
 
 const ShapesAnswer = (props) => {
-  const {correctAns, numOne, numTwo, color1, color2, color3, colorStyle, numQuestions, userUID} = props.route.params;
-  const [value, loading, error] = useDocument(
+  const {correctAns, numOne, numTwo, color1, color2, color3, colorStyle, numQuestions, userUID, level} = props.route.params;
+  const [value] = useDocument(
     firebase.firestore().collection("users").doc(userUID)
   );
   let {shape, rotation} = props.route.params;
@@ -51,16 +54,34 @@ const ShapesAnswer = (props) => {
    }
 
   const handlePress = () => {
+    
     if (numQuestions < 10) {
       props.stopAudio()
       props.navigation.navigate("Shapes",{userUID});
     }
     if (numQuestions === 10) {
-
-      props.navigation.navigate("Subjects", {userUID});
-      updateMathScores();
+      if (level < 10) {
+        props.addLevel()
+        Alert.alert(`Congratulations`, `You've made it to level ${level + 1}`, [
+          {
+  
+            onPress: () => props.navigation.navigate("Shapes",{userUID}),
+          },
+        ]) 
+        updateMathScores();
+      } else {
+        Alert.alert(`You've passed all 10 levels!`, `You are a Math Genius !`, [
+          {
+  
+            onPress: () => props.navigation.navigate("Subjects",{userUID}),
+          },
+        ])
+      }
+      
+      
     }
-  };
+  }
+  
 
   return (
     <View style={styles.container}>
@@ -81,6 +102,8 @@ const ShapesAnswer = (props) => {
             <Text style={styles.number}>{numOne}</Text>
           </Animatable.View>
         </View>
+       
+      
         <View style={styles.rowContainer}>
           <FontAwesome
             style={styles.addSign}
@@ -119,7 +142,10 @@ const ShapesAnswer = (props) => {
           {numQuestions < 10 ? (
             <Text style={styles.submitButtonText}>Go to the next Question</Text>
           ) : (
+            <View>
+           
             <Text style={styles.submitButtonText}>Go to next Level</Text>
+            </View>
           )}
         </TouchableOpacity>
       </View>
@@ -132,7 +158,8 @@ const ShapesAnswer = (props) => {
 
 const mapDispatch = dispatch => {
   return {
-    stopAudio: () => {dispatch(stopAudioThunk())}
+    stopAudio: () => {dispatch(stopAudioThunk())},
+    addLevel: () => {dispatch(addLevelThunk())}
   }
 }
 

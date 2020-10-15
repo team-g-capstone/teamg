@@ -104,7 +104,6 @@ export default function UserStats_PT(props) {
   const handleGraphPressHistory = () => {
     setSelectedGraph("history");
   };
-
   let image = require("../../assets/backgrounds/green.jpg");
 
   //Change font

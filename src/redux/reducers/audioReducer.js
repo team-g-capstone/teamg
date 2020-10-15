@@ -46,7 +46,7 @@ const audioReducer = (state = initialState, action) => {
             }
         }
         case STOP_AUDIO: {
-            console.log('I made it')
+         
             return {
                 isPlaying: false, 
             }

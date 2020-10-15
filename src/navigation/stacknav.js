@@ -36,7 +36,6 @@ function stackNav({ navigation }) {
         component={SignIn}
         options={{ headerShown: false }}
       />
-
     </Stack.Navigator>
   );
 }
