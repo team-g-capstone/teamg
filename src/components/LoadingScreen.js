@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, StyleSheet, View, Button } from "react-native";
+import {
+  ActivityIndicator,
+  Alert,
+  StyleSheet,
+  View,
+  Button,
+} from "react-native";
 import * as firebase from "firebase";
 
 export default function LoadingScreen({ navigation }) {

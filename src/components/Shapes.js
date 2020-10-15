@@ -17,10 +17,12 @@ import { Audio } from "expo-av";
 import styles from './Shapes.component.style.js'
 import {componentDidMountAudio, colorDecider, colors, shapes, getRandomInt} from './ShapesHelperFuncs'
 import { useNavigation } from "@react-navigation/native";
+import {startAudioThunk} from '../redux/reducers/audioReducer'
+import {connect} from 'react-redux'
 
 let rotation = 0;
 
-export default function Shapes(props) {
+const Shapes = (props) => {
 
   const navigation = useNavigation();
   const [answer, setAnswer] = useState("");
@@ -29,7 +31,10 @@ export default function Shapes(props) {
   const [checkAns, setCheckAns] = useState(true);
   const [numQuestions, setNumQuestions] = useState(1);
   const userUID = props.route.params.userUID;
-
+// let userUID;
+//   if(props.route.params.userUID){
+//   userUID = props.route.params.userUID
+// }
 
   let shape = shapes[rotation];
 
@@ -43,6 +48,9 @@ export default function Shapes(props) {
   componentDidMountAudio();
 
   const handlePress = async () => {
+    
+    await Audio.setIsEnabledAsync(true)
+    await props.startAudio()
     let correctAns = numOne + numTwo;
 
     if (Number(answer) === correctAns) {
@@ -54,7 +62,7 @@ export default function Shapes(props) {
       setAnswer();
       setCheckAns(true);
     } else {
-
+      
       let sound = new Audio.Sound();
       const status = {
         shouldPlay: false,
@@ -176,4 +184,10 @@ export default function Shapes(props) {
   );
 }
 
+const mapDispatch = dispatch => {
+  return {
+    startAudio: () => {dispatch(startAudioThunk())}
+  }
+}
 
+export default connect (null, mapDispatch)(Shapes)

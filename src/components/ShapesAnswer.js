@@ -10,7 +10,8 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import * as Animatable from "react-native-animatable";
 import * as firebase from "firebase"
-
+import {connect} from 'react-redux'
+import {stopAudioThunk} from '../redux/reducers/audioReducer'
 import Animations from "./Animations";
 import styles from './ShapesAnswer.component.style.js';
 import {
@@ -24,7 +25,7 @@ const windowWidth = Dimensions.get("window").width;
 
 const widthConstant = windowWidth / 667;
 
-export default function Shapes2Answer(props) {
+const ShapesAnswer = (props) => {
   const {correctAns, numOne, numTwo, color1, color2, color3, colorStyle, numQuestions, userUID} = props.route.params;
   const [value, loading, error] = useDocument(
     firebase.firestore().collection("users").doc(userUID)
@@ -34,21 +35,29 @@ export default function Shapes2Answer(props) {
   let image = require('../../assets/backgrounds/orange.jpg')
 
   const updateMathScores = async () => {
-    let mathScores = value.data().mathScores;
-    let mathScoresNew = mathScores.map((score,idx)=> idx === 0? true:score);
-    let userDocument = await firebase.firestore().collection('users').doc(userUID).get();
-    userDocument.ref.update({
-      mathScores:mathScoresNew
-    })
+
+    let currentUser =  await firebase.auth().currentUser;
+
+    if(!currentUser.isAnonymous){
+      let mathScores = value.data().mathScores;
+      let mathScoresNew = mathScores.map((score,idx)=> idx === 0? true:score);
+
+      let userDocument = await firebase.firestore().collection('users').doc(userUID).get();
+      userDocument.ref.update({
+        mathScores:mathScoresNew
+      })
+    }
+
    }
 
   const handlePress = () => {
     if (numQuestions < 10) {
+      props.stopAudio()
       props.navigation.navigate("Shapes",{userUID});
     }
     if (numQuestions === 10) {
 
-      props.navigation.navigate("ColorSortGame", {userUID});
+      props.navigation.navigate("Subjects", {userUID});
       updateMathScores();
     }
   };
@@ -121,3 +130,10 @@ export default function Shapes2Answer(props) {
   );
 }
 
+const mapDispatch = dispatch => {
+  return {
+    stopAudio: () => {dispatch(stopAudioThunk())}
+  }
+}
+
+export default connect (null, mapDispatch)(ShapesAnswer)

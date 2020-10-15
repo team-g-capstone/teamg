@@ -101,6 +101,10 @@ export default StyleSheet.create({
       fontSize: 25,
       fontWeight: "bold",
       color: "white",
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.8,
+      shadowRadius: 2, 
     
     },
     circle: {

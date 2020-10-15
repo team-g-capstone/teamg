@@ -14,15 +14,15 @@ import ColorSortGame from "../components/ColorSortGame";
 
 import UserStats_PT from "../components/UserStats_PT";
 import UserStats_Student from "../components/UserStats_Student";
-import AudioButton from "../components/AudioButton";
-
 import SignUp from "../components/SignUp";
+
 import SignIn from "../components/SignIn";
 import LoadingScreen from "../components/LoadingScreen";
 //Firebase
 import * as firebase from "firebase";
 import apiKeys from "../../config/keys";
 import parentEditProfile from "../components/parentEditProfile";
+import AllChildList from "../components/AllChildrenList";
 
 //Drawer
 import { createDrawerNavigator } from "@react-navigation/drawer";
@@ -45,26 +45,7 @@ const Navigation = () => (
         component={stackNav}
         options={{ headerShown: false }}
       />
-      {/* <Drawer.Screen
-        name="LoadingScreen"
-        component={LoadingScreen}
-        options={{ headerShown: false }}
-      />
-      <Drawer.Screen
-        name="WelcomePage"
-        component={WelcomePage}
-        options={{ headerShown: false }}
-      />
-      <Drawer.Screen
-        name="SignUp"
-        component={SignUp}
-        options={{ headerShown: false }}
-      />
-      <Drawer.Screen
-        name="SignIn"
-        component={SignIn}
-        options={{ headerShown: false }}
-      /> */}
+
       <Drawer.Screen
         name="MainMenu"
         component={MainMenuNav}
@@ -75,36 +56,6 @@ const Navigation = () => (
         component={SubjectsNav}
         options={{ headerShown: false }}
       />
-      {/* <Drawer.Screen
-        name="Shapes"
-        component={Shapes}
-        options={{ headerShown: false }}
-      />
-      <Drawer.Screen
-        name="ColorSortGame"
-        component={ColorSortGame}
-        options={{ headerShown: false }}
-      />
-      <Drawer.Screen
-        name="ShapesAnswer"
-        component={ShapesAnswer}
-        options={{ headerShown: false }}
-      /> */}
-      {/* <Drawer.Screen
-        name="parentEditProfile"
-        component={parentEditProfile}
-        options={{ headerShown: false }}
-      /> */}
-      {/* <Drawer.Screen
-        name="UserStats_PT"
-        component={UserStats_PT}
-        options={{ headerShown: false }}
-      />
-      <Drawer.Screen
-        name="UserStats_Student"
-        component={UserStats_Student}
-        options={{ headerShown: false }}
-      /> */}
     </Drawer.Navigator>
   </NavigationContainer>
 );
