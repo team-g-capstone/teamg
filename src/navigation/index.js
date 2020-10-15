@@ -10,12 +10,11 @@ import ShapesAnswer from "../components/ShapesAnswer";
 import Subjects from "../components/Subjects";
 import WelcomePage from "../components/WelcomePage";
 import MainMenu from "../components/MainMenu";
-import ColorSortGame from '../components/ColorSortGame';
+import ColorSortGame from "../components/ColorSortGame";
 
 import UserStats_PT from "../components/UserStats_PT";
 import UserStats_Student from "../components/UserStats_Student";
 import SignUp from "../components/SignUp";
-
 
 import SignIn from "../components/SignIn";
 import LoadingScreen from "../components/LoadingScreen";
@@ -25,6 +24,14 @@ import apiKeys from "../../config/keys";
 import parentEditProfile from "../components/parentEditProfile";
 import AllChildList from "../components/AllChildrenList";
 
+//Drawer
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import stackNav from "./stacknav";
+import SubjectsNav from "./subjectsnav";
+import MainMenuNav from "./MainMenuNav";
+
+const Drawer = createDrawerNavigator();
+
 const Stack = createStackNavigator();
 
 if (!firebase.apps.length) {
@@ -32,74 +39,24 @@ if (!firebase.apps.length) {
 }
 const Navigation = () => (
   <NavigationContainer>
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen
-        name="LoadingScreen"
-        component={LoadingScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
+    <Drawer.Navigator screenOptions={{ headerShown: false }}>
+      <Drawer.Screen
         name="WelcomePage"
-        component={WelcomePage}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="SignUp"
-        component={SignUp}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="SignIn"
-        component={SignIn}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="MainMenu"
-        component={MainMenu}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Subjects"
-        component={Subjects}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Shapes"
-        component={Shapes}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="ColorSortGame"
-        component={ColorSortGame}
-        options={{ headerShown: false}}
-        />
-      <Stack.Screen
-        name="ShapesAnswer"
-        component={ShapesAnswer}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-      name= "parentEditProfile"
-      component={parentEditProfile}
-      options={{headerShown: false}}
-      />
-      <Stack.Screen
-      name= "allChildrenList"
-      component={AllChildList}
-      options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="UserStats_PT"
-        component={UserStats_PT}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="UserStats_Student"
-        component={UserStats_Student}
+        component={stackNav}
         options={{ headerShown: false }}
       />
 
-    </Stack.Navigator>
+      <Drawer.Screen
+        name="MainMenu"
+        component={MainMenuNav}
+        options={{ headerShown: false }}
+      />
+      <Drawer.Screen
+        name="SubjectsNav"
+        component={SubjectsNav}
+        options={{ headerShown: false }}
+      />
+    </Drawer.Navigator>
   </NavigationContainer>
 );
 
