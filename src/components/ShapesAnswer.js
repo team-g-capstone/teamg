@@ -5,7 +5,8 @@ import {
   TouchableOpacity,
   Dimensions,
   ImageBackground,
-  Alert
+  Alert,
+  Button
 } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
@@ -54,14 +55,20 @@ const ShapesAnswer = (props) => {
    }
 
   const handlePress = () => {
+    console.log(props)
     if (numQuestions < 10) {
       props.stopAudio()
       props.navigation.navigate("Shapes",{userUID});
     }
     if (numQuestions === 10) {
-      if (level <= 10) {
+      if (level < 10) {
         props.addLevel()
-        props.navigation.navigate("Shapes", {userUID});
+        Alert.alert(`Congratulations`, `You've made it to level ${level + 1}`, [
+          {
+  
+            onPress: () => props.navigation.navigate("Shapes",{userUID}),
+          },
+        ]) 
         updateMathScores();
       } else {
         Alert.alert(`You've passed all 10 levels!`, `You are a Math Genius !`, [
@@ -74,7 +81,8 @@ const ShapesAnswer = (props) => {
       
       
     }
-  };
+  }
+  
 
   return (
     <View style={styles.container}>
@@ -95,6 +103,8 @@ const ShapesAnswer = (props) => {
             <Text style={styles.number}>{numOne}</Text>
           </Animatable.View>
         </View>
+       
+      
         <View style={styles.rowContainer}>
           <FontAwesome
             style={styles.addSign}
@@ -103,6 +113,10 @@ const ShapesAnswer = (props) => {
             color="black"
           />
         </View>
+        {/* <View style={{paddingTop: 300}}>
+                <Button	onPress={() => this.toastify.show('Hello World !', 1000)}	title="Demo" />
+                <Toast ref={(c) => this.toastify = c} />
+            </View> */}
         <View style={styles.rowContainer}>
           <Animatable.View
             animation="slideInDown"
@@ -133,7 +147,10 @@ const ShapesAnswer = (props) => {
           {numQuestions < 10 ? (
             <Text style={styles.submitButtonText}>Go to the next Question</Text>
           ) : (
+            <View>
+           
             <Text style={styles.submitButtonText}>Go to next Level</Text>
+            </View>
           )}
         </TouchableOpacity>
       </View>
