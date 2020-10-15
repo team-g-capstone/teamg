@@ -109,17 +109,17 @@ export default function UserStats_Student(props) {
               {selectedImage?
               <>
               <TouchableOpacity
-                onPress={handlePressUpdateImageUrl}
-                style={styles.button}
-              >
-                <Text style={styles.buttonText}>Update Photo</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
               onPress={openImagePickerAsync}
               style={styles.button}
             >
               <Text style={styles.buttonText}>Pick another Photo</Text>
             </TouchableOpacity>
+            <TouchableOpacity
+                onPress={handlePressUpdateImageUrl}
+                style={styles.button}
+              >
+                <Text style={styles.buttonText}>Save Changes</Text>
+              </TouchableOpacity>
             </>
               :<TouchableOpacity
                 onPress={openImagePickerAsync}
