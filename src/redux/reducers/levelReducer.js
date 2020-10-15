@@ -18,7 +18,7 @@ export const addLevelThunk = () => {
 }
 
 const initialState = {
-    currentLevel: 0,
+    currentLevel: 1,
 }
 
 const levelReducer = (state = initialState, action) => {

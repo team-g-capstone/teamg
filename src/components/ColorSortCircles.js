@@ -11,7 +11,7 @@ import {connect} from 'react-redux'
 const ColorSortCircles= (props) => {
     const width = props.width
     const pan = useState(new Animated.ValueXY())[0]
-    let [color] = useState(colors[getRandomInt(3)]);
+    let [color] = useState(colors[getRandomInt(0, 3)]);
     const opacity = useState(new Animated.Value(1))[0]
     Audio.setIsEnabledAsync(true)
     componentDidMountAudio();

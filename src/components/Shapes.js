@@ -15,7 +15,7 @@ import * as Animatable from "react-native-animatable";
 import LottieView from "lottie-react-native";
 import { Audio } from "expo-av";
 import styles from './Shapes.component.style.js'
-import {componentDidMountAudio, colorDecider, colors, shapes, getRandomInt} from './ShapesHelperFuncs'
+import {componentDidMountAudio, colorDecider, colors, shapes, getRandomInt, getIndexForRandom} from './ShapesHelperFuncs'
 import { useNavigation } from "@react-navigation/native";
 import {startAudioThunk} from '../redux/reducers/audioReducer'
 import {connect} from 'react-redux'
@@ -23,16 +23,19 @@ import {connect} from 'react-redux'
 let rotation = 0;
 
 const Shapes = (props) => {
-
+  let  level = props.level
+  let [index1] = useState(getIndexForRandom(level))
+  let [index2] = useState(getIndexForRandom(level))
+  
   const navigation = useNavigation();
   const [answer, setAnswer] = useState("");
-  const [numOne, setNumOne] = useState(getRandomInt(10));
-  const [numTwo, setNumTwo] = useState(getRandomInt(10));
+  const [numOne, setNumOne] = useState(getRandomInt(index1[0], index1[1]));
+  const [numTwo, setNumTwo] = useState(getRandomInt(index2[0], index2[1]));
   const [checkAns, setCheckAns] = useState(true);
   const [numQuestions, setNumQuestions] = useState(1);
   const userUID = props.route.params.userUID;
   
-  let  level = props.level
+
   console.log(level)
 // let userUID;
 //   if(props.route.params.userUID){
@@ -64,10 +67,11 @@ const Shapes = (props) => {
         setNumQuestions(1);
       }
       
-      navigation.navigate("ShapesAnswer", {rotation, numOne, numTwo, correctAns, shape, color1, color2, color3, colorStyle, numQuestions, userUID});
-
-      setNumOne(getRandomInt(10));
-      setNumTwo(getRandomInt(10));
+      navigation.navigate("ShapesAnswer", {rotation, numOne, numTwo, correctAns, shape, color1, color2, color3, colorStyle, numQuestions, userUID, level});
+      index1 = getIndexForRandom(level)
+      index2 = getIndexForRandom(level)
+      setNumOne(getRandomInt(index1[0], index1[1] + 1));
+      setNumTwo(getRandomInt(index2[0], index2[1] + 1));
       setAnswer();
       setCheckAns(true);
     } else {

@@ -4,7 +4,8 @@ import {
   View,
   TouchableOpacity,
   Dimensions,
-  ImageBackground
+  ImageBackground,
+  Alert
 } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
@@ -28,7 +29,7 @@ const windowWidth = Dimensions.get("window").width;
 const widthConstant = windowWidth / 667;
 
 const ShapesAnswer = (props) => {
-  const {correctAns, numOne, numTwo, color1, color2, color3, colorStyle, numQuestions, userUID} = props.route.params;
+  const {correctAns, numOne, numTwo, color1, color2, color3, colorStyle, numQuestions, userUID, level} = props.route.params;
   const [value, loading, error] = useDocument(
     firebase.firestore().collection("users").doc(userUID)
   );
@@ -58,9 +59,19 @@ const ShapesAnswer = (props) => {
       props.navigation.navigate("Shapes",{userUID});
     }
     if (numQuestions === 10) {
-      props.addLevel() 
-      props.navigation.navigate("Shapes", {userUID});
-      updateMathScores();
+      if (level <= 10) {
+        props.addLevel()
+        props.navigation.navigate("Shapes", {userUID});
+        updateMathScores();
+      } else {
+        Alert.alert(`You've passed all 10 levels!`, `You are a Math Genius !`, [
+          {
+  
+            onPress: () => props.navigation.navigate("Subjects",{userUID}),
+          },
+        ])
+      }
+      
       
     }
   };
