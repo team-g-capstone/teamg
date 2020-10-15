@@ -8,8 +8,7 @@ import SignIn from "../components/SignIn";
 import LoadingScreen from "../components/LoadingScreen";
 import WelcomePage from "../components/WelcomePage";
 import parentEditProfile from "../components/parentEditProfile";
-import UserStats_PT from "../components/UserStats_PT";
-import UserStats_Student from "../components/UserStats_Student";
+import AllChildList from "../components/AllChildrenList";
 
 import MainMenu from "../components/MainMenu";
 
@@ -47,6 +46,11 @@ function stackNav({ navigation }) {
       <Stack.Screen
         name="parentEditProfile"
         component={parentEditProfile}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="AllChildrenList"
+        component={AllChildList}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

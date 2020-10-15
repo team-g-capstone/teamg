@@ -97,6 +97,7 @@ export default function MainMenu(props) {
                       mathScores: mathScores,
                       userUID: userUID,
                       firstName: firstName,
+                      logicScores: logicScores,
                     },
                   })
                 }
