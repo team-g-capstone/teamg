@@ -41,6 +41,18 @@ export function colorDecider(color1, color2) {
     return newColor;
   }
 
-  export function getRandomInt(max) {
-    return Math.floor(Math.random() * Math.floor(max));
+  export function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min) + min);
+  }
+
+  export function getIndexForRandom(level) {
+    if (level < 3) {
+      return [0, level + 3]
+    } else if (level >= 3 && level < 6) {
+      return [2, level + 4]
+    } else if (level >= 6 && level < 8) {
+      return [4, 10]
+    } else {
+      return [6, 15]
+    }
   }

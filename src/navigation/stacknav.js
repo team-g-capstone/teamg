@@ -7,10 +7,7 @@ import SignUp from "../components/SignUp";
 import SignIn from "../components/SignIn";
 import LoadingScreen from "../components/LoadingScreen";
 import WelcomePage from "../components/WelcomePage";
-import parentEditProfile from "../components/parentEditProfile";
-import AllChildList from "../components/AllChildrenList";
 
-import MainMenu from "../components/MainMenu";
 
 import { createStackNavigator } from "@react-navigation/stack";
 
@@ -43,16 +40,7 @@ function stackNav({ navigation }) {
         component={SignIn}
         options={{ headerShown: false }}
       />
-      <Stack.Screen
-        name="parentEditProfile"
-        component={parentEditProfile}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="AllChildrenList"
-        component={AllChildList}
-        options={{ headerShown: false }}
-      />
+      
     </Stack.Navigator>
   );
 }
