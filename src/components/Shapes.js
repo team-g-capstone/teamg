@@ -36,11 +36,6 @@ const Shapes = (props) => {
   const userUID = props.route.params.userUID;
   
 
-  console.log(level)
-// let userUID;
-//   if(props.route.params.userUID){
-//   userUID = props.route.params.userUID
-// }
 
   let shape = shapes[rotation];
 

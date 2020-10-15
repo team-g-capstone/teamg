@@ -4,7 +4,8 @@ import Subjects from "../components/Subjects";
 import MainMenu from "../components/MainMenu";
 import UserStats_PT from "../components/UserStats_PT";
 import UserStats_Student from "../components/UserStats_Student";
-
+import parentEditProfile from "../components/parentEditProfile";
+import AllChildList from "../components/AllChildrenList";
 import { createStackNavigator } from "@react-navigation/stack";
 
 const Stack = createStackNavigator();
@@ -32,6 +33,17 @@ function MainMenuNav({ navigation }) {
         component={UserStats_Student}
         options={{ headerShown: false }}
       />
+
+      <Stack.Screen
+        name="parentEditProfile"
+        component={parentEditProfile}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="AllChildrenList"
+        component={AllChildList}
+        options={{ headerShown: false }}
+      /> 
     </Stack.Navigator>
   );
 }

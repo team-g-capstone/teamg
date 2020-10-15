@@ -50,7 +50,6 @@
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
     "rnal": "^0.2.1"
-    
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",

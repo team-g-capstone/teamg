@@ -5,8 +5,7 @@ import Shapes from "../components/Shapes";
 import ShapesAnswer from "../components/ShapesAnswer";
 import Subjects from "../components/Subjects";
 import ColorSortGame from "../components/ColorSortGame";
-import UserStats_PT from "../components/UserStats_PT";
-import UserStats_Student from "../components/UserStats_Student";
+
 
 const Stack = createStackNavigator();
 
@@ -33,16 +32,6 @@ function SubjectsNav({ navigation }) {
         component={ShapesAnswer}
         options={{ headerShown: false }}
       />
-      {/* <Stack.Screen
-        name="UserStats_PT"
-        component={UserStats_PT}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="UserStats_Student"
-        component={UserStats_Student}
-        options={{ headerShown: false }}
-      /> */}
     </Stack.Navigator>
   );
 }

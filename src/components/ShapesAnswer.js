@@ -6,7 +6,7 @@ import {
   Dimensions,
   ImageBackground,
   Alert,
-  Button
+  
 } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
@@ -17,12 +17,11 @@ import {stopAudioThunk} from '../redux/reducers/audioReducer'
 import Animations from "./Animations";
 import styles from './ShapesAnswer.component.style.js';
 import {
-  useCollection,
   useDocument,
-  useDocumentOnce,
+ 
 } from "react-firebase-hooks/firestore";
 import {addLevelThunk} from '../redux/reducers/levelReducer'
-import { add } from "react-native-reanimated";
+
 
 
 const windowWidth = Dimensions.get("window").width;
@@ -31,7 +30,7 @@ const widthConstant = windowWidth / 667;
 
 const ShapesAnswer = (props) => {
   const {correctAns, numOne, numTwo, color1, color2, color3, colorStyle, numQuestions, userUID, level} = props.route.params;
-  const [value, loading, error] = useDocument(
+  const [value] = useDocument(
     firebase.firestore().collection("users").doc(userUID)
   );
   let {shape, rotation} = props.route.params;
@@ -55,7 +54,7 @@ const ShapesAnswer = (props) => {
    }
 
   const handlePress = () => {
-    console.log(props)
+    
     if (numQuestions < 10) {
       props.stopAudio()
       props.navigation.navigate("Shapes",{userUID});
@@ -113,10 +112,6 @@ const ShapesAnswer = (props) => {
             color="black"
           />
         </View>
-        {/* <View style={{paddingTop: 300}}>
-                <Button	onPress={() => this.toastify.show('Hello World !', 1000)}	title="Demo" />
-                <Toast ref={(c) => this.toastify = c} />
-            </View> */}
         <View style={styles.rowContainer}>
           <Animatable.View
             animation="slideInDown"

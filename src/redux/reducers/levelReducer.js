@@ -24,7 +24,7 @@ const initialState = {
 const levelReducer = (state = initialState, action) => {
     switch(action.type) {
         case ADD_LEVEL: {
-            console.log('HELLO')
+            
             const newState = state.currentLevel + 1
             return {
                 currentLevel: newState
