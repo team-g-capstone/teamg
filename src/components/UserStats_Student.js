@@ -45,9 +45,7 @@ const lvlsCompletedData = {
 export default function UserStats_Student(props) {
   const navigation = useNavigation();
   const [selectedImage, setSelectedImage] = useState(null);
-  const {mathScores,logicScores, firstName,userUID} = props.route.params;
-
-
+  const { mathScores, logicScores, firstName, userUID } = props.route.params;
 
   let openImagePickerAsync = async () => {
     let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
@@ -63,7 +61,6 @@ export default function UserStats_Student(props) {
       return;
     }
     setSelectedImage({ localUri: pickerResult.uri });
-
   };
 
   let image = require("../../assets/backgrounds/green.jpg");
@@ -142,8 +139,7 @@ export default function UserStats_Student(props) {
 
           <Text style={styles.text}>Logic</Text>
           <View style={styles.animationContainer}>
-            {
-            logicScores.map((level,index) => {
+            {logicScores.map((level, index) => {
               if (level !== false) {
                 return (
                   <LottieView
