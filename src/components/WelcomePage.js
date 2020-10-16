@@ -11,27 +11,31 @@ export default function Welcome() {
   const navigation = useNavigation();
   let image = require("../../assets/backgrounds/red.jpg");
 
-  const signInAnonymous =()=>{
-    firebase.auth().signInAnonymously().catch(function(error){Alert.alert("There is an error", error.message)})
+  const signInAnonymous = () => {
+    firebase
+      .auth()
+      .signInAnonymously()
+      .catch(function (error) {
+        Alert.alert("There is an error", error.message);
+      });
 
-    firebase.auth().onAuthStateChanged((user)=>{
-      if(user){
-       const userUID = user.uid
-       navigation.navigate("Subjects", {userUID})
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        const userUID = user.uid;
+        navigation.navigate("Subjects", { userUID });
       }
-    })
-  }
+    });
+  };
 
-  const handlePress =()=>{
-      signInAnonymous();
-      //navigation.navigate("Subjects")
-  }
+  const handlePress = () => {
+    signInAnonymous();
+    //navigation.navigate("Subjects")
+  };
 
   return (
     <View style={styles.container}>
       <ImageBackground source={image} style={styles.image}>
-
-        <Text style={styles.headerText}>Welcome to Math Crazy!!</Text>
+        <Text style={styles.headerText}>Welcome to BrainTeez!!</Text>
         <Text style={styles.signUpText}>Don't have an account yet?</Text>
         <TouchableOpacity
           style={styles.button}
@@ -51,10 +55,7 @@ export default function Welcome() {
           <Text style={styles.buttonText}>Sign in</Text>
         </TouchableOpacity>
         <StatusBar style="auto" />
-        <Button
-          title="Go To Subjects"
-          onPress={handlePress}
-        />
+        <Button title="Go To Subjects" onPress={handlePress} />
       </ImageBackground>
     </View>
   );

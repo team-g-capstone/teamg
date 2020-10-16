@@ -75,9 +75,6 @@ export default function MainMenu(props) {
             <Button
               title="User Progress for Parents/Teachers"
               onPress={() =>
-                // navigation.navigate( "UserStats_PT",
-                //   { userUID }
-                // )}
                 navigation.navigate("MainMenu", {
                   screen: "UserStats_PT",
                   params: { userUID },

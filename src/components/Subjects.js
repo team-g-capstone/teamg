@@ -8,13 +8,15 @@ import * as firebase from "firebase";
 export default function Subjects(props) {
   const navigation = useNavigation();
   // const userUID = props.route.params.userUID;
-  let propsUSer = props.route.params.userUID;
-  let userUID;
-  if (propsUSer) {
-    userUID = props.route.params.userUID;
-  } else {
-    userUID = props.userUID;
-  }
+  // let propsUSer = props.route.params.userUID;
+  // let userUID;
+  // if (propsUSer) {
+  //   userUID = props.route.params.userUID;
+  // } else {
+  //   userUID = props.userUID;
+  // }
+  let user = firebase.auth().currentUser;
+  const userUID = user.uid;
 
   let image = require("../../assets/backgrounds/blue.jpg");
   return (
