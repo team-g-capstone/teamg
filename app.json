@@ -6,9 +6,9 @@
     "orientation": "landscape",
     "icon": "./assets/icon.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/brain_teez.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#FEF9B0"
     },
     "updates": {
       "fallbackToCacheTimeout": 0

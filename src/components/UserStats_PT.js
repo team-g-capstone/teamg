@@ -15,8 +15,8 @@ import { AppLoading } from "expo";
 import * as ImagePicker from "expo-image-picker";
 
 import styles from "./UserStats_PT.component.style.js";
-import * as firebase from "firebase"
-import {useDocument} from "react-firebase-hooks/firestore";
+import * as firebase from "firebase";
+import { useDocument } from "react-firebase-hooks/firestore";
 import { useNavigation } from "@react-navigation/native";
 
 const dummyData = {
@@ -56,8 +56,6 @@ const chartConfig = {
   backgroundColor: "#F4B266",
   backgroundGradientFrom: "#F4B266",
   backgroundGradientTo: "#F4B266",
-  // backgroundGradientFromOpacity: 0,
-  // backgroundGradientToOpacity: 0.5,
   color: (opacity = 1) => `rgba(66, 72, 116, ${opacity})`,
   strokeWidth: 2, // optional, default 3
   barPercentage: 1,
@@ -69,18 +67,18 @@ export default function UserStats_PT(props) {
   //Parent ID
   const userUID = props.route.params.userUID;
   //Child ID, DUMMY for now, need to get it from PROPS
-  const childUID ='GHTGDSbxRChwwoURLsU9xIsgmrl1'
+  const childUID = "GHTGDSbxRChwwoURLsU9xIsgmrl1";
 
-  const [value, loading, error] = useDocument(firebase.firestore().collection('users').doc(childUID))
+  const [value, loading, error] = useDocument(
+    firebase.firestore().collection("users").doc(childUID)
+  );
 
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedGraph, setSelectedGraph] = useState(null);
 
-  //Async to get the data
-  const childData =async() =>{
+  const childData = async () => {
     let childMathScores = value.data().childMathScores;
-
-  }
+  };
   let openImagePickerAsync = async () => {
     let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
 
@@ -107,7 +105,6 @@ export default function UserStats_PT(props) {
 
   let image = require("../../assets/backgrounds/green.jpg");
 
-  //Change font
   let [fontsLoaded] = useFonts({
     Chilanka_400Regular,
   });

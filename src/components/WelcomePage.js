@@ -1,37 +1,47 @@
 import { useNavigation } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet, Text, View, Button, ImageBackground } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  ImageBackground,
+  Image,
+} from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import * as firebase from "firebase";
-
-// import SideMenu from "react-native-side-menu";
 
 export default function Welcome() {
   const navigation = useNavigation();
   let image = require("../../assets/backgrounds/red.jpg");
+  let logo = require("../../assets/logo_without_text.png");
 
-  const signInAnonymous =()=>{
-    firebase.auth().signInAnonymously().catch(function(error){Alert.alert("There is an error", error.message)})
+  const signInAnonymous = () => {
+    firebase
+      .auth()
+      .signInAnonymously()
+      .catch(function (error) {
+        Alert.alert("There is an error", error.message);
+      });
 
-    firebase.auth().onAuthStateChanged((user)=>{
-      if(user){
-       const userUID = user.uid
-       navigation.navigate("Subjects", {userUID})
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        const userUID = user.uid;
+        navigation.navigate("Subjects", { userUID });
       }
-    })
-  }
+    });
+  };
 
-  const handlePress =()=>{
-      signInAnonymous();
-      //navigation.navigate("Subjects")
-  }
+  const handlePress = () => {
+    signInAnonymous();
+  };
 
   return (
     <View style={styles.container}>
       <ImageBackground source={image} style={styles.image}>
-
-        <Text style={styles.headerText}>Welcome to Math Crazy!!</Text>
+        <Image source={logo} style={styles.logo} />
+        <Text style={styles.headerText}>Welcome to BrainTeez!!</Text>
         <Text style={styles.signUpText}>Don't have an account yet?</Text>
         <TouchableOpacity
           style={styles.button}
@@ -51,10 +61,10 @@ export default function Welcome() {
           <Text style={styles.buttonText}>Sign in</Text>
         </TouchableOpacity>
         <StatusBar style="auto" />
-        <Button
-          title="Go To Subjects"
-          onPress={handlePress}
-        />
+        {/* <Button title="Go To Subjects" onPress={handlePress} /> */}
+        <TouchableOpacity onPress={handlePress}>
+          <Text style={styles.anonButtonText}>Go to Games</Text>
+        </TouchableOpacity>
       </ImageBackground>
     </View>
   );
@@ -104,5 +114,23 @@ const styles = StyleSheet.create({
     height: "100%",
     resizeMode: "cover",
     justifyContent: "center",
+  },
+  logo: {
+    // flex: 1,
+    width: "10%",
+    height: "10%",
+    marginLeft: "45%",
+    paddingBottom: "10%",
+    justifyContent: "center",
+  },
+  anonButtonText: {
+    color: "cornflowerblue",
+    fontWeight: "bold",
+    textAlign: "center",
+    fontSize: 25,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
   },
 });

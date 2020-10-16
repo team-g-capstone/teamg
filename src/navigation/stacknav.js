@@ -8,7 +8,6 @@ import SignIn from "../components/SignIn";
 import LoadingScreen from "../components/LoadingScreen";
 import WelcomePage from "../components/WelcomePage";
 
-
 import { createStackNavigator } from "@react-navigation/stack";
 
 const Stack = createStackNavigator();
@@ -40,7 +39,6 @@ function stackNav({ navigation }) {
         component={SignIn}
         options={{ headerShown: false }}
       />
-      
     </Stack.Navigator>
   );
 }

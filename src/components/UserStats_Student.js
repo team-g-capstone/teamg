@@ -64,7 +64,6 @@ export default function UserStats_Student(props) {
   };
 
   let image = require("../../assets/backgrounds/green.jpg");
-  //Change font
   let [fontsLoaded] = useFonts({
     Chilanka_400Regular,
   });

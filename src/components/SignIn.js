@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, StyleSheet, Alert } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  Alert,
+  ScrollView,
+  Keyboard,
+} from "react-native";
 import * as firebase from "firebase";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
@@ -13,7 +21,7 @@ export default function SignIn({ navigation }) {
         .auth()
         .signInWithEmailAndPassword(email, password);
 
-      navigation.navigate("MainMenu");
+      navigation.navigate("Menu");
     } catch (err) {
       Alert.alert("There is something wrong!", err.message);
     }
@@ -36,25 +44,26 @@ export default function SignIn({ navigation }) {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Enter your email and password to sign in:</Text>
+      <ScrollView onBlur={Keyboard.dismiss}>
+        <TextInput
+          style={styles.emailInput}
+          placeholder="Enter your email"
+          value={email}
+          onChangeText={(email) => setEmail(email)}
+          autoCapitalize="none"
+        />
+        <TextInput
+          style={styles.passwordInput}
+          placeholder="Enter your password"
+          value={password}
+          onChangeText={(password) => setPassword(password)}
+          secureTextEntry={true}
+        />
 
-      <TextInput
-        style={styles.emailInput}
-        placeholder="Enter your email"
-        value={email}
-        onChangeText={(email) => setEmail(email)}
-        autoCapitalize="none"
-      />
-      <TextInput
-        style={styles.passwordInput}
-        placeholder="Enter your password"
-        value={password}
-        onChangeText={(password) => setPassword(password)}
-        secureTextEntry={true}
-      />
-
-      <TouchableOpacity style={styles.button} onPress={handlePress}>
-        <Text style={styles.buttonText}>Sumbit</Text>
-      </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={handlePress}>
+          <Text style={styles.buttonText}>Submit</Text>
+        </TouchableOpacity>
+      </ScrollView>
     </View>
   );
 }
@@ -68,7 +77,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   text: {
-    //center the text
     textAlign: "center",
     fontSize: 18,
     margin: 10,

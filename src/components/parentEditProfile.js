@@ -26,13 +26,6 @@ export default function parentEditProfile(props) {
     "You have added this child, click View all children to see the child's score";
   let image = require("../../assets/backgrounds/red.jpg");
 
-  // const readChildrenFB = () =>{
-  //   let childrenArr =[];
-  //   firebase.firestore().collection('users').doc(userUID).onSnapshot((querysnap)=>
-  //        console.log(querysnap)
-  //   )
-
-  // }
   const addAChild = async () => {
     let childrenFB = value.data().children;
     childrenFB.includes(childUID)
@@ -80,10 +73,13 @@ export default function parentEditProfile(props) {
         >
           <Text style={styles.buttonText}>View all children </Text>
         </TouchableOpacity>
-        <Button
-          title="Main Menu"
-          onPress={() => navigation.navigate("MainMenu")}
-        />
+        {/* <Button title="Menu" onPress={() => navigation.navigate("Menu")} /> */}
+        <TouchableOpacity
+          style={styles.viewAllChildbutton}
+          onPress={() => navigation.navigate("Menu", { userUID })}
+        >
+          <Text style={styles.buttonText}>Menu</Text>
+        </TouchableOpacity>
       </ImageBackground>
     </View>
   );

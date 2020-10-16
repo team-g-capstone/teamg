@@ -9,13 +9,12 @@ import {
 import * as firebase from "firebase";
 
 export default function LoadingScreen({ navigation }) {
-  //MAIN checking if a user is logged in
   useEffect(
     (checkIfLoggedIn = () => {
       firebase.auth().onAuthStateChanged((user) => {
         if (user) {
           const userUID = user.uid;
-          navigation.navigate("MainMenu", {
+          navigation.navigate("Menu", {
             screen: "MainMenuNav",
             params: { userUID },
           });
@@ -31,7 +30,7 @@ export default function LoadingScreen({ navigation }) {
       <ActivityIndicator size="large" />
       <Button
         title="Go to Main Menu"
-        onPress={() => navigation.navigate("MainMenu")}
+        onPress={() => navigation.navigate("Menu")}
         style={styles.progressButton}
       />
     </View>
