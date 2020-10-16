@@ -1,13 +1,10 @@
 import React from "react";
-
 import * as firebase from "firebase";
 import apiKeys from "../../config/keys";
-
 import SignUp from "../components/SignUp";
 import SignIn from "../components/SignIn";
 import LoadingScreen from "../components/LoadingScreen";
 import WelcomePage from "../components/WelcomePage";
-
 import { createStackNavigator } from "@react-navigation/stack";
 
 const Stack = createStackNavigator();

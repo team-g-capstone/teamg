@@ -12,6 +12,7 @@ export default function LoadingScreen({ navigation }) {
   useEffect(
     (checkIfLoggedIn = () => {
       firebase.auth().onAuthStateChanged((user) => {
+
         if (user) {
           const userUID = user.uid;
           navigation.navigate("Menu", {

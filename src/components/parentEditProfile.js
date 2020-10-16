@@ -8,9 +8,12 @@ import {
   Button,
   ImageBackground,
   Alert,
+  ScrollView,
+  Keyboard
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import * as firebase from "firebase";
+
 import { useDocument } from "react-firebase-hooks/firestore";
 
 export default function parentEditProfile(props) {
@@ -19,50 +22,86 @@ export default function parentEditProfile(props) {
   const [value, loading, error] = useDocument(
     firebase.firestore().collection("users").doc(userUID)
   );
-  const [childUID, setChildUID] = useState("");
-  const [childrenFB, setChildrenFB] = useState([]);
+  const [childEmail, setChildEmail]=useState('');
 
   let alertMsg =
-    "You have added this child, click View all children to see the child's score";
+    "Error: You have added this student, click View all students button to see the student's profile.";
   let image = require("../../assets/backgrounds/red.jpg");
+  let studentUIDVar;
 
-  const addAChild = async () => {
-    let childrenFB = value.data().children;
-    childrenFB.includes(childUID)
+  const getStudentUID = async () => {
+     const snapshot = await firebase.firestore().collection('users').where('email', '==',childEmail).get();
+
+     if(snapshot.empty){
+       Alert.alert('The email provided is not registered in the system!')
+       return;
+     }
+
+     snapshot.forEach(doc=>{
+      studentUIDVar= doc.id
+      //DON"T DELTE THIS YET until code review, .data() will give us many info
+      //  console.log(doc.id, '=>', doc.data())
+     })
+  };
+
+  const addStudentToTeacher = async()=>{
+    let studentsFB;
+    if(value&&value.data()){
+    studentsFB = await value.data().students;
+    }
+
+    studentsFB.includes(studentUIDVar)
       ? Alert.alert(alertMsg)
-      : childrenFB.push(childUID);
+      : studentsFB.push(studentUIDVar);
+
     let userDocument = await firebase
       .firestore()
       .collection("users")
       .doc(userUID)
       .get();
     userDocument.ref.update({
-      children: childrenFB,
+      students: studentsFB,
     });
-  };
 
-  const handlePressAddAChild = () => {
-    addAChild();
+    let studentDocument = await firebase
+      .firestore()
+      .collection("users")
+      .doc(studentUIDVar)
+      .get();
+    studentDocument.ref.update({
+      teacherUID:userUID,
+    });
+  }
+
+  const handlePressAddAChild = async () => {
+   await getStudentUID();
+   addStudentToTeacher();
+   setChildEmail('');
   };
 
   return (
     <View style={styles.container}>
       <ImageBackground source={image} style={styles.image}>
         <Text style={styles.headerText}>
-          Parent Dashboard: Edit your profile
+          Teacher Dashboard:
         </Text>
+        <Text style={styles.textInputTitle}>
+          Add a student through their email
+        </Text>
+        <ScrollView onBlur={Keyboard.dismiss}>
         <View style={styles.addAChildContainer}>
           <TextInput
             style={styles.textInput}
-            placeholder="Child UID"
-            value={childUID}
-            onChangeText={(uid) => setChildUID(uid)}
+            placeholder="Enter student email"
+            value={childEmail}
+            autoCapitalize='none'
+            onChangeText={(email) => setChildEmail(email)}
           />
           <TouchableOpacity
             style={styles.button}
             onPress={handlePressAddAChild}
           >
-            <Text style={styles.buttonText}>Add a child </Text>
+            <Text style={styles.buttonText}>ADD</Text>
           </TouchableOpacity>
         </View>
         <TouchableOpacity
@@ -71,7 +110,7 @@ export default function parentEditProfile(props) {
             navigation.navigate("AllChildrenList", { userUID });
           }}
         >
-          <Text style={styles.buttonText}>View all children </Text>
+          <Text style={styles.buttonText}>VIEW ALL STUDENTS</Text>
         </TouchableOpacity>
         {/* <Button title="Menu" onPress={() => navigation.navigate("Menu")} /> */}
         <TouchableOpacity
@@ -80,6 +119,7 @@ export default function parentEditProfile(props) {
         >
           <Text style={styles.buttonText}>Menu</Text>
         </TouchableOpacity>
+        </ScrollView>
       </ImageBackground>
     </View>
   );
@@ -88,31 +128,37 @@ export default function parentEditProfile(props) {
 const styles = StyleSheet.create({
   button: {
     width: 100,
-    padding: 5,
-    backgroundColor: "#ff9999",
+    padding: 10,
+    backgroundColor: "#441196",
     borderWidth: 2,
+    borderRadius:5,
     borderColor: "#ffcccc",
-    borderRadius: 15,
     alignSelf: "center",
     margin: "1%",
   },
   viewAllChildbutton: {
-    width: 250,
-    padding: 5,
-    backgroundColor: "#ff9999",
+    width: 280,
+    padding: 12,
+    backgroundColor: "#441196",
     borderWidth: 2,
     borderColor: "#ffcccc",
-    borderRadius: 15,
+    borderRadius: 5,
     alignSelf: "center",
     margin: "0.5%",
-    marginLeft: "10%",
+    marginLeft: "1%",
+  },
+  textInputTitle:{
+    color:"#fbedeb",
+    marginLeft:"25%",
+    fontSize: 18,
+    fontWeight:"bold"
   },
   textInput: {
-    width: 250,
-    borderWidth: 1,
+    width: 300,
+    borderColor:"#de9999",
+    borderWidth: 2,
     padding: 10,
-    margin: "0.2%",
-    marginLeft: "35%",
+    marginLeft: "25%",
   },
   buttonText: {
     color: "white",
@@ -131,10 +177,11 @@ const styles = StyleSheet.create({
     margin: "1%",
   },
   headerText: {
-    color: "white",
+    color: "#02042e",
     fontSize: 25,
     fontWeight: "bold",
     textAlign: "center",
+    marginBottom:"2%"
   },
   progressButton: {
     alignSelf: "flex-end",
@@ -152,5 +199,6 @@ const styles = StyleSheet.create({
     height: "100%",
     resizeMode: "cover",
     justifyContent: "center",
+    paddingTop:"1.5%"
   },
 });

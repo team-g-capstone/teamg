@@ -6,7 +6,6 @@ import ShapesAnswer from "../components/ShapesAnswer";
 import Subjects from "../components/Subjects";
 import ColorSortGame from "../components/ColorSortGame";
 
-
 const Stack = createStackNavigator();
 
 function SubjectsNav({ navigation }) {

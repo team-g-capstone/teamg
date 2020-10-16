@@ -3,7 +3,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import * as firebase from "firebase";
 import apiKeys from "../../config/keys";
-
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import stackNav from "./stacknav";
 import SubjectsNav from "./subjectsnav";
