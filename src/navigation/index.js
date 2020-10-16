@@ -8,6 +8,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import stackNav from "./stacknav";
 import SubjectsNav from "./subjectsnav";
 import MainMenuNav from "./MainMenuNav";
+import LoadingScreen from "../components/LoadingScreen";
 
 const Drawer = createDrawerNavigator();
 

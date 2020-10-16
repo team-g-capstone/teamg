@@ -1,13 +1,21 @@
 import { useNavigation } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet, Text, View, Button, ImageBackground } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  ImageBackground,
+  Image,
+} from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import * as firebase from "firebase";
 
 export default function Welcome() {
   const navigation = useNavigation();
   let image = require("../../assets/backgrounds/red.jpg");
+  let logo = require("../../assets/logo_without_text.png");
 
   const signInAnonymous = () => {
     firebase
@@ -32,6 +40,7 @@ export default function Welcome() {
   return (
     <View style={styles.container}>
       <ImageBackground source={image} style={styles.image}>
+        <Image source={logo} style={styles.logo} />
         <Text style={styles.headerText}>Welcome to BrainTeez!!</Text>
         <Text style={styles.signUpText}>Don't have an account yet?</Text>
         <TouchableOpacity
@@ -104,6 +113,14 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     resizeMode: "cover",
+    justifyContent: "center",
+  },
+  logo: {
+    // flex: 1,
+    width: "10%",
+    height: "10%",
+    marginLeft: "45%",
+    paddingBottom: "10%",
     justifyContent: "center",
   },
   anonButtonText: {

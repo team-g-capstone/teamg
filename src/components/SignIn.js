@@ -61,7 +61,7 @@ export default function SignIn({ navigation }) {
         />
 
         <TouchableOpacity style={styles.button} onPress={handlePress}>
-          <Text style={styles.buttonText}>Sumbit</Text>
+          <Text style={styles.buttonText}>Submit</Text>
         </TouchableOpacity>
       </ScrollView>
     </View>
