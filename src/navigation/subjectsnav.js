@@ -5,10 +5,6 @@ import Shapes from "../components/Shapes";
 import ShapesAnswer from "../components/ShapesAnswer";
 import Subjects from "../components/Subjects";
 import ColorSortGame from "../components/ColorSortGame";
-<<<<<<< HEAD
-=======
-
->>>>>>> 449e7fb0826680d20b8dcb1ae7e1e336a9a787d7
 
 const Stack = createStackNavigator();
 

@@ -32,10 +32,6 @@ function MainMenuNav({ navigation }) {
         component={UserStats_Student}
         options={{ headerShown: false }}
       />
-<<<<<<< HEAD
-=======
-
->>>>>>> 449e7fb0826680d20b8dcb1ae7e1e336a9a787d7
       <Stack.Screen
         name="parentEditProfile"
         component={parentEditProfile}
@@ -45,11 +41,7 @@ function MainMenuNav({ navigation }) {
         name="AllChildrenList"
         component={AllChildList}
         options={{ headerShown: false }}
-<<<<<<< HEAD
       />
-=======
-      />
->>>>>>> 449e7fb0826680d20b8dcb1ae7e1e336a9a787d7
     </Stack.Navigator>
   );
 }

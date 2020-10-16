@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
+import { View, Text, TextInput, Button, StyleSheet, Alert ,ScrollView,Keyboard} from "react-native";
 import { Picker } from "react-native-picker-dropdown";
 import * as firebase from "firebase";
 import "firebase/firestore";
@@ -35,6 +35,7 @@ export default function SignUp({ navigation }) {
           mathScores:falseArr ,
           logicScores: falseArr,
           imageUrl: defaultImage,
+          students:[],
 
         });
       const userUID = currentUser.uid
@@ -86,6 +87,7 @@ export default function SignUp({ navigation }) {
         }}
       />
       <Text style={styles.text}>Create an account </Text>
+
       <Picker
         style={styles.pickerInput}
         enabled={false}
@@ -96,7 +98,7 @@ export default function SignUp({ navigation }) {
         <Picker.Item label="Teacher" value="teacher" />
         <Picker.Item label="Parents" value="parent" />
       </Picker>
-
+      <ScrollView onBlur={Keyboard.dismiss}>
       <TextInput
         style={styles.textInput}
         placeholder="First name"
@@ -136,6 +138,7 @@ export default function SignUp({ navigation }) {
       <TouchableOpacity style={styles.button} onPress={handlePress}>
         <Text style={styles.buttonText}>Sign up</Text>
       </TouchableOpacity>
+      </ScrollView>
     </View>
   );
 }
