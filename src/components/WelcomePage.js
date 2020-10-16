@@ -28,7 +28,7 @@ export default function Welcome() {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         const userUID = user.uid;
-        navigation.navigate("Subjects", { userUID });
+        navigation.navigate("Games", { userUID });
       }
     });
   };
