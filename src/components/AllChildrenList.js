@@ -63,10 +63,10 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
-    paddingTop:"2%",
+    paddingTop: "2%",
     resizeMode: "cover",
     justifyContent: "center",
-    alignItems:"center",
+    alignItems: "center",
     height: "100%",
     width: "100%",
   },

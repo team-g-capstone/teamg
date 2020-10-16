@@ -1,34 +1,38 @@
 import { useNavigation } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet, Text, View, Button, ImageBackground } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  ImageBackground,
+  TouchableOpacity,
+} from "react-native";
 import AudioButton from "./AudioButton";
 import * as firebase from "firebase";
 
 export default function Subjects(props) {
   const navigation = useNavigation();
-  // const userUID = props.route.params.userUID;
-  let propsUSer = props.route.params.userUID;
-  let userUID;
-  if (propsUSer) {
-    userUID = props.route.params.userUID;
-  } else {
-    userUID = props.userUID;
-  }
+
+  let user = firebase.auth().currentUser;
+  const userUID = user.uid;
 
   let image = require("../../assets/backgrounds/blue.jpg");
   return (
     <View style={styles.container}>
       <ImageBackground source={image} style={styles.image}>
         <StatusBar style="auto" />
-        <Button
-          title="Math"
+        <TouchableOpacity
           onPress={() => navigation.navigate("Shapes", { userUID })}
-        />
-        <Button
-          title="Logic"
+        >
+          <Text style={styles.ButtonText}>Math</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
           onPress={() => navigation.navigate("ColorSortGame", { userUID })}
-        />
+        >
+          <Text style={styles.ButtonText}>Logic</Text>
+        </TouchableOpacity>
       </ImageBackground>
     </View>
   );
@@ -48,5 +52,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     height: "100%",
     width: "100%",
+  },
+  ButtonText: {
+    color: "cornflowerblue",
+    fontWeight: "bold",
+    textAlign: "center",
+    fontSize: 25,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
   },
 });

@@ -39,7 +39,7 @@ export default function SignUp({ navigation }) {
 
         });
       const userUID = currentUser.uid
-      navigation.navigate("MainMenu", { userUID });
+      navigation.navigate("Menu", { userUID });
     } catch (err) {
       Alert.alert("There is something wrong!", err.message);
     }
@@ -73,7 +73,7 @@ export default function SignUp({ navigation }) {
       Alert.alert("Password does not match!");
     } else {
       registration(email, password);
-      navigation.navigate("MainMenu");
+      navigation.navigate("Menu");
       emptyState();
     }
   };

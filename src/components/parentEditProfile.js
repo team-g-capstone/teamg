@@ -112,13 +112,12 @@ export default function parentEditProfile(props) {
         >
           <Text style={styles.buttonText}>VIEW ALL STUDENTS</Text>
         </TouchableOpacity>
+        {/* <Button title="Menu" onPress={() => navigation.navigate("Menu")} /> */}
         <TouchableOpacity
           style={styles.viewAllChildbutton}
-          onPress={() => {
-            navigation.navigate("MainMenuNav");
-          }}
+          onPress={() => navigation.navigate("Menu", { userUID })}
         >
-          <Text style={styles.buttonText}>MAIN MENU</Text>
+          <Text style={styles.buttonText}>Menu</Text>
         </TouchableOpacity>
         </ScrollView>
       </ImageBackground>

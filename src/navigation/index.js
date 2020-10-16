@@ -7,6 +7,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import stackNav from "./stacknav";
 import SubjectsNav from "./subjectsnav";
 import MainMenuNav from "./MainMenuNav";
+import LoadingScreen from "../components/LoadingScreen";
 
 const Drawer = createDrawerNavigator();
 
@@ -15,22 +16,22 @@ const Stack = createStackNavigator();
 if (!firebase.apps.length) {
   firebase.initializeApp(apiKeys.firebaseConfig);
 }
+
 const Navigation = () => (
   <NavigationContainer>
     <Drawer.Navigator screenOptions={{ headerShown: false }}>
       <Drawer.Screen
-        name="WelcomePage"
+        name="Welcome"
         component={stackNav}
         options={{ headerShown: false }}
       />
-
       <Drawer.Screen
-        name="MainMenu"
+        name="Menu"
         component={MainMenuNav}
         options={{ headerShown: false }}
       />
       <Drawer.Screen
-        name="SubjectsNav"
+        name="Games"
         component={SubjectsNav}
         options={{ headerShown: false }}
       />
