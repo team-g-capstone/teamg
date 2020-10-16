@@ -21,17 +21,17 @@ const Navigation = () => (
   <NavigationContainer>
     <Drawer.Navigator screenOptions={{ headerShown: false }}>
       <Drawer.Screen
-        name="WelcomePage"
+        name="Welcome"
         component={stackNav}
         options={{ headerShown: false }}
       />
       <Drawer.Screen
-        name="MainMenu"
+        name="Menu"
         component={MainMenuNav}
         options={{ headerShown: false }}
       />
       <Drawer.Screen
-        name="SubjectsNav"
+        name="Games"
         component={SubjectsNav}
         options={{ headerShown: false }}
       />

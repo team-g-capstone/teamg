@@ -1,31 +1,20 @@
-//import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
   View,
-  Button,
   ImageBackground,
   Alert,
   ActivityIndicator,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-// import SideMenu from "react-native-side-menu";
 import * as firebase from "firebase";
-import {
-  useCollection,
-  useDocument,
-  useDocumentOnce,
-} from "react-firebase-hooks/firestore";
+import { useDocument } from "react-firebase-hooks/firestore";
 import { useNavigation } from "@react-navigation/native";
-import Subjects from "./Subjects";
 
 export default function MainMenu(props) {
   const navigation = useNavigation();
   const userUID = props.route.params.userUID;
-  // let user = firebase.auth().currentUser;
-  // const userUID = user.uid;
-  // console.log(userUID);
 
   let image = require("../../assets/backgrounds/orange.jpg");
 
@@ -54,41 +43,36 @@ export default function MainMenu(props) {
     return (
       <View style={styles.container}>
         <ImageBackground source={image} style={styles.image}>
-          <Text style={styles.headerText}>
-            Main Menu: Hello {userType}
-            {` `}
-            {firstName} !
-          </Text>
-          <Text style={styles.signUpText}>Collect some stickers</Text>
-
-          <Button
-            title="Go To Subjects"
+          <Text style={styles.headerText}>Hello, {firstName} !</Text>
+          <TouchableOpacity
             onPress={() =>
-              navigation.navigate("SubjectsNav", {
+              navigation.navigate("Games", {
                 screen: "Subjects",
                 params: { userUID: userUID },
               })
             }
-          />
+          >
+            <Text style={styles.anonButtonText}>Games</Text>
+          </TouchableOpacity>
 
           {userType !== "student" ? (
-            <Button
-              title="User Progress for Parents/Teachers"
+            <TouchableOpacity
               onPress={() =>
-                navigation.navigate("MainMenu", {
+                navigation.navigate("Menu", {
                   screen: "UserStats_PT",
                   params: { userUID },
                 })
               }
-              style={styles.progressButton}
-            />
+            >
+              <Text style={styles.anonButtonText}>
+                Student Progress for Teachers/Parents
+              </Text>
+            </TouchableOpacity>
           ) : (
             <>
-              <Text style={styles.signUpText}>View my stickers</Text>
-              <Button
-                title="User Progress for Student"
+              <TouchableOpacity
                 onPress={() =>
-                  navigation.navigate("MainMenu", {
+                  navigation.navigate("Menu", {
                     screen: "UserStats_Student",
                     params: {
                       mathScores: mathScores,
@@ -98,8 +82,9 @@ export default function MainMenu(props) {
                     },
                   })
                 }
-                style={styles.progressButton}
-              />
+              >
+                <Text style={styles.anonButtonText}>Student Progress</Text>
+              </TouchableOpacity>
             </>
           )}
           <TouchableOpacity
@@ -118,27 +103,18 @@ export default function MainMenu(props) {
     );
   } else {
     let image = require("../../assets/backgrounds/blue.jpg");
-    //SHOULD CHANGE BUTTON STYLING IF WE ARE OK WITH THIS
     return (
       <View style={styles.container}>
         <ImageBackground source={image} style={styles.image}>
-          <Text>ELSE from MAIN MENU</Text>
-          <Button
-            title="Math"
-            onPress={() => navigation.navigate("Shapes", { userUID })}
-          />
-          <Button
-            title="Logic"
-            onPress={() => navigation.navigate("ColorSortGame", { userUID })}
-          />
-          <Button
-            title="Sign Up"
-            onPress={() => navigation.navigate("SignUp")}
-          />
-          <Button
-            title="Sign In"
-            onPress={() => navigation.navigate("SignIn")}
-          />
+          <Text style={styles.text}>You are not signed in!</Text>
+
+          <TouchableOpacity onPress={() => navigation.navigate("SignIn")}>
+            <Text style={styles.anonButtonText}>Sign In</Text>
+          </TouchableOpacity>
+          <Text style={styles.text}>OR</Text>
+          <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
+            <Text style={styles.anonButtonText}>Sign Up</Text>
+          </TouchableOpacity>
         </ImageBackground>
       </View>
     );
@@ -169,7 +145,7 @@ const styles = StyleSheet.create({
   },
   headerText: {
     color: "white",
-    fontSize: 25,
+    fontSize: 35,
     fontWeight: "bold",
     textAlign: "center",
   },
@@ -189,5 +165,22 @@ const styles = StyleSheet.create({
     height: "100%",
     resizeMode: "cover",
     justifyContent: "center",
+  },
+  text: {
+    textAlign: "center",
+    fontSize: 25,
+    margin: 10,
+    fontWeight: "bold",
+    color: "white",
+  },
+  anonButtonText: {
+    color: "cornflowerblue",
+    fontWeight: "bold",
+    textAlign: "center",
+    fontSize: 25,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
   },
 });

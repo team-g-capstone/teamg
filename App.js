@@ -13,21 +13,6 @@ enableScreens();
 const store = configureStore();
 store.dispatch(initialiseApplication());
 
-// SplashScreen.preventAutoHideAsync()
-//   .then((result) =>
-//     console.log(`SplashScreen.preventAutoHideAsync() succeeded: ${result}`)
-//   )
-//   .catch(console.warn); // it's good to explicitly catch and inspect any error
-
-// export default function App() {
-
-//   return (
-//     <Provider store={store}>
-//       <Navigation />
-//     </Provider>
-//   );
-// }
-
 export default class App extends React.Component {
   state = {
     isReady: false,
@@ -52,9 +37,5 @@ export default class App extends React.Component {
 
   async _cacheResourcesAsync() {
     const images = [require("./assets/blank-profile-pic.jpeg")];
-
-    // images.map((image) => {
-    //   return Asset.fromModule(image).downloadAsync();
-    // });
   }
 }

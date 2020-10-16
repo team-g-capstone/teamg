@@ -5,8 +5,6 @@ import { StyleSheet, Text, View, Button, ImageBackground } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import * as firebase from "firebase";
 
-// import SideMenu from "react-native-side-menu";
-
 export default function Welcome() {
   const navigation = useNavigation();
   let image = require("../../assets/backgrounds/red.jpg");
@@ -29,7 +27,6 @@ export default function Welcome() {
 
   const handlePress = () => {
     signInAnonymous();
-    //navigation.navigate("Subjects")
   };
 
   return (
@@ -55,7 +52,10 @@ export default function Welcome() {
           <Text style={styles.buttonText}>Sign in</Text>
         </TouchableOpacity>
         <StatusBar style="auto" />
-        <Button title="Go To Subjects" onPress={handlePress} />
+        {/* <Button title="Go To Subjects" onPress={handlePress} /> */}
+        <TouchableOpacity onPress={handlePress}>
+          <Text style={styles.anonButtonText}>Go to Games</Text>
+        </TouchableOpacity>
       </ImageBackground>
     </View>
   );
@@ -105,5 +105,15 @@ const styles = StyleSheet.create({
     height: "100%",
     resizeMode: "cover",
     justifyContent: "center",
+  },
+  anonButtonText: {
+    color: "cornflowerblue",
+    fontWeight: "bold",
+    textAlign: "center",
+    fontSize: 25,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
   },
 });

@@ -21,22 +21,19 @@ export default function SignUp({ navigation }) {
 
       //Assign additional info to the Auth profile
       const currentUser = firebase.auth().currentUser;
-      const falseArr= new Array(10).fill(false);
+      const falseArr = new Array(10).fill(false);
       //Setting the user info to the firestone database
       const db = firebase.firestore();
-      db.collection("users")
-        .doc(currentUser.uid)
-        .set({
-          email: currentUser.email,
-          lastName: lastName,
-          firstName: firstName,
-          userType: userType,
-          mathScores:falseArr ,
-          logicScores: falseArr,
-
-        });
-      const userUID = currentUser.uid
-      navigation.navigate("MainMenu", { userUID });
+      db.collection("users").doc(currentUser.uid).set({
+        email: currentUser.email,
+        lastName: lastName,
+        firstName: firstName,
+        userType: userType,
+        mathScores: falseArr,
+        logicScores: falseArr,
+      });
+      const userUID = currentUser.uid;
+      navigation.navigate("Menu", { userUID });
     } catch (err) {
       Alert.alert("There is something wrong!", err.message);
     }
@@ -70,7 +67,7 @@ export default function SignUp({ navigation }) {
       Alert.alert("Password does not match!");
     } else {
       registration(email, password);
-      navigation.navigate("MainMenu");
+      navigation.navigate("Menu");
       emptyState();
     }
   };
