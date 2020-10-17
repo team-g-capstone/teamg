@@ -50,7 +50,7 @@ export default StyleSheet.create({
     width: "40%",
   },
   text: {
-    fontSize: 24,
+    fontSize: 20,
     paddingVertical: 3,
     fontFamily: "Chilanka_400Regular",
   },

@@ -7,6 +7,8 @@ import {
   Dimensions,
   Image,
   ImageBackground,
+  Alert,
+  ActivityIndicator,
 } from "react-native";
 import { StackedBarChart } from "react-native-chart-kit";
 
@@ -14,7 +16,7 @@ import { useFonts, Chilanka_400Regular } from "@expo-google-fonts/chilanka";
 import { AppLoading } from "expo";
 import * as ImagePicker from "expo-image-picker";
 
-import styles from "./UserStats_PT.component.style.js";
+import styles from "./UserStats_TCH.component.style.js";
 import * as firebase from "firebase";
 import { useDocument } from "react-firebase-hooks/firestore";
 import { useNavigation } from "@react-navigation/native";
@@ -72,29 +74,39 @@ export default function UserStats_TCH(props) {
   const [value, loading, error] = useDocument(
     firebase.firestore().collection("users").doc(studentUID)
   );
+  let studentProfilePicture;
+  let studentName;
+  let studentMathScores;
+  let studentLogicScores;
+  let studentEmail;
+  let mixedData={
+    labels: ["Math", "Logic", "Level 3"],
+    legend: ["Completed", "Incompleted"],
+    data: [
+      [0, 10],
+      [0, 10],
+      [0, 10],
+    ],
+    barColors: ["#82AEB1", "#BC6286"],
+  };
 
-  const [selectedImage, setSelectedImage] = useState(null);
+   if(value && value.data()){
+   studentProfilePicture = value.data().imageUrl;
+   studentName = value.data().firstName + " " + value.data().lastName;
+   studentMathScores = value.data().mathScores;
+   studentLogicScores = value.data().logicScores;
+   studentEmail = value.data().email;
+   let mathTrue = studentMathScores.filter(ele => ele===true).length;
+   let logicTrue = studentLogicScores.filter(ele => ele===true).length;
+   mixedData.data[0] = [mathTrue, 10-mathTrue];
+   mixedData.data[1] = [logicTrue, 10-logicTrue];
+    console.log("from if", studentEmail)
+   }
+
+
   const [selectedGraph, setSelectedGraph] = useState(null);
 
-  const childData = async () => {
-    let childMathScores = value.data().childMathScores;
-  };
-  let openImagePickerAsync = async () => {
-    let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
 
-    if (permissionResult.granted === false) {
-      alert("Permission to access camera roll is required!");
-      return;
-    }
-
-    let pickerResult = await ImagePicker.launchImageLibraryAsync();
-
-    if (pickerResult.cancelled === true) {
-      return;
-    }
-
-    setSelectedImage({ localUri: pickerResult.uri });
-  };
 
   const handleGraphPressMath = () => {
     setSelectedGraph("math");
@@ -116,35 +128,23 @@ export default function UserStats_TCH(props) {
 
       <ImageBackground source={require("../../assets/backgrounds/green.jpg")} style={styles.image}>
         <View style={styles.person}>
-          <Text style={styles.text}>Student Name: {dummyData.name}</Text>
-          {selectedImage !== null ? (
+          <Text style={styles.text}>Student Name:</Text>
+          <Text style={styles.text}>{studentName}</Text>
+          <Text style={styles.text}>Email:</Text>
+          <Text style={styles.text}>{studentEmail}</Text>
             <View style={styles.imgContainer}>
               <Image
-                source={{ uri: selectedImage.localUri }}
+                source={{uri:studentProfilePicture}}
                 style={styles.thumbnail}
               />
+              {/* <TouchableOpacity
+                onPress={openImagePickerAsync}
+                style={styles.button}
+              > */}
+                {/* <Text style={styles.buttonText}>Pick a photo</Text>
+              </TouchableOpacity> */}
+            </View>
 
-              <TouchableOpacity
-                onPress={openImagePickerAsync}
-                style={styles.button}
-              >
-                <Text style={styles.buttonText}>Change photo</Text>
-              </TouchableOpacity>
-            </View>
-          ) : (
-            <View style={styles.imgContainer}>
-              <Image
-                source={require("../../assets/blank-profile-pic.jpeg")}
-                style={styles.thumbnail}
-              />
-              <TouchableOpacity
-                onPress={openImagePickerAsync}
-                style={styles.button}
-              >
-                <Text style={styles.buttonText}>Pick a photo</Text>
-              </TouchableOpacity>
-            </View>
-          )}
         </View>
 
         <View style={styles.progressContainer}>
@@ -161,14 +161,14 @@ export default function UserStats_TCH(props) {
             onPress={handleGraphPressHistory}
             style={styles.button}
           >
-            <Text style={styles.buttonText}>History</Text>
+            <Text style={styles.buttonText}>Mixed</Text>
           </TouchableOpacity>
 
           {selectedGraph === "math" ? (
             <View style={styles.graph}>
               <StackedBarChart
                 data={dataMath}
-                width={screenWidth}
+                width={400}
                 height={200}
                 chartConfig={chartConfig}
               />
@@ -176,8 +176,8 @@ export default function UserStats_TCH(props) {
           ) : (
             <View style={styles.graph}>
               <StackedBarChart
-                data={dataHistory}
-                width={screenWidth}
+                data={mixedData}
+                width={400}
                 height={200}
                 chartConfig={chartConfig}
               />
