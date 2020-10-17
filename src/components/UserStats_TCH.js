@@ -9,6 +9,7 @@ import {
   ImageBackground,
   Alert,
   ActivityIndicator,
+  AccessibilityInfo,
 } from "react-native";
 import { StackedBarChart } from "react-native-chart-kit";
 
@@ -74,6 +75,10 @@ export default function UserStats_TCH(props) {
   const [value, loading, error] = useDocument(
     firebase.firestore().collection("users").doc(studentUID)
   );
+
+  const [value1, loading1, error1] = useDocument(
+    firebase.firestore().collection("users").doc(userUID)
+  );
   let studentProfilePicture;
   let studentName;
   let studentMathScores;
@@ -100,7 +105,6 @@ export default function UserStats_TCH(props) {
    let logicTrue = studentLogicScores.filter(ele => ele===true).length;
    mixedData.data[0] = [mathTrue, 10-mathTrue];
    mixedData.data[1] = [logicTrue, 10-logicTrue];
-    console.log("from if", studentEmail)
    }
 
 
@@ -124,6 +128,45 @@ export default function UserStats_TCH(props) {
   }
   console.log(selectedGraph);
 
+  const updateStudent = async ()=>{
+    // let studentsArr;
+    // if(value && value.data()){
+      let studentsArr = value1.data().students;
+    // }
+      let studentDeletedArr = studentsArr.reduce((accum, student)=>{
+       if(student !== studentUID){
+          accum.push(student);
+       }
+       return accum;
+      },[])
+
+      let teacherDocument = await firebase
+          .firestore()
+          .collection("users")
+          .doc(userUID)
+          .get();
+        teacherDocument.ref.update({
+          students: studentDeletedArr,
+        });
+        //Empty student teacherUID field DONE, need testing
+        let studentDocument = await firebase
+          .firestore()
+          .collection("users")
+          .doc(studentUID)
+          .get();
+        studentDocument.ref.update({
+          teacherUID:'',
+        });
+    }
+
+  const handlePressDelete = () => {
+    //console.log("Im pressed ")
+
+    updateStudent();
+    Alert.alert("A student has been removed from your profile.")
+    props.navigation.navigate('TeacherEditStudent', {userUID})
+
+  }
   return (
 
       <ImageBackground source={require("../../assets/backgrounds/green.jpg")} style={styles.image}>
@@ -137,12 +180,12 @@ export default function UserStats_TCH(props) {
                 source={{uri:studentProfilePicture}}
                 style={styles.thumbnail}
               />
-              {/* <TouchableOpacity
-                onPress={openImagePickerAsync}
-                style={styles.button}
-              > */}
-                {/* <Text style={styles.buttonText}>Pick a photo</Text>
-              </TouchableOpacity> */}
+              <TouchableOpacity
+                onPress={handlePressDelete}
+                style={styles.deleteButton}
+              >
+                <Text style={styles.buttonText}>DELETE STUDENT</Text>
+              </TouchableOpacity>
             </View>
 
         </View>

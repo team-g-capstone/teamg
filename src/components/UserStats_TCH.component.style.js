@@ -5,14 +5,26 @@ export default StyleSheet.create({
     backgroundColor: "#F4B266",
     borderRadius: 5,
     width: "16%",
-    height: "7%",
+    height: "5%",
     alignContent: "center",
     marginTop: "1%",
+    padding:"0.5%"
   },
+  deleteButton:{
+    backgroundColor: "#F4B266",
+    borderRadius: 5,
+    width: "25%",
+    height: "10%",
+    alignContent: "center",
+    marginTop: "1%",
+    padding:"0.5%",
+  },
+
   buttonText: {
     fontSize: 15,
     color: "#fff",
-    alignSelf: "center",
+    textAlign:"center",
+    textAlignVertical:"top",
     fontFamily: "Chilanka_400Regular",
   },
   container: {
@@ -33,7 +45,6 @@ export default StyleSheet.create({
   },
   imgContainer: {
     flex: 1,
-    flexDirection: "column",
   },
   person: {
     width: "80%",

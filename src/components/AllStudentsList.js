@@ -61,28 +61,7 @@ getStudentsList = async () => {
   }
 }
 
-// updateStudent = async ()=>{
-//   let teacherDocument = await firebase
-//       .firestore()
-//       .collection("users")
-//       .doc(userUID)
-//       .get();
-//     userDocument.ref.update({
-//       students: studentsFB,
-//     });
-//     //need student id
-//     let studentDocument = await firebase
-//       .firestore()
-//       .collection("users")
-//       .doc(studentUIDVar)
-//       .get();
-//     studentDocument.ref.update({
-//       teacherUID:userUID,
-//     });
-// }
-// handleDeleteStudent(studentUID){
-//   console.log("from handle", studentUID)
-// }
+
 handlePress(studentUID){
   console.log(studentUID)
 }
