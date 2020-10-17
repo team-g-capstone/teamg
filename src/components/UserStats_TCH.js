@@ -62,15 +62,15 @@ const chartConfig = {
   useShadowColorFromDataset: false, // optional
 };
 
-export default function UserStats_PT(props) {
+export default function UserStats_TCH(props) {
   const navigation = useNavigation();
-  //Parent ID
+  //Teacher ID
   const userUID = props.route.params.userUID;
   //Child ID, DUMMY for now, need to get it from PROPS
-  const childUID = "GHTGDSbxRChwwoURLsU9xIsgmrl1";
+  const studentUID = props.route.params.studentUID;
 
   const [value, loading, error] = useDocument(
-    firebase.firestore().collection("users").doc(childUID)
+    firebase.firestore().collection("users").doc(studentUID)
   );
 
   const [selectedImage, setSelectedImage] = useState(null);
@@ -102,7 +102,6 @@ export default function UserStats_PT(props) {
   const handleGraphPressHistory = () => {
     setSelectedGraph("history");
   };
-  let image = require("../../assets/backgrounds/green.jpg");
 
   let [fontsLoaded] = useFonts({
     Chilanka_400Regular,
@@ -114,10 +113,10 @@ export default function UserStats_PT(props) {
   console.log(selectedGraph);
 
   return (
-    <View style={styles.container}>
-      <ImageBackground source={image} style={styles.image}>
+
+      <ImageBackground source={require("../../assets/backgrounds/green.jpg")} style={styles.image}>
         <View style={styles.person}>
-          <Text style={styles.text}>Child Name: {dummyData.name}</Text>
+          <Text style={styles.text}>Student Name: {dummyData.name}</Text>
           {selectedImage !== null ? (
             <View style={styles.imgContainer}>
               <Image
@@ -210,6 +209,6 @@ export default function UserStats_PT(props) {
           } */}
         </View>
       </ImageBackground>
-    </View>
+
   );
 }
