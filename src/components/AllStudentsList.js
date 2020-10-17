@@ -14,7 +14,7 @@ const Item = ({title})=>(
   </View>
 )
 
-export default class AllChildList extends Component {
+export default class AllStudentsList extends Component {
   constructor(props){
     super(props);
     this.state={

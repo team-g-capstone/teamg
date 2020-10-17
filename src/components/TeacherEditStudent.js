@@ -16,7 +16,7 @@ import * as firebase from "firebase";
 
 import { useDocument } from "react-firebase-hooks/firestore";
 
-export default function parentEditProfile(props) {
+export default function TeacherEditStudent(props) {
   const navigation = useNavigation();
   const userUID = props.route.params.userUID;
   const [value, loading, error] = useDocument(
@@ -107,7 +107,7 @@ export default function parentEditProfile(props) {
         <TouchableOpacity
           style={styles.viewAllChildbutton}
           onPress={() => {
-            navigation.navigate("AllChildrenList", { userUID });
+            navigation.navigate("AllStudentsList", { userUID });
           }}
         >
           <Text style={styles.buttonText}>VIEW ALL STUDENTS</Text>
@@ -115,9 +115,9 @@ export default function parentEditProfile(props) {
         {/* <Button title="Menu" onPress={() => navigation.navigate("Menu")} /> */}
         <TouchableOpacity
           style={styles.viewAllChildbutton}
-          onPress={() => navigation.navigate("Menu", { userUID })}
+          onPress={() => navigation.navigate("MainMenuNav", { userUID })}
         >
-          <Text style={styles.buttonText}>Menu</Text>
+          <Text style={styles.buttonText}>Main Menu</Text>
         </TouchableOpacity>
         </ScrollView>
       </ImageBackground>

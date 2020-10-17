@@ -58,14 +58,11 @@ export default function MainMenu(props) {
           {userType !== "student" ? (
             <TouchableOpacity
               onPress={() =>
-                navigation.navigate("Menu", {
-                  screen: "UserStats_PT",
-                  params: { userUID },
-                })
+                navigation.navigate("TeacherEditStudent", { userUID })
               }
             >
               <Text style={styles.anonButtonText}>
-                Student Progress for Teachers/Parents
+                Add/View Student(s)
               </Text>
             </TouchableOpacity>
           ) : (
@@ -87,14 +84,6 @@ export default function MainMenu(props) {
               </TouchableOpacity>
             </>
           )}
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() =>
-              navigation.navigate("parentEditProfile", { userUID })
-            }
-          >
-            <Text style={styles.buttonText}>Edit Profile</Text>
-          </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={handlePress}>
             <Text style={styles.buttonText}>Log Out</Text>
           </TouchableOpacity>
@@ -123,7 +112,7 @@ export default function MainMenu(props) {
 
 const styles = StyleSheet.create({
   button: {
-    width: 100,
+    width: 150,
     padding: 5,
     backgroundColor: "#ff9999",
     borderWidth: 2,
@@ -131,6 +120,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     alignSelf: "center",
     margin: 5,
+    marginTop:"2%"
   },
   buttonText: {
     color: "white",
@@ -182,5 +172,6 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 2,
-  },
+    marginTop:"1%",
+  }
 });
