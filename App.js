@@ -7,9 +7,12 @@ import { enableScreens } from "react-native-screens";
 import * as SplashScreen from "expo-splash-screen";
 import { useState } from "react";
 import { AppLoading } from "expo";
+import {LogBox} from 'react-native'
+
+
 
 enableScreens();
-
+LogBox.ignoreAllLogs();
 const store = configureStore();
 store.dispatch(initialiseApplication());
 
