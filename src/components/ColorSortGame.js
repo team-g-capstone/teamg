@@ -1,16 +1,16 @@
-import { StatusBar } from "expo-status-bar";
+
 import React from "react";
-import { StyleSheet, Text, View, Button, ImageBackground, Dimensions, TouchableOpacity, PanResponder, Alert} from "react-native";
+import { StyleSheet, Text, View,  ImageBackground, Dimensions, TouchableOpacity, Alert} from "react-native";
 import ColorSortCircles from './ColorSortCircles'
 import {resetSorted} from '../redux/reducers/colorSortReducer'
 import {connect} from 'react-redux'
 import * as firebase from "firebase";
 import {
-  useCollection,
+  
   useDocument,
-  useDocumentOnce,
+
 } from "react-firebase-hooks/firestore";
-import {addLogicLevelThunk} from '../redux/reducers/logicLevelReducer'
+import {addLogicLevelThunk, resetLevelThunk} from '../redux/reducers/logicLevelReducer'
 import {levelChanges} from './ShapesHelperFuncs'
  
 let {height, width} = Dimensions.get('window')
@@ -66,6 +66,7 @@ function ColorSortGame(props) {
 
   }
    const handlePress = () => {
+   
    if(level < 10) {
     updateLogicScores();
     
@@ -97,7 +98,10 @@ function ColorSortGame(props) {
    }
     
   };
-
+  
+  const handleReset = () => {
+    props.resetLevel()
+  }
 
 
   return (
@@ -116,6 +120,9 @@ function ColorSortGame(props) {
           </View>
           <View>
               {props.colorSort === num ? <View><TouchableOpacity style={{...styles.submitButton, width: 300 * width / 667}} onPress={handlePress}><Text style={styles.submitButtonText}>Go to next Level</Text></TouchableOpacity></View> : null}
+          </View>
+          <View>
+              {props.level > 10  ? <View><TouchableOpacity style={{...styles.submitButton, width: 300 * width / 667}} onPress={handleReset}><Text style={styles.submitButtonText}>Play Again?</Text></TouchableOpacity></View> : null}
           </View>
         <View style={styles.ballContainer}/>
         <View style={styles.row}>
@@ -212,7 +219,8 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   return {
     reset: () => {dispatch(resetSorted())},
-    addLevel: () => {dispatch(addLogicLevelThunk())}
+    addLevel: () => {dispatch(addLogicLevelThunk())},
+    resetLevel: () => {dispatch(resetLevelThunk())},
   }
 }
 
