@@ -1,11 +1,11 @@
 import React from "react";
 import Subjects from "../components/Subjects";
 import MainMenu from "../components/MainMenu";
-import UserStats_PT from "../components/UserStats_PT";
 import UserStats_Student from "../components/UserStats_Student";
 import { createStackNavigator } from "@react-navigation/stack";
-import AllChildList from "../components/AllChildrenList";
-import parentEditProfile from "../components/parentEditProfile";
+import TeacherEditStudent from "../components/TeacherEditStudent";
+import UserStats_TCH from "../components/UserStats_TCH";
+import AllStudentsList from "../components/AllStudentsList";
 
 const Stack = createStackNavigator();
 
@@ -23,8 +23,8 @@ function MainMenuNav({ navigation }) {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="UserStats_PT"
-        component={UserStats_PT}
+        name="UserStats_TCH"
+        component={UserStats_TCH}
         options={{ headerShown: false }}
       />
       <Stack.Screen
@@ -33,13 +33,13 @@ function MainMenuNav({ navigation }) {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="parentEditProfile"
-        component={parentEditProfile}
+        name="TeacherEditStudent"
+        component={TeacherEditStudent}
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="AllChildrenList"
-        component={AllChildList}
+        name="AllStudentsList"
+        component={AllStudentsList}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

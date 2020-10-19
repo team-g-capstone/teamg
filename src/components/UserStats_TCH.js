@@ -7,6 +7,9 @@ import {
   Dimensions,
   Image,
   ImageBackground,
+  Alert,
+  ActivityIndicator,
+  AccessibilityInfo,
 } from "react-native";
 import { StackedBarChart } from "react-native-chart-kit";
 
@@ -14,7 +17,7 @@ import { useFonts, Chilanka_400Regular } from "@expo-google-fonts/chilanka";
 import { AppLoading } from "expo";
 import * as ImagePicker from "expo-image-picker";
 
-import styles from "./UserStats_PT.component.style.js";
+import styles from "./UserStats_TCH.component.style.js";
 import * as firebase from "firebase";
 import { useDocument } from "react-firebase-hooks/firestore";
 import { useNavigation } from "@react-navigation/native";
@@ -62,39 +65,52 @@ const chartConfig = {
   useShadowColorFromDataset: false, // optional
 };
 
-export default function UserStats_PT(props) {
+export default function UserStats_TCH(props) {
   const navigation = useNavigation();
-  //Parent ID
+  //Teacher ID
   const userUID = props.route.params.userUID;
   //Child ID, DUMMY for now, need to get it from PROPS
-  const childUID = "GHTGDSbxRChwwoURLsU9xIsgmrl1";
+  const studentUID = props.route.params.studentUID;
 
   const [value, loading, error] = useDocument(
-    firebase.firestore().collection("users").doc(childUID)
+    firebase.firestore().collection("users").doc(studentUID)
   );
 
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [value1, loading1, error1] = useDocument(
+    firebase.firestore().collection("users").doc(userUID)
+  );
+  let studentProfilePicture;
+  let studentName;
+  let studentMathScores;
+  let studentLogicScores;
+  let studentEmail;
+  let mixedData={
+    labels: ["Math", "Logic", "Level 3"],
+    legend: ["Completed", "Incompleted"],
+    data: [
+      [0, 10],
+      [0, 10],
+      [0, 10],
+    ],
+    barColors: ["#82AEB1", "#BC6286"],
+  };
+
+   if(value && value.data()){
+   studentProfilePicture = value.data().imageUrl;
+   studentName = value.data().firstName + " " + value.data().lastName;
+   studentMathScores = value.data().mathScores;
+   studentLogicScores = value.data().logicScores;
+   studentEmail = value.data().email;
+   let mathTrue = studentMathScores.filter(ele => ele===true).length;
+   let logicTrue = studentLogicScores.filter(ele => ele===true).length;
+   mixedData.data[0] = [mathTrue, 10-mathTrue];
+   mixedData.data[1] = [logicTrue, 10-logicTrue];
+   }
+
+
   const [selectedGraph, setSelectedGraph] = useState(null);
 
-  const childData = async () => {
-    let childMathScores = value.data().childMathScores;
-  };
-  let openImagePickerAsync = async () => {
-    let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
 
-    if (permissionResult.granted === false) {
-      alert("Permission to access camera roll is required!");
-      return;
-    }
-
-    let pickerResult = await ImagePicker.launchImageLibraryAsync();
-
-    if (pickerResult.cancelled === true) {
-      return;
-    }
-
-    setSelectedImage({ localUri: pickerResult.uri });
-  };
 
   const handleGraphPressMath = () => {
     setSelectedGraph("math");
@@ -102,7 +118,6 @@ export default function UserStats_PT(props) {
   const handleGraphPressHistory = () => {
     setSelectedGraph("history");
   };
-  let image = require("../../assets/backgrounds/green.jpg");
 
   let [fontsLoaded] = useFonts({
     Chilanka_400Regular,
@@ -113,39 +128,66 @@ export default function UserStats_PT(props) {
   }
   console.log(selectedGraph);
 
-  return (
-    <View style={styles.container}>
-      <ImageBackground source={image} style={styles.image}>
-        <View style={styles.person}>
-          <Text style={styles.text}>Child Name: {dummyData.name}</Text>
-          {selectedImage !== null ? (
-            <View style={styles.imgContainer}>
-              <Image
-                source={{ uri: selectedImage.localUri }}
-                style={styles.thumbnail}
-              />
+  const updateStudent = async ()=>{
+    // let studentsArr;
+    // if(value && value.data()){
+      let studentsArr = value1.data().students;
+    // }
+      let studentDeletedArr = studentsArr.reduce((accum, student)=>{
+       if(student !== studentUID){
+          accum.push(student);
+       }
+       return accum;
+      },[])
 
-              <TouchableOpacity
-                onPress={openImagePickerAsync}
-                style={styles.button}
-              >
-                <Text style={styles.buttonText}>Change photo</Text>
-              </TouchableOpacity>
-            </View>
-          ) : (
+      let teacherDocument = await firebase
+          .firestore()
+          .collection("users")
+          .doc(userUID)
+          .get();
+        teacherDocument.ref.update({
+          students: studentDeletedArr,
+        });
+        //Empty student teacherUID field DONE, need testing
+        let studentDocument = await firebase
+          .firestore()
+          .collection("users")
+          .doc(studentUID)
+          .get();
+        studentDocument.ref.update({
+          teacherUID:'',
+        });
+    }
+
+  const handlePressDelete = () => {
+    //console.log("Im pressed ")
+
+    updateStudent();
+    Alert.alert("A student has been removed from your profile.")
+    props.navigation.navigate('TeacherEditStudent', {userUID})
+
+  }
+  return (
+
+      <ImageBackground source={require("../../assets/backgrounds/green.jpg")} style={styles.image}>
+        <View style={styles.person}>
+          <Text style={styles.text}>Student Name:</Text>
+          <Text style={styles.text}>{studentName}</Text>
+          <Text style={styles.text}>Email:</Text>
+          <Text style={styles.text}>{studentEmail}</Text>
             <View style={styles.imgContainer}>
               <Image
-                source={require("../../assets/blank-profile-pic.jpeg")}
+                source={{uri:studentProfilePicture}}
                 style={styles.thumbnail}
               />
               <TouchableOpacity
-                onPress={openImagePickerAsync}
-                style={styles.button}
+                onPress={handlePressDelete}
+                style={styles.deleteButton}
               >
-                <Text style={styles.buttonText}>Pick a photo</Text>
+                <Text style={styles.buttonText}>DELETE STUDENT</Text>
               </TouchableOpacity>
             </View>
-          )}
+
         </View>
 
         <View style={styles.progressContainer}>
@@ -162,14 +204,14 @@ export default function UserStats_PT(props) {
             onPress={handleGraphPressHistory}
             style={styles.button}
           >
-            <Text style={styles.buttonText}>History</Text>
+            <Text style={styles.buttonText}>Mixed</Text>
           </TouchableOpacity>
 
           {selectedGraph === "math" ? (
             <View style={styles.graph}>
               <StackedBarChart
                 data={dataMath}
-                width={screenWidth}
+                width={400}
                 height={200}
                 chartConfig={chartConfig}
               />
@@ -177,8 +219,8 @@ export default function UserStats_PT(props) {
           ) : (
             <View style={styles.graph}>
               <StackedBarChart
-                data={dataHistory}
-                width={screenWidth}
+                data={mixedData}
+                width={400}
                 height={200}
                 chartConfig={chartConfig}
               />
@@ -210,6 +252,6 @@ export default function UserStats_PT(props) {
           } */}
         </View>
       </ImageBackground>
-    </View>
+
   );
 }
