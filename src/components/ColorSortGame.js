@@ -67,7 +67,7 @@ function ColorSortGame(props) {
   }
    const handlePress = () => {
    if(level < 10) {
-    // updateLogicScores();
+    updateLogicScores();
     
     props.reset()
     props.addLevel()
@@ -82,7 +82,7 @@ function ColorSortGame(props) {
    } else if (level >= 10) {
      props.reset()
      console.log('HELLo')
-     // updateLogicScores();
+     updateLogicScores();
     
   
     
