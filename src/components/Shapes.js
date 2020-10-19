@@ -18,23 +18,43 @@ import styles from './Shapes.component.style.js'
 import {componentDidMountAudio, colorDecider, colors, shapes, getRandomInt, getIndexForRandom} from './ShapesHelperFuncs'
 import { useNavigation } from "@react-navigation/native";
 import {startAudioThunk} from '../redux/reducers/audioReducer'
-import {connect} from 'react-redux'
-
+import {setLevelThunk} from "../redux/reducers/levelReducer"
+import {connect} from 'react-redux';
+import {useDocument} from "react-firebase-hooks/firestore";
+import * as firebase from 'firebase';
 let rotation = 0;
 
 const Shapes = (props) => {
-  let  level = props.level
+  const userUID = props.route.params.userUID;
+  const [value] = useDocument(
+    firebase.firestore().collection("users").doc(userUID)
+  );
+  let level;
+  if(value && value.data()){
+    let mathScoresArrFB = value.data().mathScores;
+
+    let levelFromFS = mathScoresArrFB.reduce((accum, elem)=>{
+      if(elem === true){
+        return accum+1;
+      }
+      return accum;
+    },0)
+
+    level = levelFromFS + 1;
+    props.setLevel(level);
+  }
+
+  level = props.level;
+
   let [index1] = useState(getIndexForRandom(level))
   let [index2] = useState(getIndexForRandom(level))
-  
+
   const navigation = useNavigation();
   const [answer, setAnswer] = useState("");
   const [numOne, setNumOne] = useState(getRandomInt(index1[0], index1[1]));
   const [numTwo, setNumTwo] = useState(getRandomInt(index2[0], index2[1]));
   const [checkAns, setCheckAns] = useState(true);
   const [numQuestions, setNumQuestions] = useState(1);
-  const userUID = props.route.params.userUID;
-  
 
 
   let shape = shapes[rotation];
@@ -49,7 +69,7 @@ const Shapes = (props) => {
   componentDidMountAudio();
 
   const handlePress = async () => {
-    
+
     await Audio.setIsEnabledAsync(true)
     await props.startAudio()
     let correctAns = numOne + numTwo;
@@ -57,11 +77,11 @@ const Shapes = (props) => {
     if (Number(answer) === correctAns) {
       if(numQuestions < 10) {
         setNumQuestions(numQuestions + 1);
-        
+
       } else if (numQuestions === 10) {
         setNumQuestions(1);
       }
-      
+
       navigation.navigate("ShapesAnswer", {rotation, numOne, numTwo, correctAns, shape, color1, color2, color3, colorStyle, numQuestions, userUID, level});
       index1 = getIndexForRandom(level)
       index2 = getIndexForRandom(level)
@@ -70,7 +90,7 @@ const Shapes = (props) => {
       setAnswer();
       setCheckAns(true);
     } else {
-      
+
       let sound = new Audio.Sound();
       const status = {
         shouldPlay: false,
@@ -114,8 +134,9 @@ const Shapes = (props) => {
   return (
 
 
-    <View style={styles.container}>
+    // <View style={styles.container}>
     <ImageBackground source={image} style={styles.image}>
+     <Text style={styles.levelText}>Level: {level}</Text>
       <View style={styles.questionContainer}>
         <View style={styles.rowContainer}>
           <Animatable.View
@@ -186,7 +207,7 @@ const Shapes = (props) => {
         </View>
       ) : null}
        </ImageBackground>
-    </View>
+    // </View>
 
 
   );
@@ -199,7 +220,8 @@ const mapState = state => {
 }
 const mapDispatch = dispatch => {
   return {
-    startAudio: () => {dispatch(startAudioThunk())}
+    startAudio: () => {dispatch(startAudioThunk())},
+    setLevel: (level) => {dispatch(setLevelThunk(level))}
   }
 }
 

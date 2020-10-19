@@ -2,37 +2,45 @@ import {StyleSheet} from 'react-native'
 
 
 export default StyleSheet.create({
- 
+
     container: {
-      
+
       flex: 1,
       width: "100%",
       height: "100%",
       backgroundColor: "#4d0000",
       borderStyle: "solid",
       borderColor: 'black',
-  
-  
+
+
     },
-  
+    levelText:{
+      fontSize:20,
+      fontWeight:"bold",
+      marginLeft:"2%",
+      color: "white",
+      padding: "2%",
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.8,
+      shadowRadius: 2,
+    },
     image: {
       flex: 1,
       resizeMode: "cover",
       justifyContent: "center",
       height: '100%',
-      width: "100%"
+      width: "100%",
     },
-    
-  
     questionContainer: {
       flexDirection: "row",
-      paddingTop: 40, 
-      margin: 20, 
+      paddingTop: 1,
+      margin: 20,
       justifyContent: "space-around",
       width: "80%",
       alignItems: "center",
     },
-  
+
     rowContainer: {
       width: 50,
       height: 50,
@@ -42,7 +50,7 @@ export default StyleSheet.create({
       flexDirection: "row",
       width: 80,
       height: 80,
-     
+
       padding: 1,
       margin: 20,
       alignItems: "center",
@@ -50,8 +58,8 @@ export default StyleSheet.create({
       shadowColor: '#000',
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.8,
-      shadowRadius: 2,    
-      
+      shadowRadius: 2,
+
     },
     addSign: {
       position: "absolute",
@@ -65,15 +73,15 @@ export default StyleSheet.create({
     },
     inputContainer: {
       paddingTop: 60,
-     
+
     },
     textInput: {
       color: 'white',
       borderColor: "#80471c",
       borderWidth: 4,
       borderRadius: 15,
-      marginLeft: 20, 
-      marginRight: 45,  
+      marginLeft: 20,
+      marginRight: 45,
       height: 60,
       fontSize: 45,
       paddingLeft: 20,
@@ -85,7 +93,7 @@ export default StyleSheet.create({
       shadowRadius: 2,
     },
     submitButton: {
-   
+
       borderWidth: 1,
       borderColor: "#007BFF",
       borderRadius: 15,
@@ -114,7 +122,7 @@ export default StyleSheet.create({
       justifyContent: "center",
     },
     number: {
-      
+
       position: "absolute",
       paddingTop: "40%",
       fontSize: 25,
@@ -124,21 +132,21 @@ export default StyleSheet.create({
       shadowColor: '#000',
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.8,
-      shadowRadius: 2,   
-  
+      shadowRadius: 2,
+
     },
     circle: {
       flexDirection: "row",
       width: 100,
       height: 100,
       borderRadius: 100 / 2,
-      
+
       alignItems: "center",
       justifyContent: "center",
       shadowColor: '#000',
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.8,
-      shadowRadius: 2,    
+      shadowRadius: 2,
     },
     triangle: {
       flexDirection: "row",
@@ -156,7 +164,6 @@ export default StyleSheet.create({
       shadowColor: '#000',
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.8,
-      shadowRadius: 2,    
+      shadowRadius: 2,
     },
   });
-  

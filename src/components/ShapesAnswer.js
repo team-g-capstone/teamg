@@ -6,7 +6,7 @@ import {
   Dimensions,
   ImageBackground,
   Alert,
-  
+
 } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
@@ -16,10 +16,7 @@ import {connect} from 'react-redux'
 import {stopAudioThunk} from '../redux/reducers/audioReducer'
 import Animations from "./Animations";
 import styles from './ShapesAnswer.component.style.js';
-import {
-  useDocument,
- 
-} from "react-firebase-hooks/firestore";
+import {useDocument} from "react-firebase-hooks/firestore";
 import {addLevelThunk} from '../redux/reducers/levelReducer'
 
 
@@ -43,7 +40,8 @@ const ShapesAnswer = (props) => {
 
     if(!currentUser.isAnonymous){
       let mathScores = value.data().mathScores;
-      let mathScoresNew = mathScores.map((score,idx)=> idx === 0? true:score);
+      let levelToFS = level - 1;
+      let mathScoresNew = mathScores.map((score,idx)=> idx === levelToFS? true:score);
 
       let userDocument = await firebase.firestore().collection('users').doc(userUID).get();
       userDocument.ref.update({
@@ -54,7 +52,7 @@ const ShapesAnswer = (props) => {
    }
 
   const handlePress = () => {
-    
+
     if (numQuestions < 10) {
       props.stopAudio()
       props.navigation.navigate("Shapes",{userUID});
@@ -64,24 +62,24 @@ const ShapesAnswer = (props) => {
         props.addLevel()
         Alert.alert(`Congratulations`, `You've made it to level ${level + 1}`, [
           {
-  
+
             onPress: () => props.navigation.navigate("Shapes",{userUID}),
           },
-        ]) 
+        ])
         updateMathScores();
       } else {
         Alert.alert(`You've passed all 10 levels!`, `You are a Math Genius !`, [
           {
-  
+
             onPress: () => props.navigation.navigate("Subjects",{userUID}),
           },
         ])
       }
-      
-      
+
+
     }
   }
-  
+
 
   return (
     <View style={styles.container}>
@@ -102,8 +100,8 @@ const ShapesAnswer = (props) => {
             <Text style={styles.number}>{numOne}</Text>
           </Animatable.View>
         </View>
-       
-      
+
+
         <View style={styles.rowContainer}>
           <FontAwesome
             style={styles.addSign}
@@ -143,7 +141,7 @@ const ShapesAnswer = (props) => {
             <Text style={styles.submitButtonText}>Go to the next Question</Text>
           ) : (
             <View>
-           
+
             <Text style={styles.submitButtonText}>Go to next Level</Text>
             </View>
           )}
