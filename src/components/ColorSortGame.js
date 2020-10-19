@@ -26,7 +26,7 @@ function ColorSortGame(props) {
   let indexBase;
   let num;
   
-  if(level >= 10) {
+  if(level <= 10) {
     const array = levelChanges(level, indexBase)
   
 
@@ -35,6 +35,8 @@ function ColorSortGame(props) {
   for (let i = 1; i <= num; i++) {
     numOfCirlces.push(i)
   }
+  } else {
+    indexBase = 100;
   }
   
 
