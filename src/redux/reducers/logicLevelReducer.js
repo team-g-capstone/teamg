@@ -1,16 +1,16 @@
 
-const ADD_LEVEL = 'ADD_LEVEL'
+const ADD_LOGIC_LEVEL = 'ADD_LOGIC_LEVEL'
 
-const addLevel = () => {
+const addLogicLevel = () => {
     return {
-        type: ADD_LEVEL
+        type: ADD_LOGIC_LEVEL
     }
 }
 
-export const addLevelThunk = () => {
+export const addLogicLevelThunk = () => {
     return async dispatch => {
         try {
-            dispatch(addLevel())
+            dispatch(addLogicLevel())
         } catch (error) {
             console.log(error)
         }
@@ -21,10 +21,10 @@ const initialState = {
     currentLevel: 1,
 }
 
-const levelReducer = (state = initialState, action) => {
+const logicLevelReducer = (state = initialState, action) => {
     switch(action.type) {
-        case ADD_LEVEL: {
-            console.log('HI')
+        case ADD_LOGIC_LEVEL: {
+            
             const newState = state.currentLevel + 1
             return {
                 currentLevel: newState
@@ -36,4 +36,4 @@ const levelReducer = (state = initialState, action) => {
     }
 }
 
-export default levelReducer
+export default logicLevelReducer
