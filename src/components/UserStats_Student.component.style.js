@@ -74,6 +74,9 @@ export default StyleSheet.create({
     flex: 1,
     flexDirection: "column",
   },
+  indicator:{
+    padding:"20%",
+  },
   person: {
     width: "80%",
     height: "80%",

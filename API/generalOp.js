@@ -66,14 +66,12 @@ export const deleteUser = async() => {
     Alert.alert("There is an error." , err.message)
   }
 }
-//testing
+
 export const updateImageUrl = async(selectedImage, userUID) => {
   let userDocument = await firebase.firestore()
   .collection('users')
   .doc(userUID)
   .get();
-  console.log("I am here from generalOP")
-
   userDocument.ref.update({
     imageUrl: selectedImage
   })

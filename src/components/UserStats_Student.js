@@ -7,6 +7,7 @@ import {
   Image,
   ImageBackground,
   Alert,
+  ActivityIndicator,
 } from "react-native";
 import LottieView from "lottie-react-native";
 import { useFonts, Chilanka_400Regular } from "@expo-google-fonts/chilanka";
@@ -24,6 +25,7 @@ export default function UserStats_Student(props) {
 
   const navigation = useNavigation();
   const [selectedImage, setSelectedImage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const {mathScores,logicScores, firstName,userUID} = props.route.params;
 
   const [value, loading, error] = useDocument(
@@ -36,7 +38,7 @@ export default function UserStats_Student(props) {
 
   let openImagePickerAsync = async () => {
     let {granted} = await ImagePicker.requestCameraRollPermissionsAsync();
-
+    setIsLoading(true)
     if (granted) {
       let data = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -47,6 +49,7 @@ export default function UserStats_Student(props) {
       if (!data.cancelled) {
         let newFile = {uri:data.uri, type:`test/${data.uri.split(".")[1]}`,name:`test/${data.uri.split(".")[1]}`}
         handleUpload(newFile);
+
       }
     } else{
     alert("Permission to access camera roll is required!");
@@ -67,6 +70,7 @@ export default function UserStats_Student(props) {
   }).then(res=>res.json())
   .then(data=>{
     setSelectedImage(data.url);
+    setIsLoading(false)
   })
   .catch(err=>{
     Alert.alert("Error while uploading")
@@ -74,7 +78,9 @@ export default function UserStats_Student(props) {
   }
 
   const handlePressUpdateImageUrl = ()=> {
+
     updateImageUrl(selectedImage, userUID);
+    Alert.alert("Profile picture updated!")
   }
 
   let image = require("../../assets/backgrounds/green.jpg");
@@ -98,8 +104,8 @@ export default function UserStats_Student(props) {
      )
   }
 
-  if (!fontsLoaded) {
-    return <AppLoading />;
+  if (!fontsLoaded || isLoading) {
+    return <ActivityIndicator style={styles.indicator} size="large" />;
   }
 
   return (
