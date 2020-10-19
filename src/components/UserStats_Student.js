@@ -78,7 +78,6 @@ export default function UserStats_Student(props) {
   }
 
   const handlePressUpdateImageUrl = ()=> {
-
     updateImageUrl(selectedImage, userUID);
     Alert.alert("Profile picture updated!")
   }
