@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet, Alert ,ScrollView,Keyboard} from "react-native";
 import { Picker } from "react-native-picker-dropdown";
-import * as firebase from "firebase";
-import "firebase/firestore";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import {registration} from "../../API/generalOp"
 
 export default function SignUp({ navigation }) {
   const [firstName, setFirstName] = useState("");
@@ -13,37 +12,6 @@ export default function SignUp({ navigation }) {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  //Sign up with email and password
-  async function registration(email, password) {
-    try {
-      //Authenticating
-      await firebase.auth().createUserWithEmailAndPassword(email, password);
-
-      //Assign additional info to the Auth profile
-      const currentUser = firebase.auth().currentUser;
-      const falseArr= new Array(10).fill(false);
-      let defaultImage = 'https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png'
-      //Setting the user info to the firestone database
-      const db = firebase.firestore();
-      db.collection("users")
-        .doc(currentUser.uid)
-        .set({
-          email: currentUser.email,
-          lastName: lastName,
-          firstName: firstName,
-          userType: userType,
-          mathScores:falseArr ,
-          logicScores: falseArr,
-          imageUrl: defaultImage,
-          students:[],
-
-        });
-      const userUID = currentUser.uid
-      navigation.navigate("Menu", { userUID });
-    } catch (err) {
-      Alert.alert("There is something wrong!", err.message);
-    }
-  }
 
   const emptyState = () => {
     setFirstName("");
@@ -72,7 +40,7 @@ export default function SignUp({ navigation }) {
     } else if (password !== confirmPassword) {
       Alert.alert("Password does not match!");
     } else {
-      registration(email, password);
+      registration(email, password, lastName, firstName,userType);
       navigation.navigate("Menu");
       emptyState();
     }
@@ -81,7 +49,7 @@ export default function SignUp({ navigation }) {
   return (
     <View style={styles.container}>
       <Button
-        title="Go back to home"
+        title="Back to home"
         onPress={() => {
           navigation.navigate("WelcomePage");
         }}
@@ -101,7 +69,7 @@ export default function SignUp({ navigation }) {
       <ScrollView onBlur={Keyboard.dismiss}>
       <TextInput
         style={styles.textInput}
-        placeholder="First name"
+        placeholder="First name*"
         value={firstName}
         onChangeText={(name) => setFirstName(name)}
       />
@@ -114,7 +82,7 @@ export default function SignUp({ navigation }) {
 
       <TextInput
         style={styles.textInput}
-        placeholder="Enter your email"
+        placeholder="Enter your email*"
         value={email}
         onChangeText={(email) => setEmail(email)}
         keyboardType="email-address"
@@ -123,14 +91,14 @@ export default function SignUp({ navigation }) {
 
       <TextInput
         style={styles.textInput}
-        placeholder="Enter your password"
+        placeholder="Enter your password*"
         value={password}
         onChangeText={(password) => setPassword(password)}
         secureTextEntry={true}
       />
       <TextInput
         style={styles.textInput}
-        placeholder="Retype your password to confirm"
+        placeholder="Retype your password to confirm*"
         value={confirmPassword}
         onChangeText={(password2) => setConfirmPassword(password2)}
         secureTextEntry={true}

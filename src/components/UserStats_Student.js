@@ -18,7 +18,7 @@ import { useNavigation } from "@react-navigation/native";
 
 import * as firebase from 'firebase';
 import {useDocument} from "react-firebase-hooks/firestore";
-
+import {deleteUser, updateImageUrl} from "../../API/generalOp"
 
 export default function UserStats_Student(props) {
 
@@ -26,7 +26,6 @@ export default function UserStats_Student(props) {
   const [selectedImage, setSelectedImage] = useState(null);
   const {mathScores,logicScores, firstName,userUID} = props.route.params;
 
-  //Getting the image from firebase
   const [value, loading, error] = useDocument(
     firebase.firestore().collection("users").doc(userUID)
   );
@@ -35,7 +34,6 @@ export default function UserStats_Student(props) {
    profilePicture = value.data().imageUrl;
    }
 
-  //Asking permission and open image picker
   let openImagePickerAsync = async () => {
     let {granted} = await ImagePicker.requestCameraRollPermissionsAsync();
 
@@ -50,7 +48,6 @@ export default function UserStats_Student(props) {
         let newFile = {uri:data.uri, type:`test/${data.uri.split(".")[1]}`,name:`test/${data.uri.split(".")[1]}`}
         handleUpload(newFile);
       }
-
     } else{
     alert("Permission to access camera roll is required!");
     return;
@@ -58,14 +55,12 @@ export default function UserStats_Student(props) {
 
   };
 
-  //handle upload to cloudinary
+
   const handleUpload =(image) =>{
    const data =  new FormData()
-   //file from image arg
    data.append('file', image)
    data.append('upload_preset', "brainTeez")
    data.append('cloud_name','dp8rfxspl')
-  //fetching to your cloudinary account
    fetch("https://api.cloudinary.com/v1_1/dp8rfxspl/image/upload",{
     method:"post",
     body:data
@@ -78,16 +73,30 @@ export default function UserStats_Student(props) {
   })
   }
 
-  const handlePressUpdateImageUrl = async()=>{
-    let userDocument = await firebase.firestore().collection('users').doc(userUID).get();
-    userDocument.ref.update({
-      imageUrl: selectedImage
-    })
+  const handlePressUpdateImageUrl = ()=> {
+    updateImageUrl(selectedImage, userUID);
   }
+
   let image = require("../../assets/backgrounds/green.jpg");
   let [fontsLoaded] = useFonts({
     Chilanka_400Regular,
   });
+
+  const handleYes = () => {
+    deleteUser();
+    navigation.navigate('WelcomePage')
+  }
+  const handleShowAlert = () => {
+     Alert.alert(
+       'ALERT',
+       'Deleting your account is permanent. Do you want to proceed?',
+       [
+         {text: 'YES', onPress:handleYes},
+         {text: 'NO', onPress:()=>console.log("NO Presses"), style:'cancel'}
+       ],
+       {cancelable: false}
+     )
+  }
 
   if (!fontsLoaded) {
     return <AppLoading />;
@@ -125,6 +134,15 @@ export default function UserStats_Student(props) {
               >
                 <Text style={styles.buttonText}>Change Photo</Text>
               </TouchableOpacity>}
+
+              <TouchableOpacity
+                onPress={handleShowAlert}
+                style={styles.deleteButton}
+              >
+                <Text style={styles.deleteText}>DELETE MY ACCOUNT</Text>
+              </TouchableOpacity>
+
+
             </View>
 
         </View>
