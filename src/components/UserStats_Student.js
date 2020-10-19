@@ -7,6 +7,7 @@ import {
   Image,
   ImageBackground,
   Alert,
+  ActivityIndicator,
 } from "react-native";
 import LottieView from "lottie-react-native";
 import { useFonts, Chilanka_400Regular } from "@expo-google-fonts/chilanka";
@@ -18,15 +19,15 @@ import { useNavigation } from "@react-navigation/native";
 
 import * as firebase from 'firebase';
 import {useDocument} from "react-firebase-hooks/firestore";
-
+import {deleteUser, updateImageUrl} from "../../API/generalOp"
 
 export default function UserStats_Student(props) {
 
   const navigation = useNavigation();
   const [selectedImage, setSelectedImage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const {mathScores,logicScores, firstName,userUID} = props.route.params;
 
-  //Getting the image from firebase
   const [value, loading, error] = useDocument(
     firebase.firestore().collection("users").doc(userUID)
   );
@@ -35,10 +36,9 @@ export default function UserStats_Student(props) {
    profilePicture = value.data().imageUrl;
    }
 
-  //Asking permission and open image picker
   let openImagePickerAsync = async () => {
     let {granted} = await ImagePicker.requestCameraRollPermissionsAsync();
-
+    setIsLoading(true)
     if (granted) {
       let data = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -49,8 +49,8 @@ export default function UserStats_Student(props) {
       if (!data.cancelled) {
         let newFile = {uri:data.uri, type:`test/${data.uri.split(".")[1]}`,name:`test/${data.uri.split(".")[1]}`}
         handleUpload(newFile);
-      }
 
+      }
     } else{
     alert("Permission to access camera roll is required!");
     return;
@@ -58,39 +58,53 @@ export default function UserStats_Student(props) {
 
   };
 
-  //handle upload to cloudinary
+
   const handleUpload =(image) =>{
    const data =  new FormData()
-   //file from image arg
    data.append('file', image)
    data.append('upload_preset', "brainTeez")
    data.append('cloud_name','dp8rfxspl')
-  //fetching to your cloudinary account
    fetch("https://api.cloudinary.com/v1_1/dp8rfxspl/image/upload",{
     method:"post",
     body:data
   }).then(res=>res.json())
   .then(data=>{
     setSelectedImage(data.url);
+    setIsLoading(false)
   })
   .catch(err=>{
     Alert.alert("Error while uploading")
   })
   }
 
-  const handlePressUpdateImageUrl = async()=>{
-    let userDocument = await firebase.firestore().collection('users').doc(userUID).get();
-    userDocument.ref.update({
-      imageUrl: selectedImage
-    })
+  const handlePressUpdateImageUrl = ()=> {
+    updateImageUrl(selectedImage, userUID);
+    Alert.alert("Profile picture updated!")
   }
+
   let image = require("../../assets/backgrounds/green.jpg");
   let [fontsLoaded] = useFonts({
     Chilanka_400Regular,
   });
 
-  if (!fontsLoaded) {
-    return <AppLoading />;
+  const handleYes = () => {
+    deleteUser();
+    navigation.navigate('WelcomePage')
+  }
+  const handleShowAlert = () => {
+     Alert.alert(
+       'ALERT',
+       'Deleting your account is permanent. Do you want to proceed?',
+       [
+         {text: 'YES', onPress:handleYes},
+         {text: 'NO', onPress:()=>console.log("NO Presses"), style:'cancel'}
+       ],
+       {cancelable: false}
+     )
+  }
+
+  if (!fontsLoaded || isLoading) {
+    return <ActivityIndicator style={styles.indicator} size="large" />;
   }
 
   return (
@@ -125,6 +139,15 @@ export default function UserStats_Student(props) {
               >
                 <Text style={styles.buttonText}>Change Photo</Text>
               </TouchableOpacity>}
+
+              <TouchableOpacity
+                onPress={handleShowAlert}
+                style={styles.deleteButton}
+              >
+                <Text style={styles.deleteText}>DELETE MY ACCOUNT</Text>
+              </TouchableOpacity>
+
+
             </View>
 
         </View>
