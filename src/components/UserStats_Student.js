@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-  StyleSheet,
   Text,
   View,
   TouchableOpacity,
@@ -11,8 +10,7 @@ import {
 } from "react-native";
 import LottieView from "lottie-react-native";
 import { useFonts, Chilanka_400Regular } from "@expo-google-fonts/chilanka";
-import { AppLoading } from "expo";
-import styles from "./UserStats_Student.component.style.js";
+import styles from "../../styles/UserStats_Student.component.style";
 
 import * as ImagePicker from "expo-image-picker";
 import { useNavigation } from "@react-navigation/native";
@@ -57,7 +55,6 @@ export default function UserStats_Student(props) {
     }
 
   };
-
 
   const handleUpload =(image) =>{
    const data =  new FormData()

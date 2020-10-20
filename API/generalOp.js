@@ -42,6 +42,10 @@ export async function signIn(email, password) {
     Alert.alert("There is something wrong!", err.message);
   }
 }
+export async function loggingOut() {
+  await firebase.auth().signOut();
+  navigation.navigate("WelcomePage");
+}
 
 export async function resetPassword(email) {
   try {
