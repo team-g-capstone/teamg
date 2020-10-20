@@ -22,11 +22,6 @@ const Navigation = () => (
   <NavigationContainer>
     <Drawer.Navigator screenOptions={{ headerShown: false }}>
       <Drawer.Screen
-        name="MemoryGame"
-        component={MemoryGame}
-        options={{ headerShown: false }}
-      />
-      <Drawer.Screen
         name="Welcome"
         component={stackNav}
         options={{ headerShown: false }}
