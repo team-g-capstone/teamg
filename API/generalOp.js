@@ -1,11 +1,7 @@
-import React from "react";
-import { useNavigation } from "@react-navigation/native";
 import * as firebase from "firebase";
 import "firebase/firestore";
 import {Alert} from 'react-native';
 
-
-//Sign up with email and password
 export async function registration(email, password, lastName, firstName, userType) {
   try {
     await firebase.auth().createUserWithEmailAndPassword(email, password);
@@ -28,6 +24,8 @@ export async function registration(email, password, lastName, firstName, userTyp
         students:[],
 
       });
+
+    return currentUser.uid;
   } catch (err) {
     Alert.alert("There is something wrong!!!!", err.message);
   }
@@ -44,7 +42,6 @@ export async function signIn(email, password) {
 }
 export async function loggingOut() {
   await firebase.auth().signOut();
-  navigation.navigate("WelcomePage");
 }
 
 export async function resetPassword(email) {

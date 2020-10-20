@@ -81,7 +81,6 @@ const ShapesAnswer = (props) => {
     }
   }
 
-
   return (
     <View style={styles.container}>
       <ImageBackground source={image} style={styles.image}>

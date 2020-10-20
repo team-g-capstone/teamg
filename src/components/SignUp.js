@@ -41,8 +41,8 @@ export default function SignUp({ navigation }) {
     } else if (password !== confirmPassword) {
       Alert.alert("Password does not match!");
     } else {
-      registration(email, password, lastName, firstName,userType);
-      navigation.navigate("Menu");
+      const userUID = registration(email, password, lastName, firstName,userType);
+      navigation.navigate("Menu", userUID);
       emptyState();
     }
   };
