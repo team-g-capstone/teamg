@@ -14,8 +14,9 @@ import { render } from "react-dom";
 
 let cards = [
   { src: require("../../assets/icon_fish.png"), isOpen: false, id: 0 },
-  { src: require("../../assets/icon_fish.png"), isOpen: false, id: 2 },
   { src: require("../../assets/icon_koala.png"), isOpen: false, id: 1 },
+  { src: require("../../assets/icon_fish.png"), isOpen: false, id: 2 },
+
   { src: require("../../assets/icon_koala.png"), isOpen: false, id: 3 },
 ];
 let cards2 = [
@@ -132,6 +133,9 @@ export default class MemoryGame extends React.Component {
     return (
       <View style={styles.container}>
         <ImageBackground source={this.image} style={styles.backgroundImage}>
+          <Text style={styles.text}>
+            Flip over cards to find the Matching Pairs!
+          </Text>
           <View style={styles.containerRow}>
             {this.renderAllCards(this.state.cards)}
           </View>
@@ -156,9 +160,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   image: {
-    height: 100,
-    width: 100,
+    height: 120,
+    width: 105,
     opacity: 1,
+    marginLeft: "1%",
+    borderWidth: 1,
+    borderColor: "#FFC857",
   },
   backgroundImage: {
     flex: 1,
@@ -166,5 +173,17 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     height: "100%",
     width: "100%",
+  },
+  text: {
+    color: "#FFC857",
+    fontWeight: "bold",
+    textAlign: "center",
+    fontSize: 30,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    paddingTop: "5%",
+    marginBottom: "-10%",
   },
 });
