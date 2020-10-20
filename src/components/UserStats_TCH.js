@@ -87,10 +87,8 @@ export default function UserStats_TCH(props) {
 
 
   const updateStudent = async ()=>{
-    let studentsArr;
-    if(value && value.data()){
+
       let studentsArr = value1.data().students;
-    }
       let studentDeletedArr = studentsArr.reduce((accum, student)=>{
        if(student !== studentUID){
           accum.push(student);
