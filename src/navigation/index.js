@@ -8,6 +8,7 @@ import stackNav from "./stacknav";
 import SubjectsNav from "./subjectsnav";
 import MainMenuNav from "./MainMenuNav";
 import LoadingScreen from "../components/LoadingScreen";
+import MemoryGame from "../components/MemoryGame";
 
 const Drawer = createDrawerNavigator();
 
@@ -20,6 +21,11 @@ if (!firebase.apps.length) {
 const Navigation = () => (
   <NavigationContainer>
     <Drawer.Navigator screenOptions={{ headerShown: false }}>
+      <Drawer.Screen
+        name="MemoryGame"
+        component={MemoryGame}
+        options={{ headerShown: false }}
+      />
       <Drawer.Screen
         name="Welcome"
         component={stackNav}
