@@ -8,6 +8,8 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
+import {componentDidMountAudio} from './ShapesHelperFuncs'
+import {Audio} from 'expo-av'
 
 let cards = [
   { src: require("../../assets/icon_fish.png"), isOpen: false, id: 0 },
@@ -38,6 +40,10 @@ export default class MemoryGame extends React.Component {
     this.resetNewLevel = this.resetNewLevel.bind(this);
   }
 
+  componentDidMount() {
+    componentDidMountAudio()
+  }
+
   handleClick = async (id) => {
     let currentPair = this.state.currentPair.slice();
     let cards = this.state.cards.slice();
@@ -58,6 +64,18 @@ export default class MemoryGame extends React.Component {
     if (currentPair.length === 2) {
       let newNum;
       if (currentPair[0].src === currentPair[1].src) {
+        let sound = new Audio.Sound();
+        const status = {
+          shouldPlay: false,
+        };
+  
+        await sound.loadAsync(
+          require("../../assets/memorymatch.mp3"),
+          status,
+          false
+        );
+        await sound.playAsync();
+
         newNum = this.state.numCorrect + 1;
         await this.setState({
           numCorrect: newNum,
