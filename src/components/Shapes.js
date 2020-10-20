@@ -14,7 +14,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import * as Animatable from "react-native-animatable";
 import LottieView from "lottie-react-native";
 import { Audio } from "expo-av";
-import styles from './Shapes.component.style.js'
+import styles from '../../styles/Shapes.component.style';
 import {componentDidMountAudio, colorDecider, colors, shapes, getRandomInt, getIndexForRandom} from './ShapesHelperFuncs'
 import { useNavigation } from "@react-navigation/native";
 import {startAudioThunk} from '../redux/reducers/audioReducer'

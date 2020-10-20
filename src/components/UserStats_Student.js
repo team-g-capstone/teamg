@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import LottieView from "lottie-react-native";
 import { useFonts, Chilanka_400Regular } from "@expo-google-fonts/chilanka";
-import styles from "./UserStats_Student.component.style.js";
+import styles from "../../styles/UserStats_Student.component.style";
 
 import * as ImagePicker from "expo-image-picker";
 import { useNavigation } from "@react-navigation/native";

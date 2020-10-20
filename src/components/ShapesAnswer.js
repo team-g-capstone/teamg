@@ -15,7 +15,7 @@ import * as firebase from "firebase"
 import {connect} from 'react-redux'
 import {stopAudioThunk} from '../redux/reducers/audioReducer'
 import Animations from "./Animations";
-import styles from './ShapesAnswer.component.style.js';
+import styles from '../../styles/ShapesAnswer.component.style';
 import {useDocument} from "react-firebase-hooks/firestore";
 import {addLevelThunk} from '../redux/reducers/levelReducer'
 

@@ -17,7 +17,7 @@ import { useFonts, Chilanka_400Regular } from "@expo-google-fonts/chilanka";
 import { AppLoading } from "expo";
 import * as ImagePicker from "expo-image-picker";
 
-import styles from "./UserStats_TCH.component.style.js";
+import styles from "../../styles/UserStats_TCH.component.style";
 import * as firebase from "firebase";
 import { useDocument } from "react-firebase-hooks/firestore";
 import { useNavigation } from "@react-navigation/native";
