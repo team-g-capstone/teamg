@@ -1,12 +1,8 @@
-import { useNavigation } from "@react-navigation/native";
-import React, { Component, useEffect, useState } from "react";
-import { StyleSheet, Text, View, ImageBackground, Alert, ActivityIndicator,FlatList, Button} from "react-native";
+import React, { Component } from "react";
+import { Text, View, ImageBackground, Alert, ActivityIndicator,FlatList, Button} from "react-native";
 import * as firebase from 'firebase';
-import { useDocument } from "react-firebase-hooks/firestore";
+import { styles } from "../../styles/AllStudentsList.Component.style"
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
-import {  Divider } from 'react-native-elements';
-import { render } from "react-dom";
-import { setStatusBarNetworkActivityIndicatorVisible } from "expo-status-bar";
 
 const Item = ({title})=>(
   <View style={styles.item}>
@@ -24,13 +20,8 @@ export default class AllStudentsList extends Component {
     this.handlePress = this.handlePress.bind(this);
   }
 
-  //const navigation = useNavigation();
-
-//let image = require("../../assets/backgrounds/blue.jpg");
-
 componentDidMount(){
   this.getStudentsList();
-  // this.setState({studentsArr: studentsList})
 }
 
 getStudentsList = async () => {
@@ -50,21 +41,19 @@ getStudentsList = async () => {
     await snapshot.forEach(doc=>{
      const student = doc.data();
      student.id = doc.id
-    // console.log("student", student)
      studentsList.push(student)
     })
 
     this.setState({studentsArr: [...studentsList]})
-
   }catch(err){
     Alert.alert("There is an error", err.message)
   }
 }
 
-
 handlePress(studentUID){
   console.log(studentUID)
 }
+
  render()  {
    const studentsArr = this.state.studentsArr;
    const userUID = this.props.route.params.userUID;
@@ -73,6 +62,7 @@ handlePress(studentUID){
       <View style={styles.listContainer}>
       <Text style={styles.screenTitle}>Student's List</Text>
       <Text style={styles.screenSubText}>Click on student's name to see their progress or make changes</Text>
+      <ScrollView>
         <FlatList
         data={studentsArr}
         renderItem={({item})=>{
@@ -86,49 +76,9 @@ handlePress(studentUID){
         }}
         keyExtractor={item=>item.id}
         />
+        </ScrollView>
       </View>
     </ImageBackground>
-
   )}
  }
 
-const styles = StyleSheet.create({
-  background: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  screenTitle: {
-    textAlign: "center",
-    fontSize: 25,
-    margin: 10,
-    fontWeight: "bold",
-    color: "white",
-  },
-  screenSubText:{
-    fontSize:14,
-    color:"white",
-    fontStyle:"italic",
-  },
-  listContainer:{
-    margin:"1%",
-  },
-  listItemTO: {
-    width:450,
-    borderColor:"navy",
-    borderWidth:1,
-    borderRadius:3,
-    backgroundColor:"#b3d9ff",
-    padding:"0.5%",
-    marginBottom: 8,
-  },
-  listItemText:{
-    color:"#001a33",
-    fontSize:20,
-  },
-  listItemContainer:{
-    flex:1,
-    flexDirection:"row",
-    alignContent:"center"
-  }
-});

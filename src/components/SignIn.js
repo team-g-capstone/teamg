@@ -3,13 +3,14 @@ import {
   View,
   Text,
   TextInput,
-  StyleSheet,
   Alert,
   ScrollView,
   Keyboard,
+  ImageBackground,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import {signIn} from "../../API/generalOp"
+import { styles } from "../../styles/SignIn.Component.style";
+import { signIn } from "../../API/generalOp";
 
 export default function SignIn({ navigation }) {
   const [email, setEmail] = useState("");
@@ -30,7 +31,7 @@ export default function SignIn({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
+    <ImageBackground style = {styles.container} source={require("../../assets/backgrounds/green.jpg")}>
       <Text style={styles.text}>Enter your email and password to sign in:</Text>
       <ScrollView onBlur={Keyboard.dismiss}>
         <TextInput
@@ -54,61 +55,7 @@ export default function SignIn({ navigation }) {
           <Text style={styles.buttonText}>Forgot password</Text>
         </TouchableOpacity>
       </ScrollView>
-    </View>
+    </ImageBackground>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    height: "100%",
-    width: "100%",
-    padding:"8%",
-    backgroundColor: "#3FC5AB",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  text: {
-    textAlign: "center",
-    fontSize: 18,
-    margin: 10,
-    fontWeight: "bold",
-    color: "#2E6194",
-  },
-  emailInput: {
-    width: 250,
-    borderWidth: 1,
-    padding: 10,
-    margin: 5,
-  },
-  passwordInput: {
-    width: 250,
-    borderWidth: 1,
-    padding: 10,
-    margin: 5,
-  },
-  buttonText: {
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  button: {
-    width: 150,
-    padding: 5,
-    backgroundColor: "#ff9999",
-    borderWidth: 2,
-    borderColor: "#ffcccc",
-    borderRadius: 15,
-    alignSelf: "center",
-    margin: 5,
-  },
-  forgotButton:{
-    width: 200,
-    padding: 6,
-    backgroundColor: "#ff9999",
-    borderWidth: 2,
-    borderColor: "#ffcccc",
-    borderRadius: 15,
-    alignSelf: "center",
-    margin: 5,
-  }
-});

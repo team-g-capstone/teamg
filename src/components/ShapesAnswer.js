@@ -74,6 +74,7 @@ const ShapesAnswer = (props) => {
             onPress: () => props.navigation.navigate("Subjects",{userUID}),
           },
         ])
+        updateMathScores();
       }
 
 

@@ -44,7 +44,6 @@ const levelReducer = (state = initialState, action) => {
         }
         case SET_LEVEL: {
             const level = action.level;
-            console.log("level from level reducer", level)
             return {
                 currentLevel: level
             }

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Button, StyleSheet, Alert ,ScrollView,Keyboard} from "react-native";
+import { View, Text, TextInput, Button, Alert ,ScrollView,Keyboard, ImageBackground} from "react-native";
 import { Picker } from "react-native-picker-dropdown";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import {registration} from "../../API/generalOp"
+import { styles } from "../../styles/SignUp.Component.style"
+import { registration } from "../../API/generalOp"
 
 export default function SignUp({ navigation }) {
   const [firstName, setFirstName] = useState("");
@@ -47,7 +48,8 @@ export default function SignUp({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
+
+    <ImageBackground style={styles.container} source={require("../../assets/backgrounds/yellow.jpg")}>
       <Button
         title="Back to home"
         onPress={() => {
@@ -107,53 +109,7 @@ export default function SignUp({ navigation }) {
         <Text style={styles.buttonText}>Sign up</Text>
       </TouchableOpacity>
       </ScrollView>
-    </View>
+    </ImageBackground>
   );
 }
 
-const styles = StyleSheet.create({
-  button: {
-    width: 200,
-    padding: 5,
-    backgroundColor: "#ff9999",
-    borderWidth: 2,
-    borderColor: "#ffcccc",
-    borderRadius: 15,
-    alignSelf: "center",
-    margin: 5,
-  },
-  buttonText: {
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  container: {
-    height: "100%",
-    width: "100%",
-    backgroundColor: "#3FC5AB",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  text: {
-    //center the text
-    textAlign: "center",
-    fontSize: 18,
-    margin: 10,
-    fontWeight: "bold",
-    color: "#2E6194",
-  },
-  textInput: {
-    width: 250,
-    borderWidth: 1,
-    padding: 10,
-    margin: "0.2%",
-  },
-  pickerInput: {
-    width: 250,
-    borderWidth: 1,
-    padding: 10,
-    margin: "0.2%",
-    marginLeft: "34.5%",
-    alignContent: "center",
-  },
-});

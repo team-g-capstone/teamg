@@ -1,18 +1,14 @@
 import {StyleSheet} from 'react-native'
 
-
 export default StyleSheet.create({
 
     container: {
-
       flex: 1,
       width: "100%",
       height: "100%",
       backgroundColor: "#4d0000",
       borderStyle: "solid",
       borderColor: 'black',
-
-
     },
     levelText:{
       fontSize:20,
@@ -73,7 +69,6 @@ export default StyleSheet.create({
     },
     inputContainer: {
       paddingTop: 60,
-
     },
     textInput: {
       color: 'white',
@@ -133,7 +128,6 @@ export default StyleSheet.create({
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.8,
       shadowRadius: 2,
-
     },
     circle: {
       flexDirection: "row",

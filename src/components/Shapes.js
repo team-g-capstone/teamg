@@ -40,7 +40,12 @@ const Shapes = (props) => {
       return accum;
     },0)
 
-    level = levelFromFS + 1;
+    if(levelFromFS < 10){
+      level = levelFromFS + 1;
+    }else{
+      level = levelFromFS;
+    }
+
     props.setLevel(level);
   }
 

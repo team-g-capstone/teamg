@@ -2,15 +2,14 @@ import { useNavigation } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import {
-  StyleSheet,
   Text,
   View,
-  Button,
   ImageBackground,
   Image,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import * as firebase from "firebase";
+import { styles } from "../../styles/WelcomePage.Component.style";
 
 export default function Welcome() {
   const navigation = useNavigation();
@@ -61,7 +60,6 @@ export default function Welcome() {
           <Text style={styles.buttonText}>Sign in</Text>
         </TouchableOpacity>
         <StatusBar style="auto" />
-        {/* <Button title="Go To Subjects" onPress={handlePress} /> */}
         <TouchableOpacity onPress={handlePress}>
           <Text style={styles.anonButtonText}>Go to Games</Text>
         </TouchableOpacity>
@@ -70,67 +68,3 @@ export default function Welcome() {
   );
 }
 
-const styles = StyleSheet.create({
-  button: {
-    width: 100,
-    padding: 5,
-    backgroundColor: "#ff9999",
-    borderWidth: 2,
-    borderColor: "#ffcccc",
-    borderRadius: 15,
-    alignSelf: "center",
-    margin: 5,
-  },
-  buttonText: {
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  headerText: {
-    color: "white",
-    fontSize: 25,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  progressButton: {
-    alignSelf: "flex-end",
-  },
-  signUpText: {
-    textAlign: "center",
-    fontSize: 15,
-    margin: 10,
-    fontWeight: "bold",
-    color: "white",
-  },
-  image: {
-    flex: 1,
-    width: "100%",
-    height: "100%",
-    resizeMode: "cover",
-    justifyContent: "center",
-  },
-  logo: {
-    // flex: 1,
-    width: "10%",
-    height: "10%",
-    marginLeft: "45%",
-    paddingBottom: "10%",
-    justifyContent: "center",
-  },
-  anonButtonText: {
-    color: "cornflowerblue",
-    fontWeight: "bold",
-    textAlign: "center",
-    fontSize: 25,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-  },
-});

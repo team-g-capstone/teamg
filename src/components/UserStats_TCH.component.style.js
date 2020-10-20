@@ -11,7 +11,7 @@ export default StyleSheet.create({
     padding:"0.5%"
   },
   deleteButton:{
-    backgroundColor: "#F4B266",
+    backgroundColor: "red",
     borderRadius: 5,
     width: "25%",
     height: "10%",
@@ -27,6 +27,13 @@ export default StyleSheet.create({
     textAlignVertical:"top",
     fontFamily: "Chilanka_400Regular",
   },
+  chartTitle: {
+    fontSize: 20,
+    paddingVertical: 3,
+    fontFamily: "Chilanka_400Regular",
+    color:"navy",
+    fontWeight:"bold"
+  },
   container: {
     flex: 1,
     flexDirection: "row",
@@ -34,7 +41,7 @@ export default StyleSheet.create({
     justifyContent: "flex-start",
   },
   graph: {
-    flex: 1,
+
     justifyContent: "center",
   },
   image: {
@@ -57,8 +64,15 @@ export default StyleSheet.create({
   progressContainer: {
     flex: 1,
     marginLeft: "35%",
-    marginTop: "5%",
+    marginTop: "1%",
+    padding:"5%",
     width: "40%",
+  },
+  subText: {
+    fontSize: 20,
+    paddingVertical: 3,
+    fontFamily: "Chilanka_400Regular",
+    color:"white",
   },
   text: {
     fontSize: 20,
