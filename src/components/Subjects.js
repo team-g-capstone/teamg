@@ -33,6 +33,11 @@ export default function Subjects(props) {
         >
           <Text style={styles.ButtonText}>Logic</Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("MemoryGame", { userUID })}
+        >
+          <Text style={styles.ButtonText}>Memory</Text>
+        </TouchableOpacity>
       </ImageBackground>
     </View>
   );
@@ -57,7 +62,7 @@ const styles = StyleSheet.create({
     color: "cornflowerblue",
     fontWeight: "bold",
     textAlign: "center",
-    fontSize: 25,
+    fontSize: 35,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
