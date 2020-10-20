@@ -56,3 +56,37 @@ export function colorDecider(color1, color2) {
       return [6, 15]
     }
   }
+
+ export function levelChanges (level, indexBase)  {
+    if (level <= 1) {
+      indexBase = 0;
+      return [5, indexBase]
+    } else if (level === 2 ) {
+      indexBase = 6; 
+      return [6, indexBase]
+    } else if (level === 3) {
+      indexBase = 13;
+      return [7, indexBase]
+    } else if (level === 4) {
+      indexBase = 21;
+      return [8, indexBase]
+    } else if (level === 5) {
+      indexBase = 30;
+      return [9, indexBase]
+    } else if (level === 6) {
+      indexBase = 40;
+      return [10, indexBase]
+    } else if (level === 7) {
+      indexBase = 51;
+      return [11, indexBase]
+    } else if (level === 8) {
+      indexBase = 63;
+      return [12, indexBase]
+    } else if (level === 9) {
+      indexBase = 76;
+      return [13, indexBase]
+    } else if (level <= 10) {
+      indexBase = 90;
+      return [14, indexBase]
+    }
+} 

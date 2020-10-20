@@ -1,17 +1,16 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import {
-  StyleSheet,
   Text,
   TextInput,
   View,
-  Button,
   ImageBackground,
   Alert,
   ScrollView,
   Keyboard
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { styles } from "../../styles/TeacherEditStudent.Component.style";
 import * as firebase from "firebase";
 
 import { useDocument } from "react-firebase-hooks/firestore";
@@ -39,8 +38,6 @@ export default function TeacherEditStudent(props) {
 
      snapshot.forEach(doc=>{
       studentUIDVar= doc.id
-      //DON"T DELTE THIS YET until code review, .data() will give us many info
-      //  console.log(doc.id, '=>', doc.data())
      })
   };
 
@@ -80,8 +77,8 @@ export default function TeacherEditStudent(props) {
   };
 
   return (
-    <View style={styles.container}>
-      <ImageBackground source={image} style={styles.image}>
+
+      <ImageBackground style={styles.image} source={image} style={styles.image}>
         <Text style={styles.headerText}>
           Teacher Dashboard:
         </Text>
@@ -121,84 +118,6 @@ export default function TeacherEditStudent(props) {
         </TouchableOpacity>
         </ScrollView>
       </ImageBackground>
-    </View>
   );
 }
 
-const styles = StyleSheet.create({
-  button: {
-    width: 100,
-    padding: 10,
-    backgroundColor: "#441196",
-    borderWidth: 2,
-    borderRadius:5,
-    borderColor: "#ffcccc",
-    alignSelf: "center",
-    margin: "1%",
-  },
-  viewAllChildbutton: {
-    width: 280,
-    padding: 12,
-    backgroundColor: "#441196",
-    borderWidth: 2,
-    borderColor: "#ffcccc",
-    borderRadius: 5,
-    alignSelf: "center",
-    margin: "0.5%",
-    marginLeft: "1%",
-  },
-  textInputTitle:{
-    color:"#fbedeb",
-    marginLeft:"25%",
-    fontSize: 18,
-    fontWeight:"bold"
-  },
-  textInput: {
-    width: 300,
-    borderColor:"#de9999",
-    borderWidth: 2,
-    padding: 10,
-    marginLeft: "25%",
-  },
-  buttonText: {
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  addAChildContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    margin: "1%",
-  },
-  headerText: {
-    color: "#02042e",
-    fontSize: 25,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginBottom:"2%"
-  },
-  progressButton: {
-    alignSelf: "flex-end",
-  },
-  signUpText: {
-    textAlign: "center",
-    fontSize: 15,
-    margin: 10,
-    fontWeight: "bold",
-    color: "white",
-  },
-  image: {
-    flex: 1,
-    width: "100%",
-    height: "100%",
-    resizeMode: "cover",
-    justifyContent: "center",
-    paddingTop:"1.5%"
-  },
-});

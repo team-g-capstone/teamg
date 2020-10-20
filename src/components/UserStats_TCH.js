@@ -17,41 +17,11 @@ import { useFonts, Chilanka_400Regular } from "@expo-google-fonts/chilanka";
 import { AppLoading } from "expo";
 import * as ImagePicker from "expo-image-picker";
 
-import styles from "./UserStats_TCH.component.style.js";
+import styles from "../../styles/UserStats_TCH.component.style";
 import * as firebase from "firebase";
 import { useDocument } from "react-firebase-hooks/firestore";
 import { useNavigation } from "@react-navigation/native";
 
-const dummyData = {
-  name: "DJ",
-  subjects: ["Math", "History"],
-  levelsMath: ["Level 1", "Level 2", "Level 3"],
-  levelsHist: "Level 1",
-  score: ["5/10", "10/10", "8/10"],
-  progress: "In Progress...",
-};
-
-const dataMath = {
-  labels: ["Level 1", "Level 2", "Level 3"],
-  legend: ["Correct", "Wrong"],
-  data: [
-    [5, 5],
-    [10, 0],
-    [8, 2],
-  ],
-  barColors: ["#82AEB1", "#BC6286"],
-};
-
-const dataHistory = {
-  labels: ["Level 1", "Level 2", "Level 3"],
-  legend: ["Correct", "Wrong"],
-  data: [
-    [3, 7],
-    [6, 4],
-    [9, 1],
-  ],
-  barColors: ["#82AEB1", "#BC6286"],
-};
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -107,18 +77,6 @@ export default function UserStats_TCH(props) {
    mixedData.data[1] = [logicTrue, 10-logicTrue];
    }
 
-
-  const [selectedGraph, setSelectedGraph] = useState(null);
-
-
-
-  const handleGraphPressMath = () => {
-    setSelectedGraph("math");
-  };
-  const handleGraphPressHistory = () => {
-    setSelectedGraph("history");
-  };
-
   let [fontsLoaded] = useFonts({
     Chilanka_400Regular,
   });
@@ -126,13 +84,13 @@ export default function UserStats_TCH(props) {
   if (!fontsLoaded) {
     return <AppLoading />;
   }
-  console.log(selectedGraph);
+
 
   const updateStudent = async ()=>{
-    // let studentsArr;
-    // if(value && value.data()){
+    let studentsArr;
+    if(value && value.data()){
       let studentsArr = value1.data().students;
-    // }
+    }
       let studentDeletedArr = studentsArr.reduce((accum, student)=>{
        if(student !== studentUID){
           accum.push(student);
@@ -158,23 +116,31 @@ export default function UserStats_TCH(props) {
           teacherUID:'',
         });
     }
-
-  const handlePressDelete = () => {
-    //console.log("Im pressed ")
-
+  const handleYes = () => {
     updateStudent();
     Alert.alert("A student has been removed from your profile.")
     props.navigation.navigate('TeacherEditStudent', {userUID})
+  }
 
+  const handlePressDelete = () => {
+    Alert.alert(
+      'ALERT',
+      'Student will be permanently removed from your profile. Do you want to proceed?',
+      [
+        {text: 'YES', onPress:handleYes},
+        {text: 'NO', onPress:()=>console.log("NO Presses"), style:'cancel'}
+      ],
+      {cancelable: false}
+    )
   }
   return (
 
       <ImageBackground source={require("../../assets/backgrounds/green.jpg")} style={styles.image}>
         <View style={styles.person}>
           <Text style={styles.text}>Student Name:</Text>
-          <Text style={styles.text}>{studentName}</Text>
+          <Text style={styles.subText}>{studentName}</Text>
           <Text style={styles.text}>Email:</Text>
-          <Text style={styles.text}>{studentEmail}</Text>
+          <Text style={styles.subText}>{studentEmail}</Text>
             <View style={styles.imgContainer}>
               <Image
                 source={{uri:studentProfilePicture}}
@@ -191,32 +157,7 @@ export default function UserStats_TCH(props) {
         </View>
 
         <View style={styles.progressContainer}>
-          <Text style={styles.text}>Subjects:</Text>
-
-          <TouchableOpacity
-            onPress={handleGraphPressMath}
-            style={styles.button}
-          >
-            <Text style={styles.buttonText}>Math</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={handleGraphPressHistory}
-            style={styles.button}
-          >
-            <Text style={styles.buttonText}>Mixed</Text>
-          </TouchableOpacity>
-
-          {selectedGraph === "math" ? (
-            <View style={styles.graph}>
-              <StackedBarChart
-                data={dataMath}
-                width={400}
-                height={200}
-                chartConfig={chartConfig}
-              />
-            </View>
-          ) : (
+          <Text style={styles.chartTitle}> Statistics by Subject:</Text>
             <View style={styles.graph}>
               <StackedBarChart
                 data={mixedData}
@@ -225,31 +166,6 @@ export default function UserStats_TCH(props) {
                 chartConfig={chartConfig}
               />
             </View>
-          )}
-
-          {/* if (selectedGraph === "math") {
-            return (
-            <View style={styles.graph}>
-            <StackedBarChart
-              data={dataMath}
-              width={screenWidth}
-              height={200}
-              chartConfig={chartConfig}
-            />
-          </View>)
-          } else if (selectedGraph === "history"){
-            return (
-            <View style={styles.graph}>
-            <StackedBarChart
-              data={dataHistory}
-              width={screenWidth}
-              height={200}
-              chartConfig={chartConfig}
-            />
-          </View>)
-          } else {
-            return null
-          } */}
         </View>
       </ImageBackground>
 

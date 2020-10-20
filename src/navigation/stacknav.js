@@ -3,6 +3,7 @@ import * as firebase from "firebase";
 import apiKeys from "../../config/keys";
 import SignUp from "../components/SignUp";
 import SignIn from "../components/SignIn";
+import ForgotPassword from "../components/ForgotPassword"
 import LoadingScreen from "../components/LoadingScreen";
 import WelcomePage from "../components/WelcomePage";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -34,6 +35,11 @@ function stackNav({ navigation }) {
       <Stack.Screen
         name="SignIn"
         component={SignIn}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="forgotPassword"
+        component={ForgotPassword}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
