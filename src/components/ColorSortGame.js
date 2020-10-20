@@ -1,6 +1,6 @@
 
 import React from "react";
-import { StyleSheet, Text, View,  ImageBackground, Dimensions, TouchableOpacity, Alert} from "react-native";
+import { Text, View,  ImageBackground, Dimensions, TouchableOpacity, Alert} from "react-native";
 import ColorSortCircles from './ColorSortCircles'
 import {resetSorted} from '../redux/reducers/colorSortReducer'
 import {connect} from 'react-redux'
@@ -71,13 +71,11 @@ function ColorSortGame(props) {
         logicScores:logicScoresNew
       })
     }
-
   }
-   const handlePress = () => {
 
+   const handlePress = () => {
    if(level < 10) {
     updateLogicScores();
-
     props.reset()
     props.addLevel()
     numOfCirlces = []
@@ -102,7 +100,6 @@ function ColorSortGame(props) {
   const handleReset = () => {
     props.resetLevel()
   }
-
 
   return (
     <View style={styles.mainContainer}>
@@ -136,10 +133,6 @@ function ColorSortGame(props) {
     </View>
   );
 }
-
-
-
-
 
 const mapState = state => {
     return {
