@@ -20,6 +20,7 @@ export async function registration(email, password, lastName, firstName, userTyp
         userType: userType,
         mathScores:falseArr ,
         logicScores: falseArr,
+        memoryScores: falseArr,
         imageUrl: defaultImage,
         students:[],
 

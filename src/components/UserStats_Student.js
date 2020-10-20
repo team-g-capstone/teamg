@@ -24,7 +24,7 @@ export default function UserStats_Student(props) {
   const navigation = useNavigation();
   const [selectedImage, setSelectedImage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const {mathScores,logicScores, firstName,userUID} = props.route.params;
+  const {mathScores,logicScores, memoryScores, firstName,userUID} = props.route.params;
 
   const [value, loading, error] = useDocument(
     firebase.firestore().collection("users").doc(userUID)
@@ -150,7 +150,7 @@ export default function UserStats_Student(props) {
         </View>
 
         <View style={styles.progressContainer}>
-          <Text style={styles.text}>Subjects:</Text>
+          <Text style={styles.titleText}>Subjects:</Text>
           <Text style={styles.text}>Math</Text>
           <View style={styles.animationContainer}>
             {mathScores.map((level, index) => {
@@ -179,6 +179,31 @@ export default function UserStats_Student(props) {
           </View>
 
           <Text style={styles.text}>Logic</Text>
+          <View style={styles.animationContainer}>
+            {logicScores.map((level, index) => {
+              if (level !== false) {
+                return (
+                  <LottieView
+                    style={styles.animationStar}
+                    source={require(`../../assets/gold_star.json`)}
+                    loop
+                    autoPlay
+                    key={index}
+                  />
+                );
+              } else {
+                return (
+                  <LottieView
+                    style={styles.animationCircle}
+                    source={require(`../../assets/x_circle.json`)}
+                    autoPlay
+                    key={index}
+                  />
+                );
+              }
+            })}
+          </View>
+          <Text style={styles.text}>Memory</Text>
           <View style={styles.animationContainer}>
             {logicScores.map((level, index) => {
               if (level !== false) {

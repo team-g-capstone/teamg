@@ -12,8 +12,9 @@ export default StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
-    marginLeft: "15%",
-    marginTop: "3%",
+    marginLeft: "35%",
+    marginTop: "-12%",
+    marginBottom:"20%",
     width: "25%",
     height: "20%",
   },
@@ -95,6 +96,13 @@ export default StyleSheet.create({
   text: {
     fontSize: 24,
     paddingVertical: 3,
+    fontFamily: "Chilanka_400Regular",
+  },
+  titleText:{
+    fontSize: 24,
+    paddingVertical: 3,
+    marginBottom:"10%",
+    color:"navy",
     fontFamily: "Chilanka_400Regular",
   },
   thumbnail: {

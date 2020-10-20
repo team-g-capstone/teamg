@@ -34,6 +34,7 @@ export default function MainMenu(props) {
   } else if (value && value.data()) {
     let mathScores = value.data().mathScores;
     let logicScores = value.data().logicScores;
+    let memoryScores = value.data().memoryScores;
     let userType = value.data().userType;
     let firstName = value.data().firstName;
 
@@ -73,6 +74,7 @@ export default function MainMenu(props) {
                       userUID: userUID,
                       firstName: firstName,
                       logicScores: logicScores,
+                      memoryScores: memoryScores,
                     },
                   })
                 }
