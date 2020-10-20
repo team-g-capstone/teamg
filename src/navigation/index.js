@@ -7,12 +7,8 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import stackNav from "./stacknav";
 import SubjectsNav from "./subjectsnav";
 import MainMenuNav from "./MainMenuNav";
-import LoadingScreen from "../components/LoadingScreen";
-import MemoryGame from "../components/MemoryGame";
 
 const Drawer = createDrawerNavigator();
-
-const Stack = createStackNavigator();
 
 if (!firebase.apps.length) {
   firebase.initializeApp(apiKeys.firebaseConfig);

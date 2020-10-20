@@ -8,9 +8,6 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import Card from "./Card_MemoryGame";
-import { render } from "react-dom";
 
 let cards = [
   { src: require("../../assets/icon_fish.png"), isOpen: false, id: 0 },
@@ -23,10 +20,6 @@ let cards2 = [
   { src: require("../../assets/icon_fish.png"), isOpen: false, id: 0 },
   { src: require("../../assets/icon_koala.png"), isOpen: false, id: 1 },
 ];
-
-//trying to add a clone to have 2 of each however there will be a duplicate of id's
-// var cloneArr = [...cards];
-// cards = cards.concat(cloneArr);
 
 export default class MemoryGame extends React.Component {
   constructor(props) {
@@ -69,7 +62,6 @@ export default class MemoryGame extends React.Component {
         await this.setState({
           numCorrect: newNum,
         });
-        console.log("state:", this.state);
       } else {
         setTimeout(() => {
           newNum = 0;
@@ -89,7 +81,7 @@ export default class MemoryGame extends React.Component {
     if (this.state.numCorrect >= 2) {
       Alert.alert(
         "Congrats! You found all the pairs!",
-        "Go to next level!", // <- this part is optional, you can pass an empty string
+        "Go to next level!",
         [{ text: "OK", onPress: () => this.resetNewLevel() }],
         { cancelable: false }
       );
@@ -97,7 +89,6 @@ export default class MemoryGame extends React.Component {
   };
 
   async resetNewLevel() {
-    console.log("In resetNewLevel()");
     await this.setState({
       isChanged: false,
       cards: cards2,
@@ -105,7 +96,6 @@ export default class MemoryGame extends React.Component {
       correctPair: [],
       numCorrect: 0,
     });
-    console.log("New State:", this.state);
   }
 
   renderImg(card) {
