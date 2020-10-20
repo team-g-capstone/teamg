@@ -14,8 +14,8 @@ import { render } from "react-dom";
 
 let cards = [
   { src: require("../../assets/icon_fish.png"), isOpen: false, id: 0 },
-  { src: require("../../assets/icon_koala.png"), isOpen: false, id: 1 },
   { src: require("../../assets/icon_fish.png"), isOpen: false, id: 2 },
+  { src: require("../../assets/icon_koala.png"), isOpen: false, id: 1 },
   { src: require("../../assets/icon_koala.png"), isOpen: false, id: 3 },
 ];
 let cards2 = [
@@ -37,6 +37,7 @@ export default class MemoryGame extends React.Component {
       correctPair: [],
       numCorrect: 0,
     };
+    this.image = require("../../assets/backgrounds/green.jpg");
     this.handleClick = this.handleClick.bind(this);
     this.renderImg = this.renderImg.bind(this);
     this.renderAllCards = this.renderAllCards.bind(this);
@@ -45,10 +46,15 @@ export default class MemoryGame extends React.Component {
 
   handleClick = async (id) => {
     let currentPair = this.state.currentPair.slice();
+    let cards = this.state.cards.slice();
     let index = cards.findIndex((card) => {
       return card.id === id;
     });
     cards[index].isOpen = true;
+    this.setState({
+      cards: cards,
+    });
+
     if (currentPair.length < 2) {
       currentPair.push(cards[index]);
       await this.setState({
@@ -80,17 +86,9 @@ export default class MemoryGame extends React.Component {
     }
 
     if (this.state.numCorrect >= 2) {
-      // Alert.alert(
-      //   "Congrats! You found all the pairs!"
-      //   // [
-      //   //   {
-      //   //     onPress: () => console.log("HEY"),
-      //   //   },
-      //   // ]
-      // );
       Alert.alert(
-        "Alert Title",
-        "My Alert Msg", // <- this part is optional, you can pass an empty string
+        "Congrats! You found all the pairs!",
+        "Go to next level!", // <- this part is optional, you can pass an empty string
         [{ text: "OK", onPress: () => this.resetNewLevel() }],
         { cancelable: false }
       );
@@ -133,16 +131,11 @@ export default class MemoryGame extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        {/* <Card /> */}
-        {this.renderAllCards(this.state.cards)}
-        {/* <View style={styles.containerRow}>
-        {renderImg("koala")}
-        {renderImg("fish")}
-      </View> */}
-        {/* <View style={styles.containerRow}>
-        {renderImg("koala")}
-        {renderImg("fish")}
-      </View> */}
+        <ImageBackground source={this.image} style={styles.backgroundImage}>
+          <View style={styles.containerRow}>
+            {this.renderAllCards(this.state.cards)}
+          </View>
+        </ImageBackground>
       </View>
     );
   }
@@ -158,11 +151,20 @@ const styles = StyleSheet.create({
   },
   containerRow: {
     flex: 1,
-    flexDirection: "column",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
   },
   image: {
     height: 100,
     width: 100,
     opacity: 1,
+  },
+  backgroundImage: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "center",
+    height: "100%",
+    width: "100%",
   },
 });
