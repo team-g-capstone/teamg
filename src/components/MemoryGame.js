@@ -18,6 +18,10 @@ let cards = [
   { src: require("../../assets/icon_fish.png"), isOpen: false, id: 2 },
   { src: require("../../assets/icon_koala.png"), isOpen: false, id: 3 },
 ];
+let cards2 = [
+  { src: require("../../assets/icon_fish.png"), isOpen: false, id: 0 },
+  { src: require("../../assets/icon_koala.png"), isOpen: false, id: 1 },
+];
 
 //trying to add a clone to have 2 of each however there will be a duplicate of id's
 // var cloneArr = [...cards];
@@ -33,10 +37,10 @@ export default class MemoryGame extends React.Component {
       correctPair: [],
       numCorrect: 0,
     };
-    // this.navigation = useNavigation();
     this.handleClick = this.handleClick.bind(this);
     this.renderImg = this.renderImg.bind(this);
     this.renderAllCards = this.renderAllCards.bind(this);
+    this.resetNewLevel = this.resetNewLevel.bind(this);
   }
 
   handleClick = async (id) => {
@@ -76,20 +80,35 @@ export default class MemoryGame extends React.Component {
     }
 
     if (this.state.numCorrect >= 2) {
-      Alert.alert("Congrats! You found all the pairs!");
-      // [
-      //   {
-      //     onPress: () => this.navigation.navigate("MemoryGame"),
-      //   },
-      // ];
+      // Alert.alert(
+      //   "Congrats! You found all the pairs!"
+      //   // [
+      //   //   {
+      //   //     onPress: () => console.log("HEY"),
+      //   //   },
+      //   // ]
+      // );
+      Alert.alert(
+        "Alert Title",
+        "My Alert Msg", // <- this part is optional, you can pass an empty string
+        [{ text: "OK", onPress: () => this.resetNewLevel() }],
+        { cancelable: false }
+      );
     }
   };
 
-  //below re-renders component
-  //   this.setState({
-  //     isChanged: !this.state.isChanged,
-  //   });
-  // };
+  async resetNewLevel() {
+    console.log("In resetNewLevel()");
+    await this.setState({
+      isChanged: false,
+      cards: cards2,
+      currentPair: [],
+      correctPair: [],
+      numCorrect: 0,
+    });
+    console.log("New State:", this.state);
+  }
+
   renderImg(card) {
     const id = card.id;
 
@@ -115,7 +134,7 @@ export default class MemoryGame extends React.Component {
     return (
       <View style={styles.container}>
         {/* <Card /> */}
-        {this.renderAllCards(cards)}
+        {this.renderAllCards(this.state.cards)}
         {/* <View style={styles.containerRow}>
         {renderImg("koala")}
         {renderImg("fish")}
