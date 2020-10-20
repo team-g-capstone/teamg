@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
     borderRadius: 15,
     alignSelf: "center",
     margin: 5,
-    marginTop:"2%"
+    marginTop:"5%"
   },
   buttonText: {
     color: "white",
@@ -22,6 +22,20 @@ export const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+  },
+  deleteButton: {
+    backgroundColor: "#DC1F12",
+    width: "25%",
+    alignContent: "center",
+    margin:"0.5%",
+    marginLeft:"38%",
+    marginTop:"2%"
+  },
+  deleteText:{
+    color:"white",
+    fontSize:18,
+    fontWeight:"bold",
+    textAlign:"center",
   },
   headerText: {
     color: "white",
