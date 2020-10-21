@@ -90,3 +90,24 @@ export function colorDecider(color1, color2) {
       return [14, indexBase]
     }
 } 
+
+export const cards = [
+  { src: require("../../assets/icon_fish.png"), isOpen: false, id: 0, opacity: 1 },
+  { src: require("../../assets/icon_koala.png"), isOpen: false, id: 1, opacity: 1 },
+  { src: require("../../assets/icon_fish.png"), isOpen: false, id: 2, opacity: 1 },
+
+  { src: require("../../assets/icon_koala.png"), isOpen: false, id: 3, opacity: 1 },
+];
+
+export function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1)); // random index from 0 to i
+
+    // swap elements array[i] and array[j]
+    // we use "destructuring assignment" syntax to achieve that
+    // you'll find more details about that syntax in later chapters
+    // same can be written as:
+    // let t = array[i]; array[i] = array[j]; array[j] = t
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
