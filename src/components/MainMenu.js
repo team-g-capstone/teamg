@@ -80,6 +80,17 @@ export default function MainMenu(props) {
                 Add/View Student(s)
               </Text>
             </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate("Games", {
+                  screen:"CreateGameRoom",
+                  params:{ userUID }})
+              }
+            >
+              <Text style={styles.anonButtonText}>
+                Create Game Room
+              </Text>
+            </TouchableOpacity>
              <TouchableOpacity
                 onPress={handleShowAlert}
                 style={styles.deleteButton}
