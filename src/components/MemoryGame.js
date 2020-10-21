@@ -12,15 +12,15 @@ import {componentDidMountAudio} from './ShapesHelperFuncs'
 import {Audio} from 'expo-av'
 
 let cards = [
-  { src: require("../../assets/icon_fish.png"), isOpen: false, id: 0 },
-  { src: require("../../assets/icon_koala.png"), isOpen: false, id: 1 },
-  { src: require("../../assets/icon_fish.png"), isOpen: false, id: 2 },
+  { src: require("../../assets/icon_fish.png"), isOpen: false, id: 0, opacity: 1 },
+  { src: require("../../assets/icon_koala.png"), isOpen: false, id: 1, opacity: 1 },
+  { src: require("../../assets/icon_fish.png"), isOpen: false, id: 2, opacity: 1 },
 
-  { src: require("../../assets/icon_koala.png"), isOpen: false, id: 3 },
+  { src: require("../../assets/icon_koala.png"), isOpen: false, id: 3, opacity: 1 },
 ];
 let cards2 = [
-  { src: require("../../assets/icon_fish.png"), isOpen: false, id: 0 },
-  { src: require("../../assets/icon_koala.png"), isOpen: false, id: 1 },
+  { src: require("../../assets/icon_fish.png"), isOpen: false, id: 0, opacity: 1},
+  { src: require("../../assets/icon_koala.png"), isOpen: false, id: 1, opacity: 1},
 ];
 
 export default class MemoryGame extends React.Component {
@@ -54,16 +54,19 @@ export default class MemoryGame extends React.Component {
     this.setState({
       cards: cards,
     });
-
-    if (currentPair.length < 2) {
-      currentPair.push(cards[index]);
-      await this.setState({
-        currentPair: currentPair,
-      });
+    if(cards[index].opacity === 1) {
+      if (currentPair.length < 2) {
+        currentPair.push(cards[index]);
+        await this.setState({
+          currentPair: currentPair,
+        });
+      }
     }
+   
+    
     if (currentPair.length === 2) {
       let newNum;
-      if (currentPair[0].src === currentPair[1].src) {
+      if (currentPair[0].src === currentPair[1].src && currentPair[0].id !== currentPair[1].id) {
         let sound = new Audio.Sound();
         const status = {
           shouldPlay: false,
@@ -80,6 +83,15 @@ export default class MemoryGame extends React.Component {
         await this.setState({
           numCorrect: newNum,
         });
+        
+        setTimeout(() => {
+         
+          cards[index].opacity = 0;
+          cards[currentPair[0].id].opacity = 0
+          this.setState({
+            cards: cards,
+          });
+        }, 100);
       } else {
         setTimeout(() => {
           newNum = 0;
@@ -120,13 +132,15 @@ export default class MemoryGame extends React.Component {
     const id = card.id;
 
     let src = require("../../assets/brain_teez.png");
+    let opacity = card.opacity
     if (card.isOpen) {
       src = card.src;
+      
     }
     return (
       <View key={id}>
         <TouchableOpacity onPress={() => this.handleClick(id)}>
-          <Image source={src} style={styles.image} />
+          <Image source={src} style={[styles.image, {opacity: opacity}]} />
         </TouchableOpacity>
       </View>
     );
