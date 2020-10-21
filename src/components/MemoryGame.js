@@ -10,32 +10,7 @@ import {
 } from "react-native";
 import {componentDidMountAudio} from './ShapesHelperFuncs'
 import {Audio} from 'expo-av'
-import {cards} from './ShapesHelperFuncs'
-
-// let cards = [
-//   { src: require("../../assets/icon_fish.png"), isOpen: false, id: 0, opacity: 1 },
-//   { src: require("../../assets/icon_koala.png"), isOpen: false, id: 1, opacity: 1 },
-//   { src: require("../../assets/icon_fish.png"), isOpen: false, id: 2, opacity: 1 },
-
-//   { src: require("../../assets/icon_koala.png"), isOpen: false, id: 3, opacity: 1 },
-// ];
-function shuffle(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    let j = Math.floor(Math.random() * (i + 1)); // random index from 0 to i
-
-    // swap elements array[i] and array[j]
-    // we use "destructuring assignment" syntax to achieve that
-    // you'll find more details about that syntax in later chapters
-    // same can be written as:
-    // let t = array[i]; array[i] = array[j]; array[j] = t
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-}
-
-let cards2 = [
-  { src: require("../../assets/icon_fish.png"), isOpen: false, id: 0, opacity: 1},
-  { src: require("../../assets/icon_koala.png"), isOpen: false, id: 1, opacity: 1},
-];
+import {cards, shuffle, levelChanges} from './ShapesHelperFuncs'
 
 export default class MemoryGame extends React.Component {
   constructor(props) {
@@ -46,43 +21,50 @@ export default class MemoryGame extends React.Component {
       currentPair: [],
       correctPair: [],
       numCorrect: 0,
+      level: 1,
+      indexBase: 0,
     };
     this.image = require("../../assets/backgrounds/green.jpg");
     this.handleClick = this.handleClick.bind(this);
     this.renderImg = this.renderImg.bind(this);
     this.renderAllCards = this.renderAllCards.bind(this);
     this.resetNewLevel = this.resetNewLevel.bind(this);
-    this.shuffle = this.shuffle.bind(this)
+  
   }
 
   async componentDidMount() {
     componentDidMountAudio()
-    // console.log(cards, 'yello')
+   
+  let cards = [
+  { src: require("../../assets/icon_fish.png"), isOpen: false, id: 0, opacity: 1 },
+  { src: require("../../assets/icon_koala.png"), isOpen: false, id: 1, opacity: 1 },
+  { src: require("../../assets/icon_fish.png"), isOpen: false, id: 2, opacity: 1 },
+  { src: require("../../assets/icon_koala.png"), isOpen: false, id: 3, opacity: 1 },
+  
+
+];
     const arrayOfObjects = Object.keys(cards)
     
     const array2 = arrayOfObjects.map((key) => {
       return Number(arrayOfObjects[key])
     })
-    let shuffledCards = this.shuffle(array2)
+    let shuffledCards = shuffle(array2)
     let shuffledDeck = cards.map((card, index) => {
       card.id = shuffledCards[index]
+      card.isOpen = false, 
+      card.opacity = 1
+      
       return card
     })
     shuffledDeck.sort((a,b) => a.id - b.id)
     await this.setState({
       cards: shuffledDeck
     })
+ 
     
   }
 
- shuffle = (array) => {
-    for (let i = array.length - 1; i > 0; i--) {
-      let j = Math.floor(Math.random() * (i + 1)); // random index from 0 to i
-      [array[i], array[j]] = [array[j], array[i]];
-    }
 
-    return array
-  }
   
   handleClick = async (id) => {
     let currentPair = this.state.currentPair.slice();
@@ -90,6 +72,7 @@ export default class MemoryGame extends React.Component {
     let index = cards.findIndex((card) => {
       return card.id === id;
     });
+    console.log('ID', id, "index", index)
     cards[index].isOpen = true;
     this.setState({
       cards: cards,
@@ -120,6 +103,7 @@ export default class MemoryGame extends React.Component {
         await sound.playAsync();
 
         newNum = this.state.numCorrect + 1;
+        
         await this.setState({
           numCorrect: newNum,
         });
@@ -148,10 +132,10 @@ export default class MemoryGame extends React.Component {
       });
     }
 
-    if (this.state.numCorrect >= 2) {
+    if (this.state.numCorrect >= this.state.cards.length / 2) {
       Alert.alert(
         "Congrats! You found all the pairs!",
-        "Go to next level!",
+        `Continue to Level ${this.state.level + 1}`,
         [{ text: "OK", onPress: () => this.resetNewLevel() }],
         { cancelable: false }
       );
@@ -159,23 +143,49 @@ export default class MemoryGame extends React.Component {
   };
 
   async resetNewLevel() {
+    const newLevel = this.state.level + 1
+    let levelCards
+    newLevel % 2 === 0 ? levelCards = 4 : levelCards = 3
+    console.log('newLevel and levelCards = ', (newLevel + levelCards))
+    const newCards =  cards.slice(0, (newLevel + levelCards))
+    const arrayOfObjects = Object.keys(newCards)
+    console.log(newCards, )
+    const array2 = arrayOfObjects.map((key) => {
+      return Number(arrayOfObjects[key])
+    })
+
+
+    let shuffledCards = shuffle(array2)
+    let shuffledDeck = newCards.map((card, index) => {
+      card.id = shuffledCards[index]
+      card.isOpen = false, 
+      card.opacity = 1
+      return card
+    })
+    shuffledDeck.sort((a,b) => a.id - b.id)
+    await this.setState({
+      cards: shuffledDeck
+    })
+  
     await this.setState({
       isChanged: false,
-      cards: cards2,
       currentPair: [],
       correctPair: [],
       numCorrect: 0,
+      level: newLevel
     });
+    console.log(this.state)
   }
 
-  renderImg(card) {
+  renderImg(card, index) {
     const id = card.id;
-
+   
+    
+    console.log(index, 'HELLLLo', 'id', id)
     let src = require("../../assets/brain_teez.png");
     let opacity = card.opacity
     if (card.isOpen) {
       src = card.src;
-      
     }
     return (
       <View key={id}>
@@ -187,11 +197,14 @@ export default class MemoryGame extends React.Component {
   }
 
   renderAllCards(cards) {
-    return cards.map((card) => {
-      return this.renderImg(card);
+     let indexBase;
+    const key = levelChanges(this.state.level, indexBase)[0]
+    return cards.map((card, index) => {
+      return this.renderImg(card, index);
     });
   }
   render() {
+    
     return (
       <View style={styles.container}>
         <ImageBackground source={this.image} style={styles.backgroundImage}>

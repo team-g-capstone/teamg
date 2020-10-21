@@ -95,8 +95,26 @@ export const cards = [
   { src: require("../../assets/icon_fish.png"), isOpen: false, id: 0, opacity: 1 },
   { src: require("../../assets/icon_koala.png"), isOpen: false, id: 1, opacity: 1 },
   { src: require("../../assets/icon_fish.png"), isOpen: false, id: 2, opacity: 1 },
+  { src: require("../../assets/icon_koala.png"), isOpen: false, id: 4, opacity: 1 },
+  { src: require("../../assets/icon_fish.png"), isOpen: false, id: 5, opacity: 1 },
+  { src: require("../../assets/icon_koala.png"), isOpen: false, id: 6, opacity: 1 },
+  { src: require("../../assets/icon_fish.png"), isOpen: false, id: 7, opacity: 1 },
+  { src: require("../../assets/icon_koala.png"), isOpen: false, id: 8, opacity: 1 },
+  { src: require("../../assets/icon_fish.png"), isOpen: false, id: 9, opacity: 1 },
+  { src: require("../../assets/icon_koala.png"), isOpen: false, id: 10, opacity: 1 },
+  { src: require("../../assets/icon_fish.png"), isOpen: false, id: 11, opacity: 1 },
+  { src: require("../../assets/icon_koala.png"), isOpen: false, id: 12, opacity: 1 },
+  { src: require("../../assets/icon_fish.png"), isOpen: false, id: 13, opacity: 1 },
+  { src: require("../../assets/icon_koala.png"), isOpen: false, id: 14, opacity: 1 },
+  { src: require("../../assets/icon_fish.png"), isOpen: false, id: 15, opacity: 1 },
+  { src: require("../../assets/icon_koala.png"), isOpen: false, id: 16, opacity: 1 },
+  { src: require("../../assets/icon_fish.png"), isOpen: false, id: 17, opacity: 1 },
+  { src: require("../../assets/icon_koala.png"), isOpen: false, id: 18, opacity: 1 },
+  { src: require("../../assets/icon_fish.png"), isOpen: false, id: 19, opacity: 1 },
+  { src: require("../../assets/icon_koala.png"), isOpen: false, id: 20, opacity: 1 },
+   { src: require("../../assets/icon_fish.png"), isOpen: false, id: 21, opacity: 1 },
+  { src: require("../../assets/icon_koala.png"), isOpen: false, id: 22, opacity: 1 },
 
-  { src: require("../../assets/icon_koala.png"), isOpen: false, id: 3, opacity: 1 },
 ];
 
 export function shuffle(array) {
@@ -110,4 +128,5 @@ export function shuffle(array) {
     // let t = array[i]; array[i] = array[j]; array[j] = t
     [array[i], array[j]] = [array[j], array[i]];
   }
+  return array 
 }
