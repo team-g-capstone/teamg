@@ -22,7 +22,7 @@ export default class MemoryGame extends React.Component {
       correctPair: [],
       numCorrect: 0,
       level: 1,
-      indexBase: 0,
+    
     };
     this.image = require("../../assets/backgrounds/green.jpg");
     this.handleClick = this.handleClick.bind(this);
@@ -35,7 +35,7 @@ export default class MemoryGame extends React.Component {
 
   async componentDidMount() {
     componentDidMountAudio()
-   console.log(this.props)
+   
     
     let cardsToMount = cards.slice(0, 4)
     const arrayOfObjects = Object.keys(cardsToMount)
@@ -67,7 +67,7 @@ export default class MemoryGame extends React.Component {
     let index = cards.findIndex((card) => {
       return card.id === id;
     });
-    console.log('ID', id, "index", index)
+   
     cards[index].isOpen = true;
     this.setState({
       cards: cards,
@@ -128,18 +128,32 @@ export default class MemoryGame extends React.Component {
     }
 
     if (this.state.numCorrect >= this.state.cards.length / 2) {
-      Alert.alert(
+      if(this.state.level < 10) {
+         Alert.alert(
         "Congrats! You found all the pairs!",
         `Continue to Level ${this.state.level + 1}`,
         [{ text: "OK", onPress: () => this.resetNewLevel() }],
         { cancelable: false }
       );
+      } else {
+         Alert.alert(
+        "Congrats! You found all the pairs!",
+        `Continue`,
+        [{ text: "OK", onPress: () => this.resetNewLevel() }],
+        { cancelable: false }
+      );
+      }
+     
     }
   };
 
   async resetNewLevel() {
     const newLevel = this.state.level + 1
-    if(newLevel === 3) {
+    if(newLevel === 11) {
+        await this.setState({
+        level: 1,
+        cards: []
+      })
       const {navigation} = this.props.navigation
       let userUID = this.props.route.params.userUID
       Alert.alert(`You've passed all 10 levels!`, `You have the memory of a dolphin !`, [
@@ -148,12 +162,14 @@ export default class MemoryGame extends React.Component {
             onPress: () => this.props.navigation.navigate("Subjects",{userUID}),
           },
         ])
-      this.setState({
-        level: 1,
-      })
+    
     }
     let levelCards
     newLevel % 2 === 0 ? levelCards = 4 : levelCards = 3
+    
+    if(newLevel + levelCards >= 14) {
+       levelCards = 2
+    }
     const newCards =  cards.slice(0, (newLevel + levelCards))
     const arrayOfObjects = Object.keys(newCards)
     const array2 = arrayOfObjects.map((key) => {
@@ -180,7 +196,7 @@ export default class MemoryGame extends React.Component {
       numCorrect: 0,
       level: newLevel
     });
-    console.log(this.state)
+
   }
 
   renderImg(card, index) {
@@ -202,8 +218,7 @@ export default class MemoryGame extends React.Component {
   }
 
   renderAllCards(cards) {
-     let indexBase;
-    const key = levelChanges(this.state.level, indexBase)[0]
+    
     return cards.map((card, index) => {
       return this.renderImg(card, index);
     });
@@ -241,6 +256,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
+    height: '98%'
   },
   containerRow: {
     flex: 4,
