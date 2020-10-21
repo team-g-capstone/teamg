@@ -8,6 +8,7 @@ import ColorSortGame from "../components/ColorSortGame";
 import MemoryGame from "../components/MemoryGame";
 import CreateGameRoom from "../components/CreateGameRoom";
 import GameRoom from "../components/GameRoom";
+import JoinRoom from "../components/JoinRoom";
 
 const Stack = createStackNavigator();
 
@@ -47,6 +48,11 @@ function SubjectsNav({ navigation }) {
       <Stack.Screen
         name="GameRoom"
         component={GameRoom}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="JoinRoom"
+        component={JoinRoom}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

@@ -19,11 +19,17 @@ import * as firebase from "firebase";
         gameID:this.props.route.params.gameID,
         userUID:this.props.route.params.userUID,
         status: false,
+        waiting:"",
         questions:[],
         creator:"",
+        received:"",
+        players:[],
         numOne:0,
         numTwo:0,
         answer:0,
+        numOneFS:0,
+        numTwoFS:0,
+        answerFS:0,
         inputAnswer:0,
         score:0,
       }
@@ -38,42 +44,43 @@ import * as firebase from "firebase";
       this.db.collection('games')
             .doc(this.state.gameID)
             .onSnapshot((snapshot)=>{
-             let updates={};
+             let data={};
              let userUID = this.props.route.params.userUID;
-             updates['status'] = snapshot.data().status;
-             updates['score'] = snapshot.data()[userUID];
-             updates['creator'] = snapshot.data().creator;
-             this.setState(updates);
-
+             data['status'] = snapshot.data().status;
+             data['score'] = snapshot.data()[userUID];
+             data['creator'] = snapshot.data().creator;
+             data['numOneFS'] = snapshot.data().numOne;
+             data['numTwoFS'] = snapshot.data().numTwo;
+             data['answerFS'] = snapshot.data().answer;
+             data['waiting'] = snapshot.data().waiting;
+             data['received'] = snapshot.data().received;
+             data['players'] = snapshot.data().players;
+             this.setState(data);
             })
 
     }
 
-
     handlePressUpdateQuestion= () =>{
       let {gameID, numOne,numTwo} = this.state;
       let answer = Number(numOne)+ Number(numTwo);
-      this.setState({answer: answer})
-      updateQuestion(gameID,numOne, numTwo, answer);
+      this.setState({
+        answer: answer,
+        waiting:false ,
+      })
+      updateQuestion(gameID,Number(numOne), Number(numTwo), answer);
     }
 
     handlePressSubmitAnswer= () =>{
-      let {gameID, answer, inputAnswer, userUID} = this.state;
-      console.log("answer", typeof answer)
-      console.log("inputAnswer", typeof inputAnswer)
-      if(answer === Number(inputAnswer)){
-        let key = userUID;
-        updateScore(gameID, key);
+      let {gameID, answerFS, inputAnswer, userUID} = this.state;
+      let score = 0;
+      if(answerFS === Number(inputAnswer)){
+        score =1
         Alert.alert('You got it!')
       }else{
         Alert.alert('Sorry, incorrect!')
       }
-      this.setState({
-        numOne:'',
-        numTwo:'',
-        answer:'',
-        inputAnswer:'',
-      })
+      updateScore(gameID, userUID,score);
+      this.setState({inputAnswer:'',})
     }
 
     handleChangeNumOne = (num) =>{
@@ -95,16 +102,16 @@ import * as firebase from "firebase";
 
 
     render(){
-      const {creator, userUID} = this.state;
-
-      if(!this.state.status){
+      const isHost = this.state.creator === this.state.userUID;
+      const waitingRes = this.state.waiting;
+      console.log("GameRoomRender", this.props.route.params)
+      if(this.state.players.length < 2){
         return <ActivityIndicator size='large'/>
       }else{
       return(
       <ImageBackground style={styles.background} source={require("../../assets/backgrounds/blue.jpg")}>
          <Text styles={styles.screenTitle}>Welcome to Game Room:{this.state.gameID}</Text>
-         <Text styles={styles.screenTitle}>Score:</Text>
-         <TextInput
+      {isHost? <><Text>Response received: {this.state.received}</Text><TextInput
           style={styles.holder}
           placeholder="NUMONE"
           value={this.state.numOne}
@@ -117,21 +124,29 @@ import * as firebase from "firebase";
           value={this.state.numTwo}
           onChangeText={(num)=> this.handleChangeNumTwo(num)}
         />
+        </>:<><Text styles={styles.screenTitle}>Score:{this.state.score}</Text>
+      <Text>{this.state.numOneFS}+</Text>
+      <Text>{this.state.numTwoFS}</Text>
         <Text>=</Text>
          <TextInput
           style={styles.ansholder}
           placeholder="ANS"
           value={this.state.inputAnswer}
           onChangeText={(ans) => this.setState({inputAnswer:ans})}
-        />
-       <TouchableOpacity onPress={this.handlePressUpdateQuestion}>
+        /></>}
+
+       {isHost? <TouchableOpacity onPress={this.handlePressUpdateQuestion}>
         <Text style={styles.screenTitle}>Update Question</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={this.handlePressSubmitAnswer}>
+      : <TouchableOpacity onPress={this.handlePressSubmitAnswer}>
         <Text style={styles.screenTitle}>Submit Answer</Text>
-      </TouchableOpacity>
+      </TouchableOpacity>}
+      {isHost? waitingRes?<Text style={styles.waitingTitle}>Please update Question</Text>:<Text style={styles.waitingTitle}>Waiting for answer</Text>:waitingRes?
+      <Text style={styles.waitingTitle}>Waiting for new question</Text>:<Text style={styles.waitingTitle}>Please answer the question</Text>
+    }
       </ImageBackground>
       )}
+
     }
   }
 
@@ -154,6 +169,13 @@ import * as firebase from "firebase";
 
   number:{
     color:"white",
+  },
+  waitingTitle: {
+    textAlign: "center",
+    fontSize: 15,
+    margin: 10,
+    fontWeight: "bold",
+    color: "white",
   },
   screenTitle: {
     textAlign: "center",

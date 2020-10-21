@@ -116,6 +116,17 @@ export default function MainMenu(props) {
               >
                 <Text style={styles.anonButtonText}>View My Stars </Text>
               </TouchableOpacity>
+              <TouchableOpacity
+              onPress={() =>
+                navigation.navigate("Games", {
+                  screen:"JoinRoom",
+                  params:{ userUID }})
+              }
+            >
+              <Text style={styles.anonButtonText}>
+               Join Room
+              </Text>
+            </TouchableOpacity>
             </>
           )}
           <TouchableOpacity style={styles.button} onPress={handlePress}>
