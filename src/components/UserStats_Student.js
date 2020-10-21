@@ -17,7 +17,7 @@ import { useNavigation } from "@react-navigation/native";
 
 import * as firebase from 'firebase';
 import {useDocument} from "react-firebase-hooks/firestore";
-import {deleteUser, updateImageUrl} from "../../API/generalOp"
+import {updateImageUrl} from "../../API/generalOp";
 
 export default function UserStats_Student(props) {
 
@@ -84,22 +84,6 @@ export default function UserStats_Student(props) {
     Chilanka_400Regular,
   });
 
-  const handleYes = () => {
-    deleteUser();
-    navigation.navigate('WelcomePage')
-  }
-  const handleShowAlert = () => {
-     Alert.alert(
-       'ALERT',
-       'Deleting your account is permanent. Do you want to proceed?',
-       [
-         {text: 'YES', onPress:handleYes},
-         {text: 'NO', onPress:()=>console.log("NO Presses"), style:'cancel'}
-       ],
-       {cancelable: false}
-     )
-  }
-
   if (!fontsLoaded || isLoading) {
     return <ActivityIndicator style={styles.indicator} size="large" />;
   }
@@ -137,12 +121,6 @@ export default function UserStats_Student(props) {
                 <Text style={styles.buttonText}>Change Photo</Text>
               </TouchableOpacity>}
 
-              <TouchableOpacity
-                onPress={handleShowAlert}
-                style={styles.deleteButton}
-              >
-                <Text style={styles.deleteText}>DELETE MY ACCOUNT</Text>
-              </TouchableOpacity>
 
 
             </View>

@@ -11,7 +11,7 @@ import * as firebase from "firebase";
 import { useDocument } from "react-firebase-hooks/firestore";
 import { useNavigation } from "@react-navigation/native";
 import { styles } from "../../styles/MainMenu.Component.style";
-import { loggingOut } from "../../API/generalOp";
+import { loggingOut,deleteUser } from "../../API/generalOp";
 
 export default function MainMenu(props) {
   const navigation = useNavigation();
@@ -26,6 +26,22 @@ export default function MainMenu(props) {
   const handlePress = () => {
     loggingOut();
   };
+
+  const handleYes = () => {
+    deleteUser();
+    navigation.navigate('WelcomePage')
+  }
+  const handleShowAlert = () => {
+     Alert.alert(
+       'ALERT',
+       'Deleting your account is permanent. Do you want to proceed?',
+       [
+         {text: 'YES', onPress:handleYes},
+         {text: 'NO', onPress:()=>console.log("NO Presses"), style:'cancel'}
+       ],
+       {cancelable: false}
+     )
+  }
 
   if (error) {
     Alert.alert("There is an error", error);
@@ -54,6 +70,7 @@ export default function MainMenu(props) {
           </TouchableOpacity>
 
           {userType !== "student" ? (
+            <>
             <TouchableOpacity
               onPress={() =>
                 navigation.navigate("TeacherEditStudent", { userUID })
@@ -63,6 +80,13 @@ export default function MainMenu(props) {
                 Add/View Student(s)
               </Text>
             </TouchableOpacity>
+             <TouchableOpacity
+                onPress={handleShowAlert}
+                style={styles.deleteButton}
+              >
+                <Text style={styles.deleteText}>DELETE MY ACCOUNT</Text>
+              </TouchableOpacity>
+            </>
           ) : (
             <>
               <TouchableOpacity
