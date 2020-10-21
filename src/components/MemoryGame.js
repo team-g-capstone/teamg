@@ -29,27 +29,22 @@ export default class MemoryGame extends React.Component {
     this.renderImg = this.renderImg.bind(this);
     this.renderAllCards = this.renderAllCards.bind(this);
     this.resetNewLevel = this.resetNewLevel.bind(this);
-  
+   
+    
   }
 
   async componentDidMount() {
     componentDidMountAudio()
-   
-  let cards = [
-  { src: require("../../assets/icon_fish.png"), isOpen: false, id: 0, opacity: 1 },
-  { src: require("../../assets/icon_koala.png"), isOpen: false, id: 1, opacity: 1 },
-  { src: require("../../assets/icon_fish.png"), isOpen: false, id: 2, opacity: 1 },
-  { src: require("../../assets/icon_koala.png"), isOpen: false, id: 3, opacity: 1 },
-  
-
-];
-    const arrayOfObjects = Object.keys(cards)
+   console.log(this.props)
+    
+    let cardsToMount = cards.slice(0, 4)
+    const arrayOfObjects = Object.keys(cardsToMount)
     
     const array2 = arrayOfObjects.map((key) => {
       return Number(arrayOfObjects[key])
     })
     let shuffledCards = shuffle(array2)
-    let shuffledDeck = cards.map((card, index) => {
+    let shuffledDeck = cardsToMount.map((card, index) => {
       card.id = shuffledCards[index]
       card.isOpen = false, 
       card.opacity = 1
@@ -144,12 +139,23 @@ export default class MemoryGame extends React.Component {
 
   async resetNewLevel() {
     const newLevel = this.state.level + 1
+    if(newLevel === 3) {
+      const {navigation} = this.props.navigation
+      let userUID = this.props.route.params.userUID
+      Alert.alert(`You've passed all 10 levels!`, `You have the memory of a dolphin !`, [
+          {
+
+            onPress: () => this.props.navigation.navigate("Subjects",{userUID}),
+          },
+        ])
+      this.setState({
+        level: 1,
+      })
+    }
     let levelCards
     newLevel % 2 === 0 ? levelCards = 4 : levelCards = 3
-    console.log('newLevel and levelCards = ', (newLevel + levelCards))
     const newCards =  cards.slice(0, (newLevel + levelCards))
     const arrayOfObjects = Object.keys(newCards)
-    console.log(newCards, )
     const array2 = arrayOfObjects.map((key) => {
       return Number(arrayOfObjects[key])
     })
@@ -180,8 +186,7 @@ export default class MemoryGame extends React.Component {
   renderImg(card, index) {
     const id = card.id;
    
-    
-    console.log(index, 'HELLLLo', 'id', id)
+   
     let src = require("../../assets/brain_teez.png");
     let opacity = card.opacity
     if (card.isOpen) {
@@ -208,16 +213,25 @@ export default class MemoryGame extends React.Component {
     return (
       <View style={styles.container}>
         <ImageBackground source={this.image} style={styles.backgroundImage}>
+        
+       
+          {this.state.level <= 2 ? (
+         
           <Text style={styles.text}>
             Flip over cards to find the Matching Pairs!
           </Text>
-          <View style={styles.containerRow}>
+          ) : (<Text style={styles.text}>
+          </Text>)}
+          
+
+          <View style={styles.containerRow} elevation={5}>
             {this.renderAllCards(this.state.cards)}
           </View>
         </ImageBackground>
       </View>
     );
-  }
+  
+}
 }
 
 const styles = StyleSheet.create({
@@ -229,18 +243,41 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   containerRow: {
-    flex: 1,
+    flex: 4,
+    height: '50%',
+    width: '98%',
     flexDirection: "row",
-    justifyContent: "center",
+    flexWrap: 'wrap-reverse',
+    alignContent: 'center',
+    justifyContent: 'space-evenly',
     alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+	  width: 0,
+	  height: 8,
+    },
+    shadowOpacity: 0.44,
+    shadowRadius: 10.32,
+    elevation: 10,
   },
+
   image: {
-    height: 120,
+
+    height: 125,
     width: 105,
     opacity: 1,
-    marginLeft: "1%",
+    marginLeft: "10%",
+    marginTop: '5%',
+    borderRadius: 10, 
     borderWidth: 1,
     borderColor: "#FFC857",
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    backgroundColor: '#f0ead6',
+  
+   
   },
   backgroundImage: {
     flex: 1,
@@ -259,6 +296,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.8,
     shadowRadius: 2,
     paddingTop: "5%",
-    marginBottom: "-10%",
+    marginBottom: "-5%",
   },
 });
