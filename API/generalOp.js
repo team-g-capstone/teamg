@@ -78,3 +78,5 @@ export const updateImageUrl = async(selectedImage, userUID) => {
     imageUrl: selectedImage
   })
 }
+
+

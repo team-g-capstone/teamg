@@ -78,6 +78,17 @@ export default function MainMenu(props) {
             >
               <Text style={styles.anonButtonText}>Add/View Student(s)</Text>
             </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate("Games", {
+                  screen:"CreateGameRoom",
+                  params:{ userUID:userUID, firstName: firstName}})
+              }
+            >
+              <Text style={styles.anonButtonText}>
+                Create Game Room
+              </Text>
+            </TouchableOpacity>
              <TouchableOpacity
                 onPress={handleShowAlert}
                 style={styles.deleteButton}
@@ -103,6 +114,17 @@ export default function MainMenu(props) {
               >
                 <Text style={styles.anonButtonText}>View My Stars </Text>
               </TouchableOpacity>
+              <TouchableOpacity
+              onPress={() =>
+                navigation.navigate("Games", {
+                  screen:"JoinRoom",
+                  params:{ userUID, firstName }})
+              }
+            >
+              <Text style={styles.anonButtonText}>
+               Join Room
+              </Text>
+            </TouchableOpacity>
             </>
           )}
           <TouchableOpacity style={styles.button} onPress={handlePress}>
