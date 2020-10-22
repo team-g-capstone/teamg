@@ -16,16 +16,17 @@ npm install expo-cli
 expo start
 
 
-```
-created by :
+
+### Created By 
 
 Krystal Cheung : https://github.com/krycheung
 Kathryn Lam : https://github.com/katwingki
 Hedra Rowan : https://github.com/hedrarowan
 
 
-```
-Additional Credits: 
+
+
+#### Additional Credits
 
 
 BrainTeez logo by Leila Sherbini
