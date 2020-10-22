@@ -1,50 +1,57 @@
-import React, {Component, useEffect, useState} from 'react';
+import React, {Component} from 'react';
 import {
   StyleSheet,
   Text,
   View,
-  Dimensions,
-  Keyboard,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
   ImageBackground,
-  ScrollView,
-  Alert} from 'react-native';
+  } from 'react-native';
 
 import * as firebase from 'firebase';
 
 export default class EndGameRoom extends Component{
-  //const [gameID, setGameID] = useState(props.route.params.gameID);
   constructor(props){
     super(props);
     this.state = {
       gameID: this.props.route.params.gameID,
       players:[],
       playersName:[],
+      scores:[]
     }
   }
 
+  componentDidMount(){
+    this.db = firebase.firestore();
+    this.db.collection('games')
+          .doc(this.state.gameID)
+          .onSnapshot((snapshot)=>{
+           let data={};
+           data['players'] = snapshot.data().players;
+           data['playersName'] = snapshot.data().playersName;
+           this.setState(data);
 
-
+           let scoreArr=[];
+           let playersArr = this.state.players;
+           playersArr.forEach((playerID)=>{
+              scoreArr.push(snapshot.data()[playerID])
+              this.setState({scores:scoreArr})
+            })
+          })
+  }
 
   render(){
-  return (
-    <ImageBackground style = {styles.container} source={require("../../assets/backgrounds/green.jpg")}>
+
+    const playerNameLists = this.state.playersName.map((name, idx)=>{
+        return (
+        <View style={styles.playersList}key={idx}><Text>{name}: {this.state.scores[idx]}</Text></View>
+        )
+    })
+
+
+
+    return (
+      <ImageBackground style = {styles.container} source={require("../../assets/backgrounds/green.jpg")}>
       <Text style={styles.text}>The game has ended:</Text>
-      {/* <ScrollView onBlur={Keyboard.dismiss}>
-        <TextInput
-          style={styles.emailInput}
-          placeholder="Enter GAME ID*"
-          value={gameID}
-          onChangeText={(gameID) => setGameID(gameID)}
-          autoCapitalize="none"
-        />
-
-        <TouchableOpacity style={styles.button} onPress={handlePress}>
-          <Text style={styles.buttonText}>Enter Game Room</Text>
-        </TouchableOpacity>
-
-      </ScrollView> */}
+      <View style={styles.listView}>{playerNameLists}</View>
     </ImageBackground>
   );
 }
@@ -103,5 +110,14 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     alignSelf: "center",
     margin: 5,
+  },
+  listView:{
+    flexDirection:"column",
+  },
+  scoresLists:{
+    flexDirection:"row"
+  },
+  playersList:{
+    flexDirection:"row"
   }
 });

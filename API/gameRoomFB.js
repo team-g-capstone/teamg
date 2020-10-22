@@ -1,6 +1,7 @@
 import * as firebase from "firebase";
 import "firebase/firestore";
 import {Alert} from 'react-native';
+import { diffClamp } from "react-native-reanimated";
 
 const db = firebase.firestore();
 
@@ -81,3 +82,4 @@ export async function endGameFS (gameID) {
     console.log(err.message);
   }
 }
+

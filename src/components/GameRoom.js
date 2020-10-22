@@ -73,7 +73,6 @@ import * as firebase from "firebase";
       this.setState({
         answer: answer,
         waiting:false ,
-        isSubmitted:false,
       })
       updateQuestion(gameID,Number(numOne), Number(numTwo), answer);
     }
@@ -88,11 +87,14 @@ import * as firebase from "firebase";
       if(answerFS === Number(inputAnswer)){
         score =1
         Alert.alert('You got it!')
+        this.setState({isSubmitted:true})
       }else{
         Alert.alert('Sorry, incorrect!')
+        this.setState({isSubmitted:true})
       }
       updateScore(gameID, userUID,score);
-      this.setState({inputAnswer:'', isSubmitted:true})
+       this.setState({inputAnswer:''})
+
     }
 
     handleChangeNumOne = (num) =>{
@@ -182,6 +184,7 @@ import * as firebase from "firebase";
       : <TouchableOpacity style={styles.button} onPress={this.handlePressSubmitAnswer}>
         <Text style={styles.buttonText}>SUBMIT</Text>
       </TouchableOpacity>}
+
       {isHost? waitingRes?<Text style={styles.waitingTitle}>Please update Question</Text>:<Text style={styles.waitingTitle}>Waiting for answer</Text>:waitingRes?
         isSubmitted? <Text style={styles.waitingTitle}>Waiting for others to answer or new question </Text>:<Text style={styles.waitingTitle}>Ready???</Text>: <Text style={styles.waitingTitle}>NEW QUESTION PLEASE ENTER YOUR ANSWER</Text>
     }
