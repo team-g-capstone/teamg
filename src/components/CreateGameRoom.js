@@ -61,8 +61,8 @@ export default class CreateGameRoom extends Component {
          <Text style={styles.buttonText}>Generate Game ID</Text>
          </TouchableOpacity>
 
-        <Text styles={styles.stepTwo}>{`Step Two: Let your student know the Game ID: ${this.state.gameID}`}</Text>
-        <Text styles={styles.stepThree}>{`Step Three: Click "Create Game to enter the game`}</Text>
+        <Text style={styles.steps}>{`Step Two: Let your student know the Game ID: ${this.state.gameID}`}</Text>
+        <Text style={styles.steps}>{`Step Three: Click "Create Game to enter the game`}</Text>
         <TouchableOpacity onPress={this.handlePressCreateGame}>
         <Text style={styles.buttonText}>Create Game</Text>
       </TouchableOpacity>

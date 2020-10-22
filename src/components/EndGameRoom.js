@@ -4,6 +4,7 @@ import {
   Text,
   View,
   ImageBackground,
+  Button
   } from 'react-native';
 
 import * as firebase from 'firebase';
@@ -52,6 +53,10 @@ export default class EndGameRoom extends Component{
       <ImageBackground style = {styles.container} source={require("../../assets/backgrounds/green.jpg")}>
       <Text style={styles.text}>The game has ended:</Text>
       <View style={styles.listView}>{playerNameLists}</View>
+      <Button title="MAIN MENU" onPress={()=>this.props.navigation.navigate('Menu',{
+            screen:"MainMenuNav",
+            params:{userUID:this.props.route.params.userUID}
+          })}/>
     </ImageBackground>
   );
 }

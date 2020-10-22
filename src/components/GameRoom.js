@@ -116,8 +116,9 @@ import * as firebase from "firebase";
 
     handlePressEndGame = () =>{
       const gameID = this.state.gameID;
+      const userUID = this.props.route.params.userUID
       endGameFS(gameID);
-      this.props.navigation.navigate('EndGameRoom',{gameID})
+      this.props.navigation.navigate('EndGameRoom',{gameID, userUID})
     }
     render(){
       const isHost = this.state.creator === this.state.userUID;
