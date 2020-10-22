@@ -7,7 +7,7 @@ import {
   View,
   Alert} from 'react-native';
 import { createNewGame } from "../../API/gameRoomFB";
-
+import styles from "../../styles/CreateGameRoom.Component.style";
 
 export default class CreateGameRoom extends Component {
     constructor(props){
@@ -45,7 +45,7 @@ export default class CreateGameRoom extends Component {
       const {gameID, firstName} = this.state;
 
       createNewGame(gameID, userUID);
-      console.log("userUID from handlePressCreateNewGame", userUID)
+      
       this.props.navigation.navigate("GameRoom",{userUID:userUID, gameID:gameID,firstName:firstName})
 
     }
@@ -82,75 +82,3 @@ export default class CreateGameRoom extends Component {
       </ImageBackground>
       )}
   }
-
- const styles = StyleSheet.create({
-  background: {
-    flex: 1,
-    width: "100%",
-    height: "100%",
-    resizeMode: "cover",
-    justifyContent: "center",
-    alignContent:"center"
-  },
-  button: {
-   
-    // padding: 12,
-    
-    alignSelf: "center",
-    margin: "0.8%",
-    borderRadius: 5,
-    backgroundColor: 'red'
-    // marginLeft: "1%",
-  },
-  buttonText: {
-    color: "white",
-    fontSize: 20,
-    fontWeight: "bold",
-    textAlign: "center",
-    borderStyle: 'solid',
-    borderWidth: 2,
-    // backgroundColor: "red",
-    borderStyle: 'solid',
-    borderWidth: 2,
-    borderColor: "#ffcccc",
-    borderRadius: 5,
-    // shadowColor: '#000',
-    // shadowOffset: { width: 0, height: 2 },
-    // shadowOpacity: 0.8,
-    // shadowRadius: 2,
-  },
-  container:{
-    alignItems:"center"
-  },
-  screenTitle: {
-    fontSize: 25,
-    
-    fontWeight: "bold",
-    color: "white",
-
-    alignSelf: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-  },
-  steps:{
-    fontSize:20,
-    fontStyle: 'italic',
-    margin: 10,
-    fontWeight: "bold",
-    color: "white",
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-  },
-
-  textInput: {
-    width: 250,
-    borderWidth: 1,
-    borderColor:"#6DA171",
-    padding: 10,
-    margin: "0.2%",
-  },
-})
