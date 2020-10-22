@@ -46,19 +46,6 @@ export default StyleSheet.create({
     backgroundColor: "white",
     justifyContent: "flex-start",
   },
-  deleteButton: {
-    backgroundColor: "#DC1F12",
-    width: "25%",
-    height: "7%",
-    alignContent: "center",
-    margin: "0.5%",
-    marginTop: "7%",
-  },
-  deleteText: {
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center",
-  },
   graph: {
     flex: 1,
     justifyContent: "center",

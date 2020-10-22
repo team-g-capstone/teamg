@@ -8,18 +8,9 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
-
-let cards = [
-  { src: require("../../assets/icon_fish.png"), isOpen: false, id: 0 },
-  { src: require("../../assets/icon_koala.png"), isOpen: false, id: 1 },
-  { src: require("../../assets/icon_fish.png"), isOpen: false, id: 2 },
-
-  { src: require("../../assets/icon_koala.png"), isOpen: false, id: 3 },
-];
-let cards2 = [
-  { src: require("../../assets/icon_fish.png"), isOpen: false, id: 0 },
-  { src: require("../../assets/icon_koala.png"), isOpen: false, id: 1 },
-];
+import {Audio} from 'expo-av'
+import styles from '../../styles/MemoryGame.Component.style';
+import {componentDidMountAudio, cards, shuffle, levelChanges, audioPlayMatch, shufflePrep} from './ShapesHelperFuncs'
 
 export default class MemoryGame extends React.Component {
   constructor(props) {
@@ -30,38 +21,93 @@ export default class MemoryGame extends React.Component {
       currentPair: [],
       correctPair: [],
       numCorrect: 0,
+      level: 1,
+    
     };
     this.image = require("../../assets/backgrounds/green.jpg");
     this.handleClick = this.handleClick.bind(this);
     this.renderImg = this.renderImg.bind(this);
     this.renderAllCards = this.renderAllCards.bind(this);
     this.resetNewLevel = this.resetNewLevel.bind(this);
+   
+    
   }
 
+  async componentDidMount() {
+    componentDidMountAudio()
+   
+    
+    let cardsToMount = cards.slice(0, 4)
+    const cardsToMountIndices = Object.keys(cardsToMount)
+    
+    const indicesToRandomize = cardsToMountIndices.map((key) => {
+      return Number(cardsToMountIndices[key])
+    })
+    let shuffledCards = shuffle(indicesToRandomize)
+    
+    let shuffledDeck = cardsToMount.map((card, index) => {
+      card.id = shuffledCards[index]
+      card.isOpen = false, 
+      card.opacity = 1
+      return card
+    })
+
+    shuffledDeck.sort((a,b) => a.id - b.id)
+    
+    await this.setState({
+      cards: shuffledDeck
+    })
+ 
+    
+  }
+
+
+  
   handleClick = async (id) => {
     let currentPair = this.state.currentPair.slice();
     let cards = this.state.cards.slice();
     let index = cards.findIndex((card) => {
       return card.id === id;
     });
+   
     cards[index].isOpen = true;
+
     this.setState({
       cards: cards,
     });
 
-    if (currentPair.length < 2) {
-      currentPair.push(cards[index]);
-      await this.setState({
-        currentPair: currentPair,
-      });
+
+    if(cards[index].opacity === 1) {
+      if (currentPair.length < 2) {
+        currentPair.push(cards[index]);
+        await this.setState({
+          currentPair: currentPair,
+        });
+      }
     }
+   
+    
     if (currentPair.length === 2) {
       let newNum;
-      if (currentPair[0].src === currentPair[1].src) {
+      
+      if (currentPair[0].src === currentPair[1].src && currentPair[0].id !== currentPair[1].id) {
+        
+        audioPlayMatch()
+
         newNum = this.state.numCorrect + 1;
+        
         await this.setState({
           numCorrect: newNum,
         });
+        
+        setTimeout(() => {
+         
+          cards[index].opacity = 0;
+          cards[currentPair[0].id].opacity = 0
+          this.setState({
+            cards: cards,
+          });
+        }, 100);
       } else {
         setTimeout(() => {
           newNum = 0;
@@ -78,102 +124,125 @@ export default class MemoryGame extends React.Component {
       });
     }
 
-    if (this.state.numCorrect >= 2) {
-      Alert.alert(
+    if (this.state.numCorrect >= this.state.cards.length / 2) {
+      if(this.state.level < 10) {
+         Alert.alert(
         "Congrats! You found all the pairs!",
-        "Go to next level!",
+        `Continue to Level ${this.state.level + 1}`,
         [{ text: "OK", onPress: () => this.resetNewLevel() }],
         { cancelable: false }
       );
+      } else {
+         Alert.alert(
+        "Congrats! You found all the pairs!",
+        `Continue`,
+        [{ text: "OK", onPress: () => this.resetNewLevel() }],
+        { cancelable: false }
+      );
+      }
+     
     }
   };
 
   async resetNewLevel() {
+    const newLevel = this.state.level + 1
+
+    if(newLevel === 11) {
+        await this.setState({
+        level: 1,
+        cards: []
+      })
+      const {navigation} = this.props.navigation
+      let userUID = this.props.route.params.userUID
+
+      Alert.alert(`You've passed all 10 levels!`, `You have the memory of a dolphin !`, [
+          {
+
+            onPress: () => this.props.navigation.navigate("Subjects",{userUID}),
+          },
+        ])
+    
+    } else {
+      
+      let array = shufflePrep(newLevel)
+      let newCards = array[0]
+      let shuffledCards = array[1]
+  
+      let shuffledDeck = newCards.map((card, index) => {
+      card.id = shuffledCards[index]
+      card.isOpen = false, 
+      card.opacity = 1
+      return card
+    })
+    
+    shuffledDeck.sort((a,b) => a.id - b.id)
+    await this.setState({
+      cards: shuffledDeck
+    })
+  
     await this.setState({
       isChanged: false,
-      cards: cards2,
       currentPair: [],
       correctPair: [],
       numCorrect: 0,
+      level: newLevel
     });
+    }
+
+
+   
+    
+
   }
 
-  renderImg(card) {
+  renderImg(card, index) {
     const id = card.id;
-
+   
+   
     let src = require("../../assets/brain_teez.png");
+    let opacity = card.opacity
     if (card.isOpen) {
       src = card.src;
     }
     return (
       <View key={id}>
         <TouchableOpacity onPress={() => this.handleClick(id)}>
-          <Image source={src} style={styles.image} />
+          <Image source={src} style={[styles.image, {opacity: opacity}]} />
         </TouchableOpacity>
       </View>
     );
   }
 
   renderAllCards(cards) {
-    return cards.map((card) => {
-      return this.renderImg(card);
+    
+    return cards.map((card, index) => {
+      return this.renderImg(card, index);
     });
   }
   render() {
+    
     return (
       <View style={styles.container}>
         <ImageBackground source={this.image} style={styles.backgroundImage}>
+        
+       
+          {this.state.level <= 2 ? (
+         
           <Text style={styles.text}>
             Flip over cards to find the Matching Pairs!
           </Text>
-          <View style={styles.containerRow}>
+          ) : (<Text style={styles.text}>
+          </Text>)}
+          
+
+          <View style={styles.containerRow} elevation={5}>
             {this.renderAllCards(this.state.cards)}
           </View>
         </ImageBackground>
       </View>
     );
-  }
+  
+}
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-    flexDirection: "row",
-  },
-  containerRow: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  image: {
-    height: 120,
-    width: 105,
-    opacity: 1,
-    marginLeft: "1%",
-    borderWidth: 1,
-    borderColor: "#FFC857",
-  },
-  backgroundImage: {
-    flex: 1,
-    resizeMode: "cover",
-    justifyContent: "center",
-    height: "100%",
-    width: "100%",
-  },
-  text: {
-    color: "#FFC857",
-    fontWeight: "bold",
-    textAlign: "center",
-    fontSize: 30,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    paddingTop: "5%",
-    marginBottom: "-10%",
-  },
-});
+

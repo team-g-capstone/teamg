@@ -34,7 +34,7 @@ export default function Subjects(props) {
           <Text style={styles.ButtonText}>Logic</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => navigation.navigate("MemoryGame", { userUID })}
+          onPress={() => navigation.navigate("MemoryGame", { userUID, navigation })}
         >
           <Text style={styles.ButtonText}>Memory</Text>
         </TouchableOpacity>

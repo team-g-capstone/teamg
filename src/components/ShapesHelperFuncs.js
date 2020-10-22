@@ -90,3 +90,74 @@ export function colorDecider(color1, color2) {
       return [14, indexBase]
     }
 } 
+
+export const cards = [
+  { src: require("../../assets/memoryicons/icon_fish.png"), isOpen: false, id: 0, opacity: 1 },
+  { src: require("../../assets/memoryicons/icon_fish.png"), isOpen: false, id: 1, opacity: 1 },
+  { src: require("../../assets/memoryicons/icon_koala.png"), isOpen: false, id: 2, opacity: 1 },
+  { src: require("../../assets/memoryicons/icon_koala.png"), isOpen: false, id: 3, opacity: 1 },
+  { src: require("../../assets/memoryicons/icon_duck.png"), isOpen: false, id: 4, opacity: 1 },
+  { src: require("../../assets/memoryicons/icon_duck.png"), isOpen: false, id: 5, opacity: 1 },
+  { src: require("../../assets/memoryicons/icon_shark.png"), isOpen: false, id: 6, opacity: 1 },
+  { src: require("../../assets/memoryicons/icon_shark.png"), isOpen: false, id: 7, opacity: 1 },
+  { src: require("../../assets/memoryicons/icon_turtle.png"), isOpen: false, id: 8, opacity: 1 },
+  { src: require("../../assets/memoryicons/icon_turtle.png"), isOpen: false, id: 9, opacity: 1 },
+  { src: require("../../assets/memoryicons/icon_lion.png"), isOpen: false, id: 10, opacity: 1 },
+  { src: require("../../assets/memoryicons/icon_lion.png"), isOpen: false, id: 11, opacity: 1 },
+  { src: require("../../assets/memoryicons/icon_penguin.png"), isOpen: false, id: 12, opacity: 1 },
+  { src: require("../../assets/memoryicons/icon_penguin.png"), isOpen: false, id: 13, opacity: 1 },
+  { src: require("../../assets/memoryicons/icon_eleph.png"), isOpen: false, id: 14, opacity: 1 },
+  { src: require("../../assets/memoryicons/icon_eleph.png"), isOpen: false, id: 15, opacity: 1 },
+  { src: require("../../assets/memoryicons/icon_whale.png"), isOpen: false, id: 16, opacity: 1 },
+  { src: require("../../assets/memoryicons/icon_whale.png"), isOpen: false, id: 17, opacity: 1 },
+  { src: require("../../assets/memoryicons/rhino.png"), isOpen: false, id: 18, opacity: 1 },
+  { src: require("../../assets/memoryicons/rhino.png"), isOpen: false, id: 19, opacity: 1 },
+  { src: require("../../assets/memoryicons/leopard.png"), isOpen: false, id: 20, opacity: 1 },
+  { src: require("../../assets/memoryicons/leopard.png"), isOpen: false, id: 21, opacity: 1 },
+  
+];
+
+export function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1)); 
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array 
+}
+
+
+export async function audioPlayMatch () {
+      let sound = new Audio.Sound();
+        
+        const status = {
+          shouldPlay: false,
+        };
+  
+        await sound.loadAsync(
+          require("../../assets/memorymatch.mp3"),
+          status,
+          false
+        );
+        await sound.playAsync();
+}
+
+
+export function shufflePrep(newLevel) {
+    let levelCards;
+    newLevel % 2 === 0 ? levelCards = 4 : levelCards = 3
+    
+    if(newLevel + levelCards >= 14) {
+       levelCards = 2
+    }
+
+    const newCards =  cards.slice(0, (newLevel + levelCards))
+    const newCardsIndices = Object.keys(newCards)
+    const indicesToRandomize = newCardsIndices.map((key) => {
+      return Number(newCardsIndices[key])
+    })
+
+    let shuffledCards = shuffle(indicesToRandomize)
+
+    return [newCards, shuffledCards]
+
+}
