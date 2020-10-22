@@ -1,17 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {
-  StyleSheet,
   Text,
-  View,
-  Dimensions,
   Keyboard,
   TouchableOpacity,
-  TouchableWithoutFeedback,
   ImageBackground,
   ScrollView,
   Alert} from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { addPlayer } from "../../API/gameRoomFB";
+import { styles } from "../../styles/JoinRoom.Component.style";
 import * as firebase from 'firebase';
 
 
@@ -56,75 +53,17 @@ export default function JoinRoom(props){
       <Text style={styles.text}>Put in the Game ID to enter the game:</Text>
       <ScrollView onBlur={Keyboard.dismiss}>
         <TextInput
-          style={styles.emailInput}
+          style={styles.input}
           placeholder="Enter GAME ID*"
           value={gameID}
           onChangeText={(gameID) => setGameID(gameID)}
           autoCapitalize="none"
         />
-
         <TouchableOpacity style={styles.button} onPress={handlePress}>
           <Text style={styles.buttonText}>Enter Game Room</Text>
         </TouchableOpacity>
-
       </ScrollView>
     </ImageBackground>
   );
-
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex:1,
-    padding:"8%",
-    backgroundColor: "#3FC5AB",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  text: {
-    textAlign: "center",
-    fontSize: 18,
-    margin: 10,
-    fontWeight: "bold",
-    color: "#40434E",
-  },
-  emailInput: {
-    width: 300,
-    borderWidth: 3,
-    borderColor:"#96C598",
-    padding: 10,
-    margin: 5,
-  },
-  passwordInput: {
-    width: 300,
-    borderWidth: 3,
-    borderColor:"#96C598",
-    padding: 10,
-    margin: 5,
-  },
-  buttonText: {
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  button: {
-    width: 150,
-    padding: 5,
-    backgroundColor: "#8F540E",
-    borderWidth: 2,
-    borderColor: "#AD8557",
-    borderRadius: 15,
-    alignSelf: "center",
-    margin: 8,
-  },
-  forgotButton:{
-    width: 200,
-    padding: 6,
-    backgroundColor: "#8F540E",
-    borderWidth: 2,
-    borderColor: "#AD8557",
-    borderRadius: 15,
-    alignSelf: "center",
-    margin: 5,
-  }
-});
