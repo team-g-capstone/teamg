@@ -55,15 +55,15 @@ export default class CreateGameRoom extends Component {
       return(
       <ImageBackground style={styles.background} source={require("../../assets/backgrounds/blue.jpg")}>
         <View style={styles.container}>
-         <Text style={styles.screenTitle}>Create a Game</Text>
+         <Text style={styles.screenTitle}>Create a Game Room</Text>
          <Text style={styles.steps}>{`Step One: Click "Generate Game ID" to get a new Game ID`}</Text>
-         <TouchableOpacity styles={styles.button} onPress={this.handlePressGenerateGameID}>
+         <TouchableOpacity style={styles.button} onPress={this.handlePressGenerateGameID}>
          <Text style={styles.buttonText}>Generate Game ID</Text>
          </TouchableOpacity>
-
+        
         <Text style={styles.steps}>{`Step Two: Let your student know the Game ID: ${this.state.gameID}`}</Text>
-        <Text style={styles.steps}>{`Step Three: Click "Create Game to enter the game`}</Text>
-        <TouchableOpacity onPress={this.handlePressCreateGame}>
+        <Text style={styles.steps}>{`Step Three: Click "Create Game" to enter the room`}</Text>
+        <TouchableOpacity style={styles.button} onPress={this.handlePressCreateGame}>
         <Text style={styles.buttonText}>Create Game</Text>
       </TouchableOpacity>
       </View>
@@ -73,6 +73,7 @@ export default class CreateGameRoom extends Component {
                   screen:"JoinRoom",
                   params:{ userUID, firstName }})
               }
+              style={styles.button}
             >
               <Text style={styles.buttonText}>
                Return to an existing Game Room
@@ -92,40 +93,59 @@ export default class CreateGameRoom extends Component {
     alignContent:"center"
   },
   button: {
-    width: 280,
-    padding: 12,
-    backgroundColor: "red",
+   
+    // padding: 12,
+    
+    alignSelf: "center",
+    margin: "0.8%",
+    borderRadius: 5,
+    backgroundColor: 'red'
+    // marginLeft: "1%",
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 20,
+    fontWeight: "bold",
+    textAlign: "center",
+    borderStyle: 'solid',
+    borderWidth: 2,
+    // backgroundColor: "red",
+    borderStyle: 'solid',
     borderWidth: 2,
     borderColor: "#ffcccc",
     borderRadius: 5,
-    alignSelf: "center",
-    margin: "0.5%",
-    marginLeft: "1%",
-  },
-  buttonText: {
-    color: "red",
-    fontWeight: "bold",
-    textAlign: "center",
+    // shadowColor: '#000',
+    // shadowOffset: { width: 0, height: 2 },
+    // shadowOpacity: 0.8,
+    // shadowRadius: 2,
   },
   container:{
     alignItems:"center"
   },
   screenTitle: {
     fontSize: 25,
-    margin: 10,
+    
     fontWeight: "bold",
     color: "white",
-    marginRight:"30%"
+
+    alignSelf: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
   },
   steps:{
     fontSize:20,
+    fontStyle: 'italic',
     margin: 10,
     fontWeight: "bold",
     color: "white",
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
   },
-  stepTwo:{
-    color:"blue"
-  },
+
   textInput: {
     width: 250,
     borderWidth: 1,
