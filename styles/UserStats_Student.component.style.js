@@ -14,7 +14,7 @@ export default StyleSheet.create({
     justifyContent: "space-between",
     marginLeft: "35%",
     marginTop: "-12%",
-    marginBottom:"20%",
+    marginBottom: "20%",
     width: "25%",
     height: "20%",
   },
@@ -31,13 +31,13 @@ export default StyleSheet.create({
     width: "20%",
     height: "7%",
     alignContent: "center",
-    margin:"0.5%",
+    margin: "0.5%",
   },
   buttonText: {
     fontSize: 15,
     color: "#fff",
-    textAlign:"center",
-    margin:"2%",
+    textAlign: "center",
+    margin: "2%",
     fontFamily: "Chilanka_400Regular",
   },
   container: {
@@ -45,20 +45,19 @@ export default StyleSheet.create({
     flexDirection: "row",
     backgroundColor: "white",
     justifyContent: "flex-start",
-
   },
   deleteButton: {
     backgroundColor: "#DC1F12",
     width: "25%",
     height: "7%",
     alignContent: "center",
-    margin:"0.5%",
-    marginTop:"7%"
+    margin: "0.5%",
+    marginTop: "7%",
   },
-  deleteText:{
-    color:"white",
-    fontWeight:"bold",
-    textAlign:"center",
+  deleteText: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
   },
   graph: {
     flex: 1,
@@ -75,8 +74,8 @@ export default StyleSheet.create({
     flex: 1,
     flexDirection: "column",
   },
-  indicator:{
-    padding:"20%",
+  indicator: {
+    padding: "20%",
   },
   person: {
     width: "80%",
@@ -98,16 +97,36 @@ export default StyleSheet.create({
     paddingVertical: 3,
     fontFamily: "Chilanka_400Regular",
   },
-  titleText:{
+  titleText: {
     fontSize: 24,
     paddingVertical: 3,
-    marginBottom:"10%",
-    color:"navy",
+    marginBottom: "10%",
+    color: "navy",
     fontFamily: "Chilanka_400Regular",
   },
   thumbnail: {
     width: "20%",
     height: "50%",
     resizeMode: "contain",
+  },
+  backButton: {
+    borderWidth: 1,
+    borderColor: "#8FE09B",
+    borderRadius: 15,
+    padding: 1,
+    marginLeft: 600,
+    marginTop: -270,
+    marginBottom: 200,
+    width: 150,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+  },
+  backButtonText: {
+    color: "#8FE09B",
+    fontWeight: "bold",
+    textAlign: "center",
+    fontSize: 20,
   },
 });

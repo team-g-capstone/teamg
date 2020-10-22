@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: "#441196",
     borderWidth: 2,
-    borderRadius:5,
+    borderRadius: 5,
     borderColor: "#ffcccc",
     alignSelf: "center",
     margin: "1%",
@@ -26,8 +26,8 @@ export const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: "bold",
     textAlign: "center",
-    marginBottom:"2%",
-    paddingTop:"5%"
+    marginBottom: "2%",
+    paddingTop: "5%",
   },
   image: {
     flex: 1,
@@ -38,16 +38,16 @@ export const styles = StyleSheet.create({
   },
   textInput: {
     width: 300,
-    borderColor:"#de9999",
+    borderColor: "#de9999",
     borderWidth: 2,
     padding: 10,
     marginLeft: "25%",
   },
-  textInputTitle:{
-    color:"#fbedeb",
-    marginLeft:"25%",
+  textInputTitle: {
+    color: "#fbedeb",
+    marginLeft: "25%",
     fontSize: 18,
-    fontWeight:"bold"
+    fontWeight: "bold",
   },
   signUpText: {
     textAlign: "center",
@@ -66,5 +66,26 @@ export const styles = StyleSheet.create({
     alignSelf: "center",
     margin: "0.5%",
     marginLeft: "1%",
-  }
+  },
+  backButtonText: {
+    color: "#8FE09B",
+    fontWeight: "bold",
+    textAlign: "center",
+    fontSize: 20,
+  },
+  backButton: {
+    borderWidth: 1,
+    borderColor: "#8FE09B",
+    borderRadius: 15,
+    padding: 1,
+    margin: -45,
+    marginLeft: 600,
+    marginTop: 50,
+    width: 150,
+    height: 30,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+  },
 });

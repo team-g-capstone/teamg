@@ -59,9 +59,7 @@ export default function MainMenu(props) {
                 navigation.navigate("TeacherEditStudent", { userUID })
               }
             >
-              <Text style={styles.anonButtonText}>
-                Add/View Student(s)
-              </Text>
+              <Text style={styles.anonButtonText}>Add/View Student(s)</Text>
             </TouchableOpacity>
           ) : (
             <>
@@ -108,4 +106,3 @@ export default function MainMenu(props) {
     );
   }
 }
-

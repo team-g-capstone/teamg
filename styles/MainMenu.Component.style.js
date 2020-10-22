@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
     borderRadius: 15,
     alignSelf: "center",
     margin: 5,
-    marginTop:"2%"
+    marginTop: "2%",
   },
   buttonText: {
     color: "white",
@@ -62,6 +62,6 @@ export const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 2,
-    marginTop:"1%",
-  }
+    marginTop: "1%",
+  },
 });
