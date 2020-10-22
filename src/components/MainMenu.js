@@ -88,7 +88,7 @@ export default function MainMenu(props) {
               }
             >
               <Text style={styles.anonButtonText}>
-                Create Game Room
+                Create or Rejoin Game Room
               </Text>
             </TouchableOpacity>
              <TouchableOpacity

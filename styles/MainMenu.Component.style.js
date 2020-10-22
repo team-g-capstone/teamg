@@ -2,18 +2,20 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   button: {
-    width: 150,
-    padding: 5,
+    width: 250,
+    padding: 1,
     backgroundColor: "#ff9999",
     borderWidth: 2,
     borderColor: "#ffcccc",
     borderRadius: 15,
     alignSelf: "center",
     margin: 5,
-    marginTop:"5%"
+    marginTop:"5%",
+    marginLeft:"1.7%"
   },
   buttonText: {
     color: "white",
+    fontSize:25,
     fontWeight: "bold",
     textAlign: "center",
   },
@@ -24,18 +26,22 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
   },
   deleteButton: {
-    backgroundColor: "#DC1F12",
-    width: "25%",
-    alignContent: "center",
-    margin:"0.5%",
-    marginLeft:"38%",
-    marginTop:"2%"
+    width: 250,
+    padding: 1,
+    backgroundColor: "#ff9999",
+    borderWidth: 2,
+    borderColor: "#ffcccc",
+    borderRadius: 15,
+    alignSelf: "center",
+    margin: 5,
+    marginTop:"5%",
+    marginLeft:"1.7%"
   },
   deleteText:{
-    color:"white",
-    fontSize:18,
-    fontWeight:"bold",
-    textAlign:"center",
+    color: "white",
+    fontSize:20,
+    fontWeight: "bold",
+    textAlign: "center",
   },
   headerText: {
     color: "white",
