@@ -71,7 +71,6 @@ const logicLevelReducer = (state = initialState, action) => {
         }
         case SET_LEVEL: {
             const level = action.level;
-            console.log("level from LOGIC level reducer", level)
             return {
                 currentLevel: level
             }

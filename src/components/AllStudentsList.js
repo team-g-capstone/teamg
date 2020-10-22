@@ -33,7 +33,7 @@ getStudentsList = async () => {
     .get();
 
     if(snapshot.empty){
-      Alert.alert('There is no students under your profile.')
+      Alert.alert('There are no students on your profile.')
       return;
     }
 

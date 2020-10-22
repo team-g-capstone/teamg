@@ -18,12 +18,13 @@ height > width ? width = height : width = width
 
 function ColorSortGame(props) {
   let numOfCirlces = [];
+  let level;
   const userUID = props.route.params.userUID
   const [value, loading, error] = useDocument(
     firebase.firestore().collection("users").doc(userUID)
   );
 
-  let level;
+  
   if(value && value.data()){
     let logicScoresArrFB = value.data().logicScores;
 
