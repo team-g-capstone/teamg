@@ -22,7 +22,6 @@ import * as firebase from "firebase";
 import { useDocument } from "react-firebase-hooks/firestore";
 import { useNavigation } from "@react-navigation/native";
 
-
 const screenWidth = Dimensions.get("window").width;
 
 const chartConfig = {
@@ -54,7 +53,7 @@ export default function UserStats_TCH(props) {
   let studentMathScores;
   let studentLogicScores;
   let studentEmail;
-  let mixedData={
+  let mixedData = {
     labels: ["Math", "Logic", "Level 3"],
     legend: ["Completed", "Incompleted"],
     data: [
@@ -65,17 +64,17 @@ export default function UserStats_TCH(props) {
     barColors: ["#82AEB1", "#BC6286"],
   };
 
-   if(value && value.data()){
-   studentProfilePicture = value.data().imageUrl;
-   studentName = value.data().firstName + " " + value.data().lastName;
-   studentMathScores = value.data().mathScores;
-   studentLogicScores = value.data().logicScores;
-   studentEmail = value.data().email;
-   let mathTrue = studentMathScores.filter(ele => ele===true).length;
-   let logicTrue = studentLogicScores.filter(ele => ele===true).length;
-   mixedData.data[0] = [mathTrue, 10-mathTrue];
-   mixedData.data[1] = [logicTrue, 10-logicTrue];
-   }
+  if (value && value.data()) {
+    studentProfilePicture = value.data().imageUrl;
+    studentName = value.data().firstName + " " + value.data().lastName;
+    studentMathScores = value.data().mathScores;
+    studentLogicScores = value.data().logicScores;
+    studentEmail = value.data().email;
+    let mathTrue = studentMathScores.filter((ele) => ele === true).length;
+    let logicTrue = studentLogicScores.filter((ele) => ele === true).length;
+    mixedData.data[0] = [mathTrue, 10 - mathTrue];
+    mixedData.data[1] = [logicTrue, 10 - logicTrue];
+  }
 
   let [fontsLoaded] = useFonts({
     Chilanka_400Regular,
@@ -85,87 +84,95 @@ export default function UserStats_TCH(props) {
     return <AppLoading />;
   }
 
+  const updateStudent = async () => {
+    let studentsArr = value1.data().students;
+    let studentDeletedArr = studentsArr.reduce((accum, student) => {
+      if (student !== studentUID) {
+        accum.push(student);
+      }
+      return accum;
+    }, []);
 
-  const updateStudent = async ()=>{
-
-      let studentsArr = value1.data().students;
-      let studentDeletedArr = studentsArr.reduce((accum, student)=>{
-       if(student !== studentUID){
-          accum.push(student);
-       }
-       return accum;
-      },[])
-
-      let teacherDocument = await firebase
-          .firestore()
-          .collection("users")
-          .doc(userUID)
-          .get();
-        teacherDocument.ref.update({
-          students: studentDeletedArr,
-        });
-        //Empty student teacherUID field DONE, need testing
-        let studentDocument = await firebase
-          .firestore()
-          .collection("users")
-          .doc(studentUID)
-          .get();
-        studentDocument.ref.update({
-          teacherUID:'',
-        });
-    }
+    let teacherDocument = await firebase
+      .firestore()
+      .collection("users")
+      .doc(userUID)
+      .get();
+    teacherDocument.ref.update({
+      students: studentDeletedArr,
+    });
+    //Empty student teacherUID field DONE, need testing
+    let studentDocument = await firebase
+      .firestore()
+      .collection("users")
+      .doc(studentUID)
+      .get();
+    studentDocument.ref.update({
+      teacherUID: "",
+    });
+  };
   const handleYes = () => {
     updateStudent();
-    Alert.alert("A student has been removed from your profile.")
-    props.navigation.navigate('TeacherEditStudent', {userUID})
-  }
+    Alert.alert("A student has been removed from your profile.");
+    props.navigation.navigate("TeacherEditStudent", { userUID });
+  };
 
   const handlePressDelete = () => {
     Alert.alert(
-      'ALERT',
-      'Student will be permanently removed from your profile. Do you want to proceed?',
+      "ALERT",
+      "Student will be permanently removed from your profile. Do you want to proceed?",
       [
-        {text: 'YES', onPress:handleYes},
-        {text: 'NO', onPress:()=>console.log("NO Presses"), style:'cancel'}
+        { text: "YES", onPress: handleYes },
+        {
+          text: "NO",
+          onPress: () => console.log("NO Presses"),
+          style: "cancel",
+        },
       ],
-      {cancelable: false}
-    )
-  }
+      { cancelable: false }
+    );
+  };
   return (
-
-      <ImageBackground source={require("../../assets/backgrounds/green.jpg")} style={styles.image}>
-        <View style={styles.person}>
-          <Text style={styles.text}>Student Name:</Text>
-          <Text style={styles.subText}>{studentName}</Text>
-          <Text style={styles.text}>Email:</Text>
-          <Text style={styles.subText}>{studentEmail}</Text>
-            <View style={styles.imgContainer}>
-              <Image
-                source={{uri:studentProfilePicture}}
-                style={styles.thumbnail}
-              />
-              <TouchableOpacity
-                onPress={handlePressDelete}
-                style={styles.deleteButton}
-              >
-                <Text style={styles.buttonText}>DELETE STUDENT</Text>
-              </TouchableOpacity>
-            </View>
-
+    <ImageBackground
+      source={require("../../assets/backgrounds/green.jpg")}
+      style={styles.image}
+    >
+      <TouchableOpacity
+        style={styles.backButton}
+        onPress={() => navigation.goBack()}
+      >
+        <Text style={styles.backButtonText}>⇦ Back</Text>
+      </TouchableOpacity>
+      <View style={styles.person}>
+        <Text style={styles.text}>Student Name:</Text>
+        <Text style={styles.subText}>{studentName}</Text>
+        <Text style={styles.text}>Email:</Text>
+        <Text style={styles.subText}>{studentEmail}</Text>
+        <View style={styles.imgContainer}>
+          <Image
+            source={{ uri: studentProfilePicture }}
+            style={styles.thumbnail}
+          />
+          <TouchableOpacity
+            onPress={handlePressDelete}
+            style={styles.deleteButton}
+          >
+            <Text style={styles.buttonText}>DELETE STUDENT</Text>
+          </TouchableOpacity>
         </View>
+      </View>
 
-        <View style={styles.progressContainer}>
-          <Text style={styles.chartTitle}> Statistics by Subject:</Text>
-            <View style={styles.graph}>
-              <StackedBarChart
-                data={mixedData}
-                width={400}
-                height={200}
-                chartConfig={chartConfig}
-              />
-            </View>
+      <View style={styles.progressContainer}>
+        <Text style={styles.chartTitle}> Statistics by Subject:</Text>
+        <View style={styles.graph}>
+          <StackedBarChart
+            data={mixedData}
+            width={400}
+            height={200}
+            chartConfig={chartConfig}
+          />
         </View>
-      </ImageBackground>
-
+      </View>
+    </ImageBackground>
   );
 }

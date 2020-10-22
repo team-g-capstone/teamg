@@ -42,7 +42,7 @@ export default class AllStudentsList extends Component {
         .get();
 
       if (snapshot.empty) {
-        Alert.alert("There are no students on your profile.");
+        // Alert.alert("There are no students on your profile.");
         return;
       }
       let studentsList = [];
@@ -99,12 +99,12 @@ export default class AllStudentsList extends Component {
             />
           </ScrollView>
         </View>
-        {/* <TouchableOpacity
+        <TouchableOpacity
           style={styles.backButton}
-          onPress={() => props.navigation.goBack()}
+          onPress={() => this.props.navigation.goBack()}
         >
           <Text style={styles.backButtonText}>⇦ Back</Text>
-        </TouchableOpacity> */}
+        </TouchableOpacity>
       </ImageBackground>
     );
   }

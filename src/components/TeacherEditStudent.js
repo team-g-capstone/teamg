@@ -86,6 +86,12 @@ export default function TeacherEditStudent(props) {
       <Text style={styles.textInputTitle}>
         Add a student through their email
       </Text>
+      <TouchableOpacity
+        style={styles.backButton}
+        onPress={() => navigation.goBack()}
+      >
+        <Text style={styles.backButtonText}>⇦ Back</Text>
+      </TouchableOpacity>
       <ScrollView onBlur={Keyboard.dismiss}>
         <View style={styles.addAChildContainer}>
           <TextInput
@@ -116,12 +122,6 @@ export default function TeacherEditStudent(props) {
           onPress={() => navigation.navigate("MainMenuNav", { userUID })}
         >
           <Text style={styles.buttonText}>Main Menu</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => navigation.goBack()}
-        >
-          <Text style={styles.backButtonText}>⇦ Back</Text>
         </TouchableOpacity>
       </ScrollView>
     </ImageBackground>
