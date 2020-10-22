@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import {Audio} from 'expo-av'
 import styles from '../../styles/MemoryGame.Component.style';
+import * as firebase from 'firebase'
 import {componentDidMountAudio, cards, shuffle, levelChanges, audioPlayMatch, shufflePrep} from './ShapesHelperFuncs'
 
 export default class MemoryGame extends React.Component {
@@ -22,6 +23,7 @@ export default class MemoryGame extends React.Component {
       correctPair: [],
       numCorrect: 0,
       level: 1,
+      scores: [],
     
     };
     this.image = require("../../assets/backgrounds/green.jpg");
@@ -29,14 +31,15 @@ export default class MemoryGame extends React.Component {
     this.renderImg = this.renderImg.bind(this);
     this.renderAllCards = this.renderAllCards.bind(this);
     this.resetNewLevel = this.resetNewLevel.bind(this);
-   
-    
+    this.getUserLevel = this.getUserLevel.bind(this)
+    this.updateMemoryScores = this.updateMemoryScores.bind(this)
   }
 
   async componentDidMount() {
     componentDidMountAudio()
    
-    
+    this.getUserLevel()
+
     let cardsToMount = cards.slice(0, 4)
     const cardsToMountIndices = Object.keys(cardsToMount)
     
@@ -59,6 +62,76 @@ export default class MemoryGame extends React.Component {
     })
  
     
+  }
+
+  getUserLevel = async () => {
+    try {
+      let currentUser = await firebase.auth().currentUser;
+      
+      
+      if(!currentUser.isAnonymous) {
+      const email = currentUser.email
+     
+      const snapshot = await firebase.firestore()
+      .collection('users')
+      .where('email', '==', email)
+      .get();
+      let student
+      
+      await snapshot.forEach(doc=> {
+        student = doc.data()
+      })
+     
+      this.setState({
+        scores: student.memoryScores
+      })
+     
+      
+      let levelFromFS = student.memoryScores.reduce((accum, elem)=> {
+        if(elem === true) {
+          return accum + 1
+        }
+        return accum
+      }, 0)
+
+      if (levelFromFS < 10) {
+         this.setState({
+        level: levelFromFS
+      })
+      } else {
+        Alert.alert(
+        "You've already completed all the levels! Playing again will not affect your stars!",
+        `Play Again?`,
+        [{ text: "OK", onPress: () => {this.setState(); this.setState({level: 1,})} }],
+        { cancelable: false }
+      );
+      
+      }
+     
+     
+      }
+ 
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  updateMemoryScores = async () => {
+    let currentUser = await firebase.auth().currentUser;
+   
+    const userUID = currentUser.uid
+   
+    if(!currentUser.isAnonymous) {
+    let scores = this.state.scores.slice()
+    let memoryScoresNew = scores.map((score, idx)=> idx === this.state.level? true: score)
+    this.setState({
+      scores: memoryScoresNew
+    })
+    let userDocument = await firebase.firestore().collection('users').doc(userUID).get();
+    userDocument.ref.update({
+    memoryScores: memoryScoresNew
+  });
+    }
   }
 
 
@@ -132,7 +205,9 @@ export default class MemoryGame extends React.Component {
         [{ text: "OK", onPress: () => this.resetNewLevel() }],
         { cancelable: false }
       );
-      } else {
+
+      this.updateMemoryScores()
+      } else if (this.state.level === 10) {
          Alert.alert(
         "Congrats! You found all the pairs!",
         `Continue`,

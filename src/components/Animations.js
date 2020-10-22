@@ -4,6 +4,7 @@ import { Audio } from "expo-av";
 import { connect } from "react-redux";
 import LottieView from "lottie-react-native";
 import { RECORDING_OPTION_IOS_OUTPUT_FORMAT_APPLELOSSLESS } from "expo-av/build/Audio";
+import {componentDidMountAudio} from './ShapesHelperFuncs'
 
 const Animations = (props) => {
   let rotation = props.rotation;
@@ -12,15 +13,7 @@ const Animations = (props) => {
 
   Audio.setIsEnabledAsync(true);
   const componentDidMount = async () => {
-    Audio.setAudioModeAsync({
-      allowRecordingIOS: false,
-      interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
-      playsInSilentModeIOS: true,
-      interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DUCK_OTHERS,
-      shouldDuckAndroid: true,
-      staysActiveInBackground: true,
-      playsThroughEarpieceAndroid: true,
-    });
+    componentDidMountAudio()
 
     const status = {
       shouldPlay: false,

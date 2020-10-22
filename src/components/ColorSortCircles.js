@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import X, {View, Animated, PanResponder} from 'react-native'
-import {getRandomInt, colors, componentDidMountAudio} from './ShapesHelperFuncs'
+import {getRandomInt, colors, componentDidMountAudio, isDropArea} from './ShapesHelperFuncs'
 import {Audio} from 'expo-av'
 import {sortACircle} from '../redux/reducers/colorSortReducer'
 import {connect} from 'react-redux'
@@ -13,27 +13,15 @@ const ColorSortCircles= (props) => {
     const pan = useState(new Animated.ValueXY())[0]
     let [color] = useState(colors[getRandomInt(0, 3)]);
     const opacity = useState(new Animated.Value(1))[0]
+    
     Audio.setIsEnabledAsync(true)
     componentDidMountAudio();
 
-    const isDropArea = (gesture) => {
-         if(gesture.moveY < 50) {
-             if(gesture.moveX < (width / 3)) {
-                 return 'rgb(255, 0, 0)'
-             } 
-             if(gesture.moveX > width/ 3 && gesture.moveX < 2 * (width / 3)) {
-                 return 'rgb(0, 0, 255)'
-             }
-             if(gesture.moveX > 2  * (width / 3)){
-                 return 'rgb(0, 255, 0)'
-             }
-         }
-        return null
-    }
    
     const panResponder = useState(
         PanResponder.create({
             onMoveShouldSetPanResponder: () => true,
+
             onPanResponderGrant: () => {
                 pan.setOffset({
                     x: pan.x._value,
@@ -43,8 +31,9 @@ const ColorSortCircles= (props) => {
             onPanResponderMove: Animated.event([null, {
                 dx: pan.x, dy: pan.y
             }], {useNativeDriver: false}),
+            
             onPanResponderRelease: async (e, gesture) => {
-                const colorOfDrop = isDropArea(gesture)
+                const colorOfDrop = isDropArea(gesture, width)
               if(colorOfDrop) {
                  if(colorOfDrop === color) {
                     props.sorted()

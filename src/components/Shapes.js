@@ -152,7 +152,6 @@ const Shapes = (props) => {
   }
 
   return (
-    // <View style={styles.container}>
     <ImageBackground source={image} style={styles.image}>
       <Text style={styles.levelText}>Level: {level}</Text>
       <View style={styles.questionContainer}>
@@ -230,7 +229,6 @@ const Shapes = (props) => {
         </View>
       ) : null}
     </ImageBackground>
-    // </View>
   );
 };
 

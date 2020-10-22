@@ -9,7 +9,6 @@ import {
   ImageBackground,
   TouchableOpacity,
 } from "react-native";
-import AudioButton from "./AudioButton";
 import * as firebase from "firebase";
 
 export default function Subjects(props) {

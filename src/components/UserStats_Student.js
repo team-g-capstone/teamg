@@ -198,7 +198,7 @@ export default function UserStats_Student(props) {
           </View>
           <Text style={styles.text}>Memory</Text>
           <View style={styles.animationContainer}>
-            {logicScores.map((level, index) => {
+            {memoryScores.map((level, index) => {
               if (level !== false) {
                 return (
                   <LottieView

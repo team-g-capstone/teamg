@@ -42,10 +42,9 @@ export default class AllStudentsList extends Component {
         .get();
 
       if (snapshot.empty) {
-        Alert.alert("There is no students under your profile.");
+        Alert.alert("There are no students on your profile.");
         return;
       }
-
       let studentsList = [];
       await snapshot.forEach((doc) => {
         const student = doc.data();
