@@ -8,9 +8,9 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
-import {componentDidMountAudio} from './ShapesHelperFuncs'
 import {Audio} from 'expo-av'
-import {cards, shuffle, levelChanges} from './ShapesHelperFuncs'
+import styles from '../../styles/MemoryGame.Component.style';
+import {componentDidMountAudio, cards, shuffle, levelChanges, audioPlayMatch, shufflePrep} from './ShapesHelperFuncs'
 
 export default class MemoryGame extends React.Component {
   constructor(props) {
@@ -38,20 +38,22 @@ export default class MemoryGame extends React.Component {
    
     
     let cardsToMount = cards.slice(0, 4)
-    const arrayOfObjects = Object.keys(cardsToMount)
+    const cardsToMountIndices = Object.keys(cardsToMount)
     
-    const array2 = arrayOfObjects.map((key) => {
-      return Number(arrayOfObjects[key])
+    const indicesToRandomize = cardsToMountIndices.map((key) => {
+      return Number(cardsToMountIndices[key])
     })
-    let shuffledCards = shuffle(array2)
+    let shuffledCards = shuffle(indicesToRandomize)
+    
     let shuffledDeck = cardsToMount.map((card, index) => {
       card.id = shuffledCards[index]
       card.isOpen = false, 
       card.opacity = 1
-      
       return card
     })
+
     shuffledDeck.sort((a,b) => a.id - b.id)
+    
     await this.setState({
       cards: shuffledDeck
     })
@@ -69,9 +71,12 @@ export default class MemoryGame extends React.Component {
     });
    
     cards[index].isOpen = true;
+
     this.setState({
       cards: cards,
     });
+
+
     if(cards[index].opacity === 1) {
       if (currentPair.length < 2) {
         currentPair.push(cards[index]);
@@ -84,18 +89,10 @@ export default class MemoryGame extends React.Component {
     
     if (currentPair.length === 2) {
       let newNum;
+      
       if (currentPair[0].src === currentPair[1].src && currentPair[0].id !== currentPair[1].id) {
-        let sound = new Audio.Sound();
-        const status = {
-          shouldPlay: false,
-        };
-  
-        await sound.loadAsync(
-          require("../../assets/memorymatch.mp3"),
-          status,
-          false
-        );
-        await sound.playAsync();
+        
+        audioPlayMatch()
 
         newNum = this.state.numCorrect + 1;
         
@@ -149,6 +146,7 @@ export default class MemoryGame extends React.Component {
 
   async resetNewLevel() {
     const newLevel = this.state.level + 1
+
     if(newLevel === 11) {
         await this.setState({
         level: 1,
@@ -156,6 +154,7 @@ export default class MemoryGame extends React.Component {
       })
       const {navigation} = this.props.navigation
       let userUID = this.props.route.params.userUID
+
       Alert.alert(`You've passed all 10 levels!`, `You have the memory of a dolphin !`, [
           {
 
@@ -163,27 +162,19 @@ export default class MemoryGame extends React.Component {
           },
         ])
     
-    }
-    let levelCards
-    newLevel % 2 === 0 ? levelCards = 4 : levelCards = 3
-    
-    if(newLevel + levelCards >= 14) {
-       levelCards = 2
-    }
-    const newCards =  cards.slice(0, (newLevel + levelCards))
-    const arrayOfObjects = Object.keys(newCards)
-    const array2 = arrayOfObjects.map((key) => {
-      return Number(arrayOfObjects[key])
-    })
-
-
-    let shuffledCards = shuffle(array2)
-    let shuffledDeck = newCards.map((card, index) => {
+    } else {
+      
+      let array = shufflePrep(newLevel)
+      let newCards = array[0]
+      let shuffledCards = array[1]
+  
+      let shuffledDeck = newCards.map((card, index) => {
       card.id = shuffledCards[index]
       card.isOpen = false, 
       card.opacity = 1
       return card
     })
+    
     shuffledDeck.sort((a,b) => a.id - b.id)
     await this.setState({
       cards: shuffledDeck
@@ -196,6 +187,11 @@ export default class MemoryGame extends React.Component {
       numCorrect: 0,
       level: newLevel
     });
+    }
+
+
+   
+    
 
   }
 
@@ -249,69 +245,4 @@ export default class MemoryGame extends React.Component {
 }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-    flexDirection: "row",
-    height: '98%'
-  },
-  containerRow: {
-    flex: 4,
-    height: '50%',
-    width: '98%',
-    flexDirection: "row",
-    flexWrap: 'wrap-reverse',
-    alignContent: 'center',
-    justifyContent: 'space-evenly',
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-	  width: 0,
-	  height: 8,
-    },
-    shadowOpacity: 0.44,
-    shadowRadius: 10.32,
-    elevation: 10,
-  },
 
-  image: {
-
-    height: 125,
-    width: 105,
-    opacity: 1,
-    marginLeft: "10%",
-    marginTop: '5%',
-    borderRadius: 10, 
-    borderWidth: 1,
-    borderColor: "#FFC857",
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    backgroundColor: '#f0ead6',
-  
-   
-  },
-  backgroundImage: {
-    flex: 1,
-    resizeMode: "cover",
-    justifyContent: "center",
-    height: "100%",
-    width: "100%",
-  },
-  text: {
-    color: "#FFC857",
-    fontWeight: "bold",
-    textAlign: "center",
-    fontSize: 30,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    paddingTop: "5%",
-    marginBottom: "-5%",
-  },
-});

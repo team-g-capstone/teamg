@@ -119,14 +119,45 @@ export const cards = [
 
 export function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
-    let j = Math.floor(Math.random() * (i + 1)); // random index from 0 to i
-
-    // swap elements array[i] and array[j]
-    // we use "destructuring assignment" syntax to achieve that
-    // you'll find more details about that syntax in later chapters
-    // same can be written as:
-    // let t = array[i]; array[i] = array[j]; array[j] = t
+    let j = Math.floor(Math.random() * (i + 1)); 
     [array[i], array[j]] = [array[j], array[i]];
   }
   return array 
+}
+
+
+export async function audioPlayMatch () {
+      let sound = new Audio.Sound();
+        
+        const status = {
+          shouldPlay: false,
+        };
+  
+        await sound.loadAsync(
+          require("../../assets/memorymatch.mp3"),
+          status,
+          false
+        );
+        await sound.playAsync();
+}
+
+
+export function shufflePrep(newLevel) {
+    let levelCards;
+    newLevel % 2 === 0 ? levelCards = 4 : levelCards = 3
+    
+    if(newLevel + levelCards >= 14) {
+       levelCards = 2
+    }
+
+    const newCards =  cards.slice(0, (newLevel + levelCards))
+    const newCardsIndices = Object.keys(newCards)
+    const indicesToRandomize = newCardsIndices.map((key) => {
+      return Number(newCardsIndices[key])
+    })
+
+    let shuffledCards = shuffle(indicesToRandomize)
+
+    return [newCards, shuffledCards]
+
 }
