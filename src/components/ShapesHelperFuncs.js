@@ -1,7 +1,8 @@
 
-  import {Audio} from 'expo-av'
+import {Audio} from 'expo-av'
 
 export const shapes = ["square", "circle", "triangle", "square", "circle"];
+
 export const colors = [
   "rgb(255, 0, 0)",
   "rgb(0, 0, 255)",
@@ -161,3 +162,18 @@ export function shufflePrep(newLevel) {
     return [newCards, shuffledCards]
 
 }
+
+export function isDropArea(gesture, width) {
+         if(gesture.moveY < 50) {
+             if(gesture.moveX < (width / 3)) {
+                 return 'rgb(255, 0, 0)'
+             } 
+             if(gesture.moveX > width/ 3 && gesture.moveX < 2 * (width / 3)) {
+                 return 'rgb(0, 0, 255)'
+             }
+             if(gesture.moveX > 2  * (width / 3)){
+                 return 'rgb(0, 255, 0)'
+             }
+         }
+        return null
+    }

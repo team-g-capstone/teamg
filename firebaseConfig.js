@@ -9,3 +9,8 @@ export default { firebaseConfig : {
    appId: "1:50017325208:web:d23ac0152270b2ff7d80ed"
  }
 }
+
+const app = firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore(app);
+export const users = db.collection('users');
+export { firebase };
