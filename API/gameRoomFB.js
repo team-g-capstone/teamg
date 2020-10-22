@@ -23,6 +23,8 @@ export async function createNewGame(gameID,userUID,min, max) {
         date: Date.now(),
         status: false,
         waiting:true,
+        players:[],
+        question:0,
       });
   } catch (err) {
     console.log(err.message);
@@ -39,6 +41,7 @@ export async function updateQuestion(gameID,numOne,numTwo,answer) {
         answer: answer,
         waiting: false,
         received:0,
+        question: firebase.firestore.FieldValue.increment(1)
       });
   } catch (err) {
     console.log(err.message);
@@ -51,9 +54,9 @@ export async function updateScore(gameID,key,score) {
     updates[key] = firebase.firestore.FieldValue.increment(score);
     updates['received'] = firebase.firestore.FieldValue.increment(1);
     updates['waiting'] = true;
-    updates['numOne'] = '';
-    updates['numTwo'] = '';
-    updates['answer'] = '';
+    // updates['numOne'] = '';
+    // updates['numTwo'] = '';
+    //updates['answer'] = '';
 
 
     db.collection("games")
