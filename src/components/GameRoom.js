@@ -118,13 +118,12 @@ import * as firebase from "firebase";
       if(this.state.players.length < 2){
         return (
         <ImageBackground style={styles.background} source={require("../../assets/backgrounds/yellow.jpg")}>
-          <Text style={styles.screenTitle}>Game Loading</Text>
+          <Text style={styles.screenTitle}>Waiting for players to join GAME ID: {this.state.gameID}</Text>
           <ActivityIndicator/>
           <Button title="EXIT GAME" onPress={()=>this.props.navigation.navigate('Menu',{
             screen:"MainMenuNav",
             params:{userUID:this.state.userUID}
           })}/>
-
         </ImageBackground>
         )
       }else{
@@ -166,6 +165,10 @@ import * as firebase from "firebase";
       {isHost? waitingRes?<Text style={styles.waitingTitle}>Please update Question</Text>:<Text style={styles.waitingTitle}>Waiting for answer</Text>:waitingRes?
         isSubmitted? <Text style={styles.waitingTitle}>Waiting for others to answer or new question </Text>:<Text style={styles.waitingTitle}>Ready???</Text>: <Text style={styles.waitingTitle}>NEW QUESTION PLEASE ENTER YOUR ANSWER</Text>
     }
+    <Button title="EXIT GAME" onPress={()=>this.props.navigation.navigate('Menu',{
+            screen:"MainMenuNav",
+            params:{userUID:this.state.userUID}
+          })}/>
       </ImageBackground>
       )}
 
