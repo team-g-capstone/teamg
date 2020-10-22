@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {
+  Button,
   Text,
   View,
   TextInput,
@@ -18,6 +19,7 @@ import * as firebase from "firebase";
       this.state = {
         gameID:this.props.route.params.gameID,
         userUID:this.props.route.params.userUID,
+        firstName: this.props.route.params.firstName,
         status: false,
         waiting:"",
         questions:[],
@@ -68,7 +70,7 @@ import * as firebase from "firebase";
       this.setState({
         answer: answer,
         waiting:false ,
-
+        isSubmitted:false,
       })
       updateQuestion(gameID,Number(numOne), Number(numTwo), answer);
     }
@@ -114,11 +116,21 @@ import * as firebase from "firebase";
       const isSubmitted = this.state.isSubmitted;
 
       if(this.state.players.length < 2){
-        return <ActivityIndicator size='large'/>
+        return (
+        <ImageBackground style={styles.background} source={require("../../assets/backgrounds/yellow.jpg")}>
+          <Text style={styles.screenTitle}>Game Loading</Text>
+          <ActivityIndicator/>
+          <Button title="EXIT GAME" onPress={()=>this.props.navigation.navigate('Menu',{
+            screen:"MainMenuNav",
+            params:{userUID:this.state.userUID}
+          })}/>
+
+        </ImageBackground>
+        )
       }else{
       return(
       <ImageBackground style={styles.background} source={require("../../assets/backgrounds/blue.jpg")}>
-         <Text styles={styles.screenTitle}>Welcome to Game Room:{this.state.gameID}</Text>
+         <Text styles={styles.title}>{`${this.state.firstName} Welcome to Game Room:${this.state.gameID}`}</Text>
       {isHost? <><Text>Question Number: {this.state.question}</Text><Text>Response received: {this.state.received}</Text><TextInput
           style={styles.holder}
           placeholder="NUMONE"
@@ -148,11 +160,11 @@ import * as firebase from "firebase";
        {isHost? <TouchableOpacity onPress={this.handlePressUpdateQuestion}>
         <Text style={styles.screenTitle}>Update Question</Text>
       </TouchableOpacity>
-      : <TouchableOpacity onPress={this.handlePressSubmitAnswer}>
-        <Text style={styles.screenTitle}>Submit Answer</Text>
+      : <TouchableOpacity style={styles.button} onPress={this.handlePressSubmitAnswer}>
+        <Text style={styles.buttonText}>SUBMIT</Text>
       </TouchableOpacity>}
       {isHost? waitingRes?<Text style={styles.waitingTitle}>Please update Question</Text>:<Text style={styles.waitingTitle}>Waiting for answer</Text>:waitingRes?
-        isSubmitted? <Text>Waiting for others to answer or new question </Text>:null: <Text style={styles.waitingTitle}>NEW QUESTION PLEASE ENTER YOUR ANSWER</Text>
+        isSubmitted? <Text style={styles.waitingTitle}>Waiting for others to answer or new question </Text>:<Text style={styles.waitingTitle}>Ready???</Text>: <Text style={styles.waitingTitle}>NEW QUESTION PLEASE ENTER YOUR ANSWER</Text>
     }
       </ImageBackground>
       )}
@@ -165,6 +177,22 @@ import * as firebase from "firebase";
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+  },
+  button:{
+    width:"25%",
+    height:"7%",
+    backgroundColor:"navy",
+    marginTop:"2%"
+
+  },
+  buttonText:{
+    fontSize:20,
+    fontWeight:"bold",
+    color:"white",
+    paddingBottom:"2%",
+    paddingTop:"2%",
+    textAlign:"center",
+    textAlignVertical:"center"
   },
   holder:{
     height:50,
@@ -182,10 +210,10 @@ import * as firebase from "firebase";
   },
   waitingTitle: {
     textAlign: "center",
-    fontSize: 15,
+    fontSize: 20,
     margin: 10,
     fontWeight: "bold",
-    color: "white",
+    color: "red",
   },
   screenTitle: {
     textAlign: "center",
@@ -201,4 +229,7 @@ import * as firebase from "firebase";
     padding: 10,
     margin: "0.2%",
   },
+  title:{
+    color:"red"
+  }
 })

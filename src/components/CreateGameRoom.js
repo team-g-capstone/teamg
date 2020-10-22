@@ -2,14 +2,10 @@ import React, {Component} from 'react';
 import {
   StyleSheet,
   Text,
-  View,
-  Dimensions,
-  Keyboard,
   TouchableOpacity,
-  TouchableWithoutFeedback,
   ImageBackground,
+  View,
   Alert} from 'react-native';
-import { TextInput } from 'react-native-gesture-handler';
 import { createNewGame } from "../../API/gameRoomFB";
 
 
@@ -18,8 +14,7 @@ export default class CreateGameRoom extends Component {
       super(props);
       this.state = {
         gameID:'',
-        max:'',
-        min:'',
+        firstName: this.props.route.params.firstName,
         isLoading:false,
       }
       this.handlePressGenerateGameID = this.handlePressGenerateGameID.bind(this);
@@ -37,9 +32,6 @@ export default class CreateGameRoom extends Component {
 
 
     handlePressGenerateGameID = () =>{
-      if(!this.state.min || !this.state.max){
-        Alert.alert("Error: Please enter both MIN and MAX value before generating the Game ID")
-      }
       let newGameID = this.generateGameID();
       this.setState({gameID: newGameID})
     }
@@ -49,37 +41,31 @@ export default class CreateGameRoom extends Component {
         Alert.alert(`Error: Please make sure you click on "Generate Game ID" before "Create Game"`)
       }
 
-      const userUID = this.props.route.params.userUID
-      const gameID = this.state.gameID;
-      console.log(gameID);
-      createNewGame(gameID, userUID, this.state.min,this.state.max);
-      this.props.navigation.navigate("GameRoom",{userUID, gameID})
+      const userUID = this.props.route.params.userUID;
+      const {gameID, firstName} = this.state;
+
+      createNewGame(gameID, userUID);
+      console.log("userUID from handlePressCreateNewGame", userUID)
+      this.props.navigation.navigate("GameRoom",{userUID:userUID, gameID:gameID,firstName:firstName})
+
     }
 
     render(){
       return(
       <ImageBackground style={styles.background} source={require("../../assets/backgrounds/blue.jpg")}>
-        <Text>MIN</Text>
-        <TextInput
-          style={styles.textInput}
-          placeholder="MIN"
-          value={this.state.min}
-          onChangeText={(min) => this.setState({min:min})}
-        />
-        <Text>MAX</Text>
-        <TextInput
-          style={styles.textInput}
-          placeholder="MAX"
-          value={this.state.max}
-          onChangeText={(max) => this.setState({max:max})}
-        />
-       <TouchableOpacity onPress={this.handlePressGenerateGameID}>
-        <Text style={styles.screenTitle}>Generate Game ID</Text>
-      </TouchableOpacity>
-        <Text styles={styles.screenTitle}>Game ID:{this.state.gameID}</Text>
+        <View style={styles.container}>
+         <Text style={styles.screenTitle}>Create a Game</Text>
+         <Text style={styles.steps}>{`Step One: Click "Generate Game ID" to get a new Game ID`}</Text>
+         <TouchableOpacity styles={styles.button} onPress={this.handlePressGenerateGameID}>
+         <Text style={styles.buttonText}>Generate Game ID</Text>
+         </TouchableOpacity>
+
+        <Text styles={styles.stepTwo}>{`Step Two: Let your student know the Game ID: ${this.state.gameID}`}</Text>
+        <Text styles={styles.stepThree}>{`Step Three: Click "Create Game to enter the game`}</Text>
         <TouchableOpacity onPress={this.handlePressCreateGame}>
-        <Text style={styles.screenTitle}>Create Game</Text>
+        <Text style={styles.buttonText}>Create Game</Text>
       </TouchableOpacity>
+      </View>
       </ImageBackground>
       )}
   }
@@ -87,15 +73,46 @@ export default class CreateGameRoom extends Component {
  const styles = StyleSheet.create({
   background: {
     flex: 1,
-    alignItems: "center",
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
     justifyContent: "center",
+    alignContent:"center"
+  },
+  button: {
+    width: 280,
+    padding: 12,
+    backgroundColor: "red",
+    borderWidth: 2,
+    borderColor: "#ffcccc",
+    borderRadius: 5,
+    alignSelf: "center",
+    margin: "0.5%",
+    marginLeft: "1%",
+  },
+  buttonText: {
+    color: "red",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  container:{
+    alignItems:"center"
   },
   screenTitle: {
-    textAlign: "center",
     fontSize: 25,
     margin: 10,
     fontWeight: "bold",
     color: "white",
+    marginRight:"30%"
+  },
+  steps:{
+    fontSize:20,
+    margin: 10,
+    fontWeight: "bold",
+    color: "white",
+  },
+  stepTwo:{
+    color:"blue"
   },
   textInput: {
     width: 250,

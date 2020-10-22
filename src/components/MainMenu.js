@@ -84,7 +84,7 @@ export default function MainMenu(props) {
               onPress={() =>
                 navigation.navigate("Games", {
                   screen:"CreateGameRoom",
-                  params:{ userUID }})
+                  params:{ userUID:userUID, firstName: firstName}})
               }
             >
               <Text style={styles.anonButtonText}>
@@ -120,7 +120,7 @@ export default function MainMenu(props) {
               onPress={() =>
                 navigation.navigate("Games", {
                   screen:"JoinRoom",
-                  params:{ userUID }})
+                  params:{ userUID, firstName }})
               }
             >
               <Text style={styles.anonButtonText}>

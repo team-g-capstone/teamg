@@ -4,17 +4,8 @@ import {Alert} from 'react-native';
 
 const db = firebase.firestore();
 
-// function getRandomIntArr(min, max) {
-//   let arr=[];
-// for(let i =0; i<10; i++){
-//   let num1 = Math.floor(Math.random() * (max - min) + min);
-//   let num2 = Math.floor(Math.random() * (max - min) + min);
-//   arr.push(num1, num2, num1+num2)
-// }
-//   return arr;
-// }
-
-export async function createNewGame(gameID,userUID,min, max) {
+export async function createNewGame(gameID,userUID) {
+  console.log("async Create Game", gameID, userUID)
   try {
     db.collection("games")
       .doc(gameID)

@@ -17,6 +17,7 @@ import { addPlayer } from "../../API/gameRoomFB";
 export default function JoinRoom(props){
   const [gameID, setGameID] = useState("");
   const userUID = props.route.params.userUID;
+  const firstName = props.route.params.firstName;
 
   const handlePress = () => {
     let length = gameID.length
@@ -25,8 +26,11 @@ export default function JoinRoom(props){
     }else{
       let gameIDUpper= gameID.toUpperCase();
       addPlayer(gameIDUpper,userUID);
-      props.navigation.navigate('GameRoom', {gameID:gameIDUpper,
-      userUID: userUID})
+      props.navigation.navigate('GameRoom',{
+        gameID:gameIDUpper,
+        userUID: userUID,
+        firstName: firstName,
+        })
     }
     setGameID('')
   }
