@@ -51,6 +51,7 @@ export default class CreateGameRoom extends Component {
     }
 
     render(){
+      const {userUID,firstName} =this.props.route.params;
       return(
       <ImageBackground style={styles.background} source={require("../../assets/backgrounds/blue.jpg")}>
         <View style={styles.container}>
@@ -66,6 +67,17 @@ export default class CreateGameRoom extends Component {
         <Text style={styles.buttonText}>Create Game</Text>
       </TouchableOpacity>
       </View>
+      <TouchableOpacity
+              onPress={() =>
+                this.props.navigation.navigate("Games", {
+                  screen:"JoinRoom",
+                  params:{ userUID, firstName }})
+              }
+            >
+              <Text style={styles.buttonText}>
+               Return to an existing Game Room
+              </Text>
+            </TouchableOpacity>
       </ImageBackground>
       )}
   }

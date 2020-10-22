@@ -16,6 +16,7 @@ export async function createNewGame(gameID,userUID) {
         waiting:true,
         players:[],
         question:0,
+        gameEnded: false,
       });
   } catch (err) {
     console.log(err.message);
@@ -45,10 +46,6 @@ export async function updateScore(gameID,key,score) {
     updates[key] = firebase.firestore.FieldValue.increment(score);
     updates['received'] = firebase.firestore.FieldValue.increment(1);
     updates['waiting'] = true;
-    // updates['numOne'] = '';
-    // updates['numTwo'] = '';
-    //updates['answer'] = '';
-
 
     db.collection("games")
       .doc(gameID)
@@ -58,9 +55,10 @@ export async function updateScore(gameID,key,score) {
   }
 }
 
-export async function addPlayer(gameID,playerID) {
+export async function addPlayer(gameID,playerID, playerFirstName) {
   try {
     let updates={};
+    updates['playersName'] =  firebase.firestore.FieldValue.arrayUnion(playerFirstName);
     updates['players'] = firebase.firestore.FieldValue.arrayUnion(playerID);
     updates[playerID]=0;
 
@@ -68,6 +66,18 @@ export async function addPlayer(gameID,playerID) {
       .doc(gameID)
       .update(updates);
   } catch (err) {
-   return Alert.alert("Error", err.message)
+    console.log(err.message)
+  }
+}
+
+export async function endGameFS (gameID) {
+  try {
+    db.collection("games")
+      .doc(gameID)
+      .update({
+        gameEnded:true,
+      });
+  } catch (err) {
+    console.log(err.message);
   }
 }

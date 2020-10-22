@@ -10,7 +10,7 @@ import {
   StyleSheet,
   ImageBackground,
   ActivityIndicator} from "react-native";
-  import { updateQuestion, updateScore } from "../../API/gameRoomFB"
+  import { endGameFS, updateQuestion, updateScore } from "../../API/gameRoomFB"
 import * as firebase from "firebase";
 
   export default class GameRoom extends Component {
@@ -35,11 +35,13 @@ import * as firebase from "firebase";
         inputAnswer:0,
         score:0,
         isSubmitted: false,
+        gameEnded:'',
       }
 
       this.handlePressUpdateQuestion = this.handlePressUpdateQuestion.bind(this);
       this.handlePressSubmitAnswer = this.handlePressSubmitAnswer.bind(this);
       this.handleChangeNumOne = this.handleChangeNumOne.bind(this);
+      this.handlePressEndGame = this.handlePressEndGame.bind(this);
     }
     //Listen to Host
     componentDidMount(){
@@ -59,6 +61,7 @@ import * as firebase from "firebase";
              data['received'] = snapshot.data().received;
              data['players'] = snapshot.data().players;
              data['question'] = snapshot.data().question;
+             data['gameEnded'] = snapshot.data().gameEnded;
              this.setState(data);
             })
 
@@ -109,13 +112,30 @@ import * as firebase from "firebase";
       }
     }
 
-
+    handlePressEndGame = () =>{
+      const gameID = this.state.gameID;
+      endGameFS(gameID);
+      this.props.navigation.navigate('EndGameRoom',{gameID})
+    }
     render(){
       const isHost = this.state.creator === this.state.userUID;
       const waitingRes = this.state.waiting;
       const isSubmitted = this.state.isSubmitted;
+      const gameEnded = this.state.gameEnded;
+      if(gameEnded){
+        return(
+          <ImageBackground style={styles.background} source={require("../../assets/backgrounds/yellow.jpg")}>
+          <Text style={styles.screenTitle}>This Game ID {this.state.gameID} has ENDED.</Text>
+          <ActivityIndicator/>
+          <Button title="MAIN MENU" onPress={()=>this.props.navigation.navigate('Menu',{
+            screen:"MainMenuNav",
+            params:{userUID:this.state.userUID}
+          })}/>
+        </ImageBackground>
 
-      if(this.state.players.length < 2){
+        )
+      }
+      else if(this.state.players.length < 2){
         return (
         <ImageBackground style={styles.background} source={require("../../assets/backgrounds/yellow.jpg")}>
           <Text style={styles.screenTitle}>Waiting for players to join GAME ID: {this.state.gameID}</Text>
@@ -169,6 +189,7 @@ import * as firebase from "firebase";
             screen:"MainMenuNav",
             params:{userUID:this.state.userUID}
           })}/>
+          {isHost? <Button style={styles.endGameText} title="END GAME" onPress={this.handlePressEndGame}/>:null}
       </ImageBackground>
       )}
 
@@ -196,6 +217,9 @@ import * as firebase from "firebase";
     paddingTop:"2%",
     textAlign:"center",
     textAlignVertical:"center"
+  },
+  endGameText:{
+    color:"red",
   },
   holder:{
     height:50,
