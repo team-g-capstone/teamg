@@ -76,6 +76,7 @@ export default class GameRoom extends Component {
     this.setState({
       answer: answer,
       waiting: false,
+      isSubmitted:false,
     });
     updateQuestion(gameID, Number(numOne), Number(numTwo), answer);
   };
@@ -226,28 +227,26 @@ export default class GameRoom extends Component {
           )}
 
           {isHost ? (
-            // <View>
+
             <TouchableOpacity
               onPress={this.handlePressUpdateQuestion}
               style={styles.updateButton}
             >
               <Text style={styles.updateButtonText}>Update Question</Text>
             </TouchableOpacity>
-          ) : (
-            //</View>
-            //<View>
-            <TouchableOpacity
-              style={styles.updateButton}
-              onPress={this.handlePressSubmitAnswer}
-            >
-              <Text style={styles.updateButtonText}>SUBMIT</Text>
-            </TouchableOpacity>
-            // </View>
-          )}
+          ) : isSubmitted?
+
+            null :<TouchableOpacity
+            style={styles.updateButton}
+            onPress={this.handlePressSubmitAnswer}
+          >
+            <Text style={styles.updateButtonText}>SUBMIT</Text>
+          </TouchableOpacity>
+          }
 
           {isHost ? (
             waitingRes ? (
-              // <View>
+
               <Text style={styles.waitingTitle}>Please update Question</Text>
             ) : (
               <Text style={styles.waitingTitle}>Waiting for answer...</Text>

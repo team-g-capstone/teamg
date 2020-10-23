@@ -6,7 +6,6 @@ import { diffClamp } from "react-native-reanimated";
 const db = firebase.firestore();
 
 export async function createNewGame(gameID,userUID) {
-  console.log("async Create Game", gameID, userUID)
   try {
     db.collection("games")
       .doc(gameID)

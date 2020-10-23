@@ -14,6 +14,7 @@ export default class EndGameRoom extends Component {
       playersName: [],
       scores: [],
     };
+    this.handlePressMainMenu = this.handlePressMainMenu.bind(this);
   }
 
   componentDidMount() {
@@ -34,9 +35,16 @@ export default class EndGameRoom extends Component {
           this.setState({ scores: scoreArr });
         });
       });
-    unsubscribed();
-  }
 
+  }
+   handlePressMainMenu =()=>{
+
+    this.props.navigation.navigate("Menu", {
+      screen: "MainMenuNav",
+      params: { userUID: this.props.route.params.userUID },
+    })
+    unsubscribed();
+   }
   render() {
     const playerNameLists = this.state.playersName.map((name, idx) => {
       return (
@@ -57,12 +65,7 @@ export default class EndGameRoom extends Component {
         <View style={styles.listView}>{playerNameLists}</View>
         <TouchableOpacity
           style={styles.touchButton}
-          onPress={() =>
-            this.props.navigation.navigate("Menu", {
-              screen: "MainMenuNav",
-              params: { userUID: this.props.route.params.userUID },
-            })
-          }
+          onPress={this.handlePressMainMenu}
         >
           <Text style={styles.button}> MAIN MENU</Text>
         </TouchableOpacity>
