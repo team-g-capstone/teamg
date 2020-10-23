@@ -37,6 +37,7 @@ export default class GameRoom extends Component {
       answerFS: 0,
       inputAnswer: 0,
       score: 0,
+      answered:"",
       isSubmitted: false,
       gameEnded: "",
     };
@@ -57,6 +58,7 @@ export default class GameRoom extends Component {
         let userUID = this.props.route.params.userUID;
         data["status"] = snapshot.data().status;
         data["score"] = snapshot.data()[userUID];
+        data["answered"] = snapshot.data()[`answered${userUID}`];
         data["creator"] = snapshot.data().creator;
         data["numOneFS"] = snapshot.data().numOne;
         data["numTwoFS"] = snapshot.data().numTwo;
@@ -71,14 +73,14 @@ export default class GameRoom extends Component {
   }
 
   handlePressUpdateQuestion = () => {
-    let { gameID, numOne, numTwo } = this.state;
+    let { gameID, numOne, numTwo, players } = this.state;
     let answer = Number(numOne) + Number(numTwo);
     this.setState({
       answer: answer,
       waiting: false,
       isSubmitted:false,
     });
-    updateQuestion(gameID, Number(numOne), Number(numTwo), answer);
+    updateQuestion(gameID, Number(numOne), Number(numTwo), answer, players);
   };
 
   handlePressSubmitAnswer = () => {
@@ -123,10 +125,12 @@ export default class GameRoom extends Component {
     this.props.navigation.navigate("EndGameRoom", { gameID, userUID });
     unsubscribed();
   };
+
   render() {
     const isHost = this.state.creator === this.state.userUID;
     const waitingRes = this.state.waiting;
     const isSubmitted = this.state.isSubmitted;
+    const isAnswered = this.state.answered;
     const gameEnded = this.state.gameEnded;
     if (gameEnded) {
       return (
@@ -234,9 +238,11 @@ export default class GameRoom extends Component {
             >
               <Text style={styles.updateButtonText}>Update Question</Text>
             </TouchableOpacity>
-          ) : isSubmitted?
+          ) : isAnswered?
 
-            null :<TouchableOpacity
+          <Text style={styles.waitingTitle}>
+          Waiting for others to answer or new question...{" "}
+        </Text>:<TouchableOpacity
             style={styles.updateButton}
             onPress={this.handlePressSubmitAnswer}
           >
@@ -252,10 +258,8 @@ export default class GameRoom extends Component {
               <Text style={styles.waitingTitle}>Waiting for answer...</Text>
             )
           ) : waitingRes ? (
-            isSubmitted ? (
-              <Text style={styles.waitingTitle}>
-                Waiting for others to answer or new question...{" "}
-              </Text>
+            isAnswered? (
+              null
             ) : (
               <Text style={styles.waitingTitle}>Ready???</Text>
             )
@@ -275,7 +279,7 @@ export default class GameRoom extends Component {
             >
               <Text style={styles.buttonTextExit}>Leave Game</Text>
             </TouchableOpacity>
-            {/* </View> */}
+
 
             {isHost ? (
               <TouchableOpacity
