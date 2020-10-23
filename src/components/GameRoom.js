@@ -133,19 +133,22 @@ export default class GameRoom extends Component {
           style={styles.background}
           source={require("../../assets/backgrounds/yellow.jpg")}
         >
-          <Text style={styles.screenTitle}>
+          <Text style={styles.endScreenTitle}>
             This Game ID {this.state.gameID} has ENDED.
           </Text>
           <ActivityIndicator />
-          <Button
-            title="MAIN MENU"
+
+          <TouchableOpacity
+            style={styles.endButton}
             onPress={() =>
               this.props.navigation.navigate("Menu", {
                 screen: "MainMenuNav",
                 params: { userUID: this.state.userUID },
               })
             }
-          />
+          >
+            <Text style={styles.endButtonText}> MAIN MENU</Text>
+          </TouchableOpacity>
         </ImageBackground>
       );
     } else if (this.state.players.length < 2) {
