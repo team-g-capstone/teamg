@@ -1,12 +1,9 @@
 import * as firebase from "firebase";
 import "firebase/firestore";
-import {Alert} from 'react-native';
-import { diffClamp } from "react-native-reanimated";
 
 const db = firebase.firestore();
 
 export async function createNewGame(gameID,userUID) {
-  console.log("async Create Game", gameID, userUID)
   try {
     db.collection("games")
       .doc(gameID)
@@ -24,18 +21,24 @@ export async function createNewGame(gameID,userUID) {
   }
 }
 
-export async function updateQuestion(gameID,numOne,numTwo,answer) {
+export async function updateQuestion(gameID,numOne,numTwo,answer,players) {
+
+  const playerOneUID = players[0];
+  const playerTwoUID = players[1];
   try {
+    let updates={};
+    updates['numOne'] = numOne;
+    updates['numTwo'] = numTwo;
+    updates['answer'] = answer;
+    updates['waiting'] = false;
+    updates['received'] = 0;
+    updates['question'] = firebase.firestore.FieldValue.increment(1);
+    updates[`answered${playerOneUID}`] = false;
+    updates[`answered${playerTwoUID}`] = false;
+
     db.collection("games")
       .doc(gameID)
-      .update({
-        numOne: numOne,
-        numTwo: numTwo,
-        answer: answer,
-        waiting: false,
-        received:0,
-        question: firebase.firestore.FieldValue.increment(1)
-      });
+      .update(updates);
   } catch (err) {
     console.log(err.message);
   }
@@ -45,6 +48,7 @@ export async function updateScore(gameID,key,score) {
   try {
     let updates={};
     updates[key] = firebase.firestore.FieldValue.increment(score);
+    updates[`answered${key}`] = true;
     updates['received'] = firebase.firestore.FieldValue.increment(1);
     updates['waiting'] = true;
 
@@ -62,6 +66,7 @@ export async function addPlayer(gameID,playerID, playerFirstName) {
     updates['playersName'] =  firebase.firestore.FieldValue.arrayUnion(playerFirstName);
     updates['players'] = firebase.firestore.FieldValue.arrayUnion(playerID);
     updates[playerID]=0;
+    updates[`answered${playerID}`] = false;
 
     db.collection("games")
       .doc(gameID)
