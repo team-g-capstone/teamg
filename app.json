@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "teamg",
-    "slug": "teamg",
+    "name": "BrainTeez",
+    "slug": "brainteez",
     "version": "1.0.0",
     "orientation": "landscape",
     "icon": "./assets/icon.png",
@@ -13,13 +13,17 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "requireFullScreen": true
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "description": "Engaging learning games for kids!\n\nLearning remotely can be difficult for kids, teachers and parents. We present an interactive framework for holistic learning that engages many parts of the child’s brain at once using cutting edge educational technologies.",
+    "githubUrl": "https://github.com/team-g-capstone/teamg"
   }
 }
