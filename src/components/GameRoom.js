@@ -15,6 +15,7 @@ import { endGameFS, updateQuestion, updateScore } from "../../API/gameRoomFB";
 import * as firebase from "firebase";
 import styles from "../../styles/GameRoom.Component.style.js";
 
+let unsubscribed;
 export default class GameRoom extends Component {
   constructor(props) {
     super(props);
@@ -48,7 +49,7 @@ export default class GameRoom extends Component {
   //Listen to Host
   componentDidMount() {
     this.db = firebase.firestore();
-    this.db
+    unsubscribed = this.db
       .collection("games")
       .doc(this.state.gameID)
       .onSnapshot((snapshot) => {
@@ -119,6 +120,7 @@ export default class GameRoom extends Component {
     const userUID = this.props.route.params.userUID;
     endGameFS(gameID);
     this.props.navigation.navigate("EndGameRoom", { gameID, userUID });
+    unsubscribed();
   };
   render() {
     const isHost = this.state.creator === this.state.userUID;
@@ -202,7 +204,7 @@ export default class GameRoom extends Component {
             </>
           ) : (
             <>
-              <Text style={styles.subtext}>Score:{this.state.score}</Text>
+              <Text style={styles.subtext}>Score: {this.state.score}</Text>
 
               <View style={styles.qContainer}>
                 <Text style={styles.qAnswerContainer}>
@@ -272,19 +274,19 @@ export default class GameRoom extends Component {
                 })
               }
             >
-              <Text style={styles.buttonTextExit}>Exit Game</Text>
+              <Text style={styles.buttonTextExit}>Leave Game</Text>
             </TouchableOpacity>
-          </View>
-          {isHost ? (
-            <View style={styles.endContainer}>
+            {/* </View> */}
+
+            {isHost ? (
               <TouchableOpacity
                 style={styles.buttonExit}
                 onPress={this.handlePressEndGame}
               >
                 <Text style={styles.buttonTextExit}>End Game</Text>
               </TouchableOpacity>
-            </View>
-          ) : null}
+            ) : null}
+          </View>
         </ImageBackground>
       );
     }

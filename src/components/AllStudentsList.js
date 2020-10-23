@@ -99,12 +99,6 @@ export default class AllStudentsList extends Component {
             />
           </ScrollView>
         </View>
-        {/* <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => this.props.navigation.goBack()}
-        >
-          <Text style={styles.backButtonText}>⇦ Back</Text>
-        </TouchableOpacity> */}
       </ImageBackground>
     );
   }

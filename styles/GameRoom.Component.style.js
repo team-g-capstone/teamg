@@ -29,7 +29,8 @@ export default StyleSheet.create({
     borderColor: "#ffcccc",
     borderRadius: 15,
     alignSelf: "center",
-    // margin: 5,
+    margin: "1%",
+
     marginTop: "-3%",
   },
   buttonTextExit: {

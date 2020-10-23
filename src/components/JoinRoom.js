@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -9,50 +9,62 @@ import {
   TouchableWithoutFeedback,
   ImageBackground,
   ScrollView,
-  Alert} from 'react-native';
-import { TextInput } from 'react-native-gesture-handler';
+  Alert,
+} from "react-native";
+import { TextInput } from "react-native-gesture-handler";
 import { addPlayer } from "../../API/gameRoomFB";
-import * as firebase from 'firebase';
+import * as firebase from "firebase";
 
-
-export default function JoinRoom(props){
+export default function JoinRoom(props) {
   const [gameID, setGameID] = useState("");
-  const [gamesArr , setGamesArr] = useState([]);
+  const [gamesArr, setGamesArr] = useState([]);
   const userUID = props.route.params.userUID;
   const firstName = props.route.params.firstName;
 
-  useEffect( ()=>{
-    let arrFB=[];
+  useEffect(() => {
+    let arrFB = [];
     const db = firebase.firestore();
-    db.collection('games').get().then(function(queryShot){
-      queryShot.forEach(function(doc){
-        arrFB.push(doc.id);
-      })
-      setGamesArr(arrFB);
-    })
-  })
+    db.collection("games")
+      .get()
+      .then(function (queryShot) {
+        queryShot.forEach(function (doc) {
+          arrFB.push(doc.id);
+        });
+        setGamesArr(arrFB);
+      });
+  });
 
   const handlePress = () => {
-    let length = gameID.length
-    let gameIDUpper= gameID.toUpperCase();
-    if(!gameID || length<5 || length>5){
-      Alert.alert(`Please enter the 6 alphabet Game ID before pressing "Enter Game Room"`)
-    }else if( gamesArr.includes(gameIDUpper)){
-      addPlayer(gameIDUpper,userUID, firstName);
-      props.navigation.navigate('GameRoom',{
-        gameID:gameIDUpper,
+    let length = gameID.length;
+    let gameIDUpper = gameID.toUpperCase();
+    if (!gameID || length < 5 || length > 5) {
+      Alert.alert(
+        `Please enter the 6 alphabet Game ID before pressing "Enter Game Room"`
+      );
+    } else if (gamesArr.includes(gameIDUpper)) {
+      addPlayer(gameIDUpper, userUID, firstName);
+      props.navigation.navigate("GameRoom", {
+        gameID: gameIDUpper,
         userUID: userUID,
         firstName: firstName,
-        })
+      });
+    } else {
+      Alert.alert("This is not a valid game ID.");
     }
-    else{
-      Alert.alert("This is not a valid game ID.")
-    }
-    setGameID('')
-  }
+    setGameID("");
+  };
 
   return (
-    <ImageBackground style = {styles.container} source={require("../../assets/backgrounds/green.jpg")}>
+    <ImageBackground
+      style={styles.container}
+      source={require("../../assets/backgrounds/green.jpg")}
+    >
+      <TouchableOpacity
+        style={styles.backButton}
+        onPress={() => props.navigation.goBack()}
+      >
+        <Text style={styles.backButtonText}>⇦ Back</Text>
+      </TouchableOpacity>
       <Text style={styles.text}>Put in the Game ID to enter the game:</Text>
       <ScrollView onBlur={Keyboard.dismiss}>
         <TextInput
@@ -66,17 +78,15 @@ export default function JoinRoom(props){
         <TouchableOpacity style={styles.button} onPress={handlePress}>
           <Text style={styles.buttonText}>Enter Game Room</Text>
         </TouchableOpacity>
-
       </ScrollView>
     </ImageBackground>
   );
-
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex:1,
-    padding:"8%",
+    flex: 1,
+    padding: "8%",
     backgroundColor: "#3FC5AB",
     alignItems: "center",
     justifyContent: "center",
@@ -91,14 +101,14 @@ const styles = StyleSheet.create({
   emailInput: {
     width: 300,
     borderWidth: 3,
-    borderColor:"#96C598",
+    borderColor: "#96C598",
     padding: 10,
     margin: 5,
   },
   passwordInput: {
     width: 300,
     borderWidth: 3,
-    borderColor:"#96C598",
+    borderColor: "#96C598",
     padding: 10,
     margin: 5,
   },
@@ -117,7 +127,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     margin: 8,
   },
-  forgotButton:{
+  forgotButton: {
     width: 200,
     padding: 6,
     backgroundColor: "#8F540E",
@@ -126,5 +136,25 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     alignSelf: "center",
     margin: 5,
-  }
+  },
+  backButton: {
+    borderWidth: 1,
+    borderColor: "#8FE09B",
+    borderRadius: 15,
+    padding: 1,
+    marginLeft: "-90%",
+    marginTop: "-4%",
+    marginBottom: "5%",
+    width: 110,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+  },
+  backButtonText: {
+    color: "#8FE09B",
+    fontWeight: "bold",
+    textAlign: "center",
+    fontSize: 20,
+  },
 });
