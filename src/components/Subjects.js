@@ -33,9 +33,17 @@ export default function Subjects(props) {
           <Text style={styles.ButtonText}>Logic</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => navigation.navigate("MemoryGame", { userUID, navigation })}
+          onPress={() =>
+            navigation.navigate("MemoryGame", { userUID, navigation })
+          }
         >
           <Text style={styles.ButtonText}>Memory</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => navigation.goBack()}
+        >
+          <Text style={styles.backButtonText}>⇦ Back</Text>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -66,5 +74,25 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 2,
+  },
+  backButton: {
+    borderWidth: 1,
+    borderColor: "#8FE09B",
+    borderRadius: 15,
+    padding: 1,
+    marginLeft: 50,
+    marginTop: -210,
+    marginBottom: 200,
+    width: 110,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+  },
+  backButtonText: {
+    color: "#8FE09B",
+    fontWeight: "bold",
+    textAlign: "center",
+    fontSize: 20,
   },
 });

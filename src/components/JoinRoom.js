@@ -1,55 +1,67 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from "react";
 import {
   Text,
   Keyboard,
   TouchableOpacity,
   ImageBackground,
   ScrollView,
-  Alert} from 'react-native';
-import { TextInput } from 'react-native-gesture-handler';
+  Alert,
+} from "react-native";
+import { TextInput } from "react-native-gesture-handler";
 import { addPlayer } from "../../API/gameRoomFB";
 import { styles } from "../../styles/JoinRoom.Component.style";
-import * as firebase from 'firebase';
+import * as firebase from "firebase";
 
-
-export default function JoinRoom(props){
+export default function JoinRoom(props) {
   const [gameID, setGameID] = useState("");
-  const [gamesArr , setGamesArr] = useState([]);
+  const [gamesArr, setGamesArr] = useState([]);
   const userUID = props.route.params.userUID;
   const firstName = props.route.params.firstName;
 
-  useEffect( ()=>{
-    let arrFB=[];
+  useEffect(() => {
+    let arrFB = [];
     const db = firebase.firestore();
-    db.collection('games').get().then(function(queryShot){
-      queryShot.forEach(function(doc){
-        arrFB.push(doc.id);
-      })
-      setGamesArr(arrFB);
-    })
-  })
+    db.collection("games")
+      .get()
+      .then(function (queryShot) {
+        queryShot.forEach(function (doc) {
+          arrFB.push(doc.id);
+        });
+        setGamesArr(arrFB);
+      });
+  });
 
   const handlePress = () => {
-    let length = gameID.length
-    let gameIDUpper= gameID.toUpperCase();
-    if(!gameID || length<5 || length>5){
-      Alert.alert(`Please enter the 6 alphabet Game ID before pressing "Enter Game Room"`)
-    }else if( gamesArr.includes(gameIDUpper)){
-      addPlayer(gameIDUpper,userUID, firstName);
-      props.navigation.navigate('GameRoom',{
-        gameID:gameIDUpper,
+    let length = gameID.length;
+    let gameIDUpper = gameID.toUpperCase();
+    if (!gameID || length < 5 || length > 5) {
+      Alert.alert(
+        `Please enter the 6 alphabet Game ID before pressing "Enter Game Room"`
+      );
+    } else if (gamesArr.includes(gameIDUpper)) {
+      addPlayer(gameIDUpper, userUID, firstName);
+      props.navigation.navigate("GameRoom", {
+        gameID: gameIDUpper,
         userUID: userUID,
         firstName: firstName,
-        })
+      });
+    } else {
+      Alert.alert("This is not a valid game ID.");
     }
-    else{
-      Alert.alert("This is not a valid game ID.")
-    }
-    setGameID('')
-  }
+    setGameID("");
+  };
 
   return (
-    <ImageBackground style = {styles.container} source={require("../../assets/backgrounds/green.jpg")}>
+    <ImageBackground
+      style={styles.container}
+      source={require("../../assets/backgrounds/green.jpg")}
+    >
+      <TouchableOpacity
+        style={styles.backButton}
+        onPress={() => props.navigation.goBack()}
+      >
+        <Text style={styles.backButtonText}>⇦ Back</Text>
+      </TouchableOpacity>
       <Text style={styles.text}>Put in the Game ID to enter the game:</Text>
       <ScrollView onBlur={Keyboard.dismiss}>
         <TextInput
@@ -66,4 +78,3 @@ export default function JoinRoom(props){
     </ImageBackground>
   );
 }
-

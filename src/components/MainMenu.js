@@ -11,7 +11,7 @@ import * as firebase from "firebase";
 import { useDocument } from "react-firebase-hooks/firestore";
 import { useNavigation } from "@react-navigation/native";
 import { styles } from "../../styles/MainMenu.Component.style";
-import { loggingOut,deleteUser } from "../../API/generalOp";
+import { loggingOut, deleteUser } from "../../API/generalOp";
 
 export default function MainMenu(props) {
   const navigation = useNavigation();
@@ -29,19 +29,23 @@ export default function MainMenu(props) {
 
   const handleYes = () => {
     deleteUser();
-    navigation.navigate('WelcomePage')
-  }
+    navigation.navigate("WelcomePage");
+  };
   const handleShowAlert = () => {
-     Alert.alert(
-       'ALERT',
-       'Deleting your account is permanent. Do you want to proceed?',
-       [
-         {text: 'YES', onPress:handleYes},
-         {text: 'NO', onPress:()=>console.log("NO Presses"), style:'cancel'}
-       ],
-       {cancelable: false}
-     )
-  }
+    Alert.alert(
+      "ALERT",
+      "Deleting your account is permanent. Do you want to proceed?",
+      [
+        { text: "YES", onPress: handleYes },
+        {
+          text: "NO",
+          onPress: () => console.log("NO Presses"),
+          style: "cancel",
+        },
+      ],
+      { cancelable: false }
+    );
+  };
 
   if (error) {
     Alert.alert("There is an error", error);
@@ -71,31 +75,30 @@ export default function MainMenu(props) {
 
           {userType !== "student" ? (
             <>
-            <TouchableOpacity
-              onPress={() =>
-                navigation.navigate("TeacherEditStudent", { userUID })
-              }
-            >
-              <Text style={styles.anonButtonText}>
-                Add/View Student(s)
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() =>
-                navigation.navigate("Games", {
-                  screen:"CreateGameRoom",
-                  params:{ userUID:userUID, firstName: firstName}})
-              }
-            >
-              <Text style={styles.anonButtonText}>
-                Create or Rejoin Game Room
-              </Text>
-            </TouchableOpacity>
-             <TouchableOpacity
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate("TeacherEditStudent", { userUID })
+                }
+              >
+                <Text style={styles.anonButtonText}>Add/View Student(s)</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate("Games", {
+                    screen: "CreateGameRoom",
+                    params: { userUID: userUID, firstName: firstName },
+                  })
+                }
+              >
+                <Text style={styles.anonButtonText}>
+                  Create or Rejoin Game Room
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
                 onPress={handleShowAlert}
                 style={styles.deleteButton}
               >
-                <Text style={styles.deleteText}>DELETE MY ACCOUNT</Text>
+                <Text style={styles.deleteText}>Delete My Account</Text>
               </TouchableOpacity>
             </>
           ) : (
@@ -117,16 +120,15 @@ export default function MainMenu(props) {
                 <Text style={styles.anonButtonText}>View My Stars </Text>
               </TouchableOpacity>
               <TouchableOpacity
-              onPress={() =>
-                navigation.navigate("Games", {
-                  screen:"JoinRoom",
-                  params:{ userUID, firstName }})
-              }
-            >
-              <Text style={styles.anonButtonText}>
-               Join Room
-              </Text>
-            </TouchableOpacity>
+                onPress={() =>
+                  navigation.navigate("Games", {
+                    screen: "JoinRoom",
+                    params: { userUID, firstName },
+                  })
+                }
+              >
+                <Text style={styles.anonButtonText}>Join Room</Text>
+              </TouchableOpacity>
             </>
           )}
           <TouchableOpacity style={styles.button} onPress={handlePress}>
@@ -154,4 +156,3 @@ export default function MainMenu(props) {
     );
   }
 }
-

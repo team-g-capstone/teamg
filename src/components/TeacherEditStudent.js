@@ -7,7 +7,7 @@ import {
   ImageBackground,
   Alert,
   ScrollView,
-  Keyboard
+  Keyboard,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { styles } from "../../styles/TeacherEditStudent.Component.style";
@@ -21,7 +21,7 @@ export default function TeacherEditStudent(props) {
   const [value, loading, error] = useDocument(
     firebase.firestore().collection("users").doc(userUID)
   );
-  const [childEmail, setChildEmail]=useState('');
+  const [childEmail, setChildEmail] = useState("");
 
   let alertMsg =
     "Error: You have added this student, click View all students button to see the student's profile.";
@@ -29,22 +29,26 @@ export default function TeacherEditStudent(props) {
   let studentUIDVar;
 
   const getStudentUID = async () => {
-     const snapshot = await firebase.firestore().collection('users').where('email', '==',childEmail).get();
+    const snapshot = await firebase
+      .firestore()
+      .collection("users")
+      .where("email", "==", childEmail)
+      .get();
 
-     if(snapshot.empty){
-       Alert.alert('The email provided is not registered in the system!')
-       return;
-     }
+    if (snapshot.empty) {
+      Alert.alert("The email provided is not registered in the system!");
+      return;
+    }
 
-     snapshot.forEach(doc=>{
-      studentUIDVar= doc.id
-     })
+    snapshot.forEach((doc) => {
+      studentUIDVar = doc.id;
+    });
   };
 
-  const addStudentToTeacher = async()=>{
+  const addStudentToTeacher = async () => {
     let studentsFB;
-    if(value&&value.data()){
-    studentsFB = await value.data().students;
+    if (value && value.data()) {
+      studentsFB = await value.data().students;
     }
 
     studentsFB.includes(studentUIDVar)
@@ -66,32 +70,30 @@ export default function TeacherEditStudent(props) {
       .doc(studentUIDVar)
       .get();
     studentDocument.ref.update({
-      teacherUID:userUID,
+      teacherUID: userUID,
     });
-  }
+  };
 
   const handlePressAddAChild = async () => {
-   await getStudentUID();
-   addStudentToTeacher();
-   setChildEmail('');
+    await getStudentUID();
+    addStudentToTeacher();
+    setChildEmail("");
   };
 
   return (
+    <ImageBackground style={styles.image} source={image} style={styles.image}>
+      <Text style={styles.headerText}>Teacher Dashboard:</Text>
+      <Text style={styles.textInputTitle}>
+        Add a student through their email
+      </Text>
 
-      <ImageBackground style={styles.image} source={image} style={styles.image}>
-        <Text style={styles.headerText}>
-          Teacher Dashboard:
-        </Text>
-        <Text style={styles.textInputTitle}>
-          Add a student through their email
-        </Text>
-        <ScrollView onBlur={Keyboard.dismiss}>
+      <ScrollView onBlur={Keyboard.dismiss}>
         <View style={styles.addAChildContainer}>
           <TextInput
             style={styles.textInput}
             placeholder="Enter student email"
             value={childEmail}
-            autoCapitalize='none'
+            autoCapitalize="none"
             onChangeText={(email) => setChildEmail(email)}
           />
           <TouchableOpacity
@@ -116,8 +118,7 @@ export default function TeacherEditStudent(props) {
         >
           <Text style={styles.buttonText}>Main Menu</Text>
         </TouchableOpacity>
-        </ScrollView>
-      </ImageBackground>
+      </ScrollView>
+    </ImageBackground>
   );
 }
-

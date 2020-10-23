@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: "#441196",
     borderWidth: 2,
-    borderRadius:5,
+    borderRadius: 5,
     borderColor: "#ffcccc",
     alignSelf: "center",
     margin: "1%",
@@ -26,8 +26,8 @@ export const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: "bold",
     textAlign: "center",
-    marginBottom:"2%",
-    paddingTop:"5%"
+    marginBottom: "2%",
+    paddingTop: "5%",
   },
   image: {
     flex: 1,
@@ -38,16 +38,16 @@ export const styles = StyleSheet.create({
   },
   textInput: {
     width: 300,
-    borderColor:"#de9999",
+    borderColor: "#de9999",
     borderWidth: 2,
     padding: 10,
     marginLeft: "25%",
   },
-  textInputTitle:{
-    color:"#fbedeb",
-    marginLeft:"25%",
+  textInputTitle: {
+    color: "#fbedeb",
+    marginLeft: "25%",
     fontSize: 18,
-    fontWeight:"bold"
+    fontWeight: "bold",
   },
   signUpText: {
     textAlign: "center",
@@ -66,5 +66,5 @@ export const styles = StyleSheet.create({
     alignSelf: "center",
     margin: "0.5%",
     marginLeft: "1%",
-  }
+  },
 });

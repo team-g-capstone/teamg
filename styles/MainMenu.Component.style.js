@@ -10,12 +10,12 @@ export const styles = StyleSheet.create({
     borderRadius: 15,
     alignSelf: "center",
     margin: 5,
-    marginTop:"5%",
-    marginLeft:"1.7%"
+    marginTop: "5%",
+    marginLeft: "1.7%",
   },
   buttonText: {
     color: "white",
-    fontSize:25,
+    fontSize: 25,
     fontWeight: "bold",
     textAlign: "center",
   },
@@ -34,12 +34,12 @@ export const styles = StyleSheet.create({
     borderRadius: 15,
     alignSelf: "center",
     margin: 5,
-    marginTop:"5%",
-    marginLeft:"1.7%"
+    marginTop: "5%",
+    marginLeft: "1.7%",
   },
-  deleteText:{
+  deleteText: {
     color: "white",
-    fontSize:20,
+    fontSize: 20,
     fontWeight: "bold",
     textAlign: "center",
   },
@@ -82,6 +82,6 @@ export const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 2,
-    marginTop:"1%",
-  }
+    marginTop: "1%",
+  },
 });
