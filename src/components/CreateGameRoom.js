@@ -7,7 +7,7 @@ import {
   View,
   Alert} from 'react-native';
 import { createNewGame } from "../../API/gameRoomFB";
-
+import styles from "../../styles/CreateGameRoom.Component.style";
 
 export default class CreateGameRoom extends Component {
     constructor(props){
@@ -45,7 +45,7 @@ export default class CreateGameRoom extends Component {
       const {gameID, firstName} = this.state;
 
       createNewGame(gameID, userUID);
-      console.log("userUID from handlePressCreateNewGame", userUID)
+      
       this.props.navigation.navigate("GameRoom",{userUID:userUID, gameID:gameID,firstName:firstName})
 
     }
@@ -55,15 +55,15 @@ export default class CreateGameRoom extends Component {
       return(
       <ImageBackground style={styles.background} source={require("../../assets/backgrounds/blue.jpg")}>
         <View style={styles.container}>
-         <Text style={styles.screenTitle}>Create a Game</Text>
+         <Text style={styles.screenTitle}>Create a Game Room</Text>
          <Text style={styles.steps}>{`Step One: Click "Generate Game ID" to get a new Game ID`}</Text>
-         <TouchableOpacity styles={styles.button} onPress={this.handlePressGenerateGameID}>
+         <TouchableOpacity style={styles.button} onPress={this.handlePressGenerateGameID}>
          <Text style={styles.buttonText}>Generate Game ID</Text>
          </TouchableOpacity>
-
+        
         <Text style={styles.steps}>{`Step Two: Let your student know the Game ID: ${this.state.gameID}`}</Text>
-        <Text style={styles.steps}>{`Step Three: Click "Create Game to enter the game`}</Text>
-        <TouchableOpacity onPress={this.handlePressCreateGame}>
+        <Text style={styles.steps}>{`Step Three: Click "Create Game" to enter the room`}</Text>
+        <TouchableOpacity style={styles.button} onPress={this.handlePressCreateGame}>
         <Text style={styles.buttonText}>Create Game</Text>
       </TouchableOpacity>
       </View>
@@ -73,6 +73,7 @@ export default class CreateGameRoom extends Component {
                   screen:"JoinRoom",
                   params:{ userUID, firstName }})
               }
+              style={styles.button}
             >
               <Text style={styles.buttonText}>
                Return to an existing Game Room
@@ -81,56 +82,3 @@ export default class CreateGameRoom extends Component {
       </ImageBackground>
       )}
   }
-
- const styles = StyleSheet.create({
-  background: {
-    flex: 1,
-    width: "100%",
-    height: "100%",
-    resizeMode: "cover",
-    justifyContent: "center",
-    alignContent:"center"
-  },
-  button: {
-    width: 280,
-    padding: 12,
-    backgroundColor: "red",
-    borderWidth: 2,
-    borderColor: "#ffcccc",
-    borderRadius: 5,
-    alignSelf: "center",
-    margin: "0.5%",
-    marginLeft: "1%",
-  },
-  buttonText: {
-    color: "red",
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  container:{
-    alignItems:"center"
-  },
-  screenTitle: {
-    fontSize: 25,
-    margin: 10,
-    fontWeight: "bold",
-    color: "white",
-    marginRight:"30%"
-  },
-  steps:{
-    fontSize:20,
-    margin: 10,
-    fontWeight: "bold",
-    color: "white",
-  },
-  stepTwo:{
-    color:"blue"
-  },
-  textInput: {
-    width: 250,
-    borderWidth: 1,
-    borderColor:"#6DA171",
-    padding: 10,
-    margin: "0.2%",
-  },
-})
