@@ -144,6 +144,7 @@ export default function UserStats_Student(props) {
 
         <View style={styles.progressContainer}>
           <Text style={styles.titleText}>Subjects:</Text>
+          <Text style={styles.starText}>Play some games to gain stars! 🌟</Text>
           <Text style={styles.text}>Math</Text>
           <View style={styles.animationContainer}>
             {mathScores.map((level, index) => {
