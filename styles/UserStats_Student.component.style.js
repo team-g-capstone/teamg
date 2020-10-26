@@ -91,6 +91,13 @@ export default StyleSheet.create({
     color: "navy",
     fontFamily: "Chilanka_400Regular",
   },
+  starText: {
+    fontSize: 21,
+    marginBottom: "5%",
+    marginTop: "-12%",
+    fontFamily: "Chilanka_400Regular",
+    color: "navy",
+  },
   thumbnail: {
     width: "20%",
     height: "50%",
