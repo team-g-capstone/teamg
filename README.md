@@ -11,17 +11,22 @@ Learning remotely can be difficult for kids, teachers and parents. We present an
 Note: testing this app requires expo and an iOS simulator/iOS product. Try using the expo app on your iPhone!
 
 
-npm install
-npm install expo-cli
-expo start
+* npm install
+* npm install expo-cli
+* expo start
 
 
+### Expo Links and QR Code
+https://exp.host/@katwingki/brainteez
 
-### Created By 
+![Image of QR code]
+(https://res.cloudinary.com/dp8rfxspl/image/upload/v1603831450/download_1_hrbsn7.png)
 
-Krystal Cheung : https://github.com/krycheung
-Kathryn Lam : https://github.com/katwingki
-Hedra Rowan : https://github.com/hedrarowan
+#### Created By 
+
+* Krystal Cheung : https://github.com/krycheung
+* Kathryn Lam : https://github.com/katwingki
+* Hedra Rowan : https://github.com/hedrarowan
 
 
 
