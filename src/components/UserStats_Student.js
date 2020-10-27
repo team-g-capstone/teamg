@@ -197,6 +197,7 @@ export default function UserStats_Student(props) {
               }
             })}
           </View>
+
           <Text style={styles.text}>Memory</Text>
           <View style={styles.animationContainer}>
             {memoryScores.map((level, index) => {
