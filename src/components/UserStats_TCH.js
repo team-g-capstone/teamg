@@ -52,9 +52,10 @@ export default function UserStats_TCH(props) {
   let studentName;
   let studentMathScores;
   let studentLogicScores;
+  let studentMemoryScores;
   let studentEmail;
   let mixedData = {
-    labels: ["Math", "Logic", "Level 3"],
+    labels: ["Math", "Logic", "Memory"],
     legend: ["Completed", "Incompleted"],
     data: [
       [0, 10],
@@ -69,11 +70,14 @@ export default function UserStats_TCH(props) {
     studentName = value.data().firstName + " " + value.data().lastName;
     studentMathScores = value.data().mathScores;
     studentLogicScores = value.data().logicScores;
+    studentMemoryScores = value.data().memoryScores;
     studentEmail = value.data().email;
     let mathTrue = studentMathScores.filter((ele) => ele === true).length;
     let logicTrue = studentLogicScores.filter((ele) => ele === true).length;
+    let memoryTrue = studentMemoryScores.filter((ele) => ele === true).length;
     mixedData.data[0] = [mathTrue, 10 - mathTrue];
     mixedData.data[1] = [logicTrue, 10 - logicTrue];
+    mixedData.data[2] = [memoryTrue, 10 - memoryTrue];
   }
 
   let [fontsLoaded] = useFonts({
