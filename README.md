@@ -19,8 +19,7 @@ Note: testing this app requires expo and an iOS simulator/iOS product. Try using
 ### Expo Links and QR Code
 https://exp.host/@katwingki/brainteez
 
-![Image of QR code]
-(https://res.cloudinary.com/dp8rfxspl/image/upload/v1603831450/download_1_hrbsn7.png)
+![](https://res.cloudinary.com/dp8rfxspl/image/upload/v1603831450/download_1_hrbsn7.png)
 
 #### Created By 
 
