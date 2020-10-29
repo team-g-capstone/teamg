@@ -19,12 +19,14 @@ Note: testing this app requires expo and an iOS simulator/iOS product. Try using
 ### Expo Links and QR Code
 https://exp.host/@edutechbrainteez/brainteez
 
-#### FOR IOS Device 
+#### FOR iOS Device 
 Please log in with the following credential on the Expo Client app before scanning the QR code
 * Username: edutechteamg@gmail.com 
 * Password: 123456
 
 ![](https://res.cloudinary.com/dp8rfxspl/image/upload/v1603919116/download_k16h6y.png)
+
+#### BrainTeez is not yet optimizied for Android
 
 #### Created By 
 
