@@ -26,7 +26,7 @@ Please log in with the following credential on the Expo Client app before scanni
 
 ![](https://res.cloudinary.com/dp8rfxspl/image/upload/v1603919116/download_k16h6y.png)
 
-#### BrainTeez is not yet optimizied for Android
+#### BrainTeez is not yet optimized for Android
 
 #### Created By 
 
